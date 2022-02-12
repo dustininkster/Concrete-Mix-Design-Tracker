@@ -46,6 +46,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InitializationFiles\MixDesignInitialization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InitializationFiles\SubmittalInitialization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InitializationFiles\TrialBatchInitialization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InitializationFiles\PrototypeInitialization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InitializationFiles\MaterialsInitialization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InitializationFiles\TabInitialization.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

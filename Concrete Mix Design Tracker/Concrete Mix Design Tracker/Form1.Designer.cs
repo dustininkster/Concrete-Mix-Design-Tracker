@@ -37,8 +37,7 @@ namespace Concrete_Mix_Design_Tracker
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "Main";
-            this.Text = "6";
-            this.Load += new System.EventHandler(this.Main_Load);
+            this.Text = "Concrete Mix Tracker";
             this.ResumeLayout(false);
 
         }
