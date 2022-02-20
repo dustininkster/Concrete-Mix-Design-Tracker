@@ -10,7 +10,7 @@ namespace Concrete_Mix_Design_Tracker
         private System.Windows.Forms.RichTextBox rchMixPrototypeSummary;
 
          private void InitializeMixDesignsControls()
-         {
+        {
             const int ROW_SPACING = 35;
             const int i = 4;
             this.lstMixFileList = new ListBox();

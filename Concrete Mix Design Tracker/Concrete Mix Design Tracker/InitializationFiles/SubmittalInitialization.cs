@@ -5,12 +5,12 @@ using System.Windows.Forms;
 namespace Concrete_Mix_Design_Tracker
 {
     public partial class Main
-    { 
+    {
         private System.Windows.Forms.ListBox lstSubmittalFileList;
         private System.Windows.Forms.Button btnAddSubmittalFile;
         private System.Windows.Forms.Label lblHistory;   
-        private void InitializeSubmittalsControls()
-        {
+       private void InitializeSubmittalsControls()
+       {
             const int ROW_SPACING = 35;
             const int i = 3;
             this.lstSubmittalFileList = new ListBox();
@@ -51,7 +51,7 @@ namespace Concrete_Mix_Design_Tracker
             spImagePropSplit[i].Panel1.Controls.Add(lstSubmittalFileList);
             spImagePropSplit[i].Panel1.Controls.Add(btnAddSubmittalFile);
 
-        }
     }
+}
 }
  

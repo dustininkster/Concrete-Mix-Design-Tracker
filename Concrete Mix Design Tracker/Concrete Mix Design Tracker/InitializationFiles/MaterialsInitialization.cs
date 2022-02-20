@@ -30,7 +30,7 @@ namespace Concrete_Mix_Design_Tracker
             this.btnAddMaterialsImg = new Button();
             this.btnMaterialsImgLeft = new Button();
             this.btnMaterialsImgRight = new Button();
-            //System.Drawing.Bitmap TestImage = new System.Drawing.Bitmap(@"C:\Users\dusti\OneDrive\Documents\Capstone Project\Concrete Mix Design Tracker\Concrete Mix Design Tracker\bin\Debug\TestImage.png");
+            System.Drawing.Bitmap TestImage = new System.Drawing.Bitmap(@"C:\Users\dusti\OneDrive\Documents\Capstone Project\Concrete Mix Design Tracker\Concrete Mix Design Tracker\bin\Debug\TestImage.png");
             System.Drawing.Point pntCurrentLocation = new System.Drawing.Point(PANEL_PADDING, PANEL_PADDING + lblIDDisplay[i].Height + ROW_SPACING);
 
             // Properties
@@ -63,7 +63,7 @@ namespace Concrete_Mix_Design_Tracker
             pcMaterialImg.Size = new System.Drawing.Size(spImagePropSplit[i].Panel1.Width, spImagePropSplit[i].Panel1.Height - btnAddMaterialsImg.Height - (IMG_PANEL_PADDING*2));
             pcMaterialImg.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
             pcMaterialImg.SizeMode = PictureBoxSizeMode.CenterImage;
-            //pcMaterialImg.Image = TestImage;
+            pcMaterialImg.Image = TestImage;
 
 
             btnMaterialsImgLeft.Text = "<";
