@@ -21,7 +21,7 @@ namespace Concrete_Mix_Design_Tracker
             InitializeTrialBatchesControls();
             InitializeSubmittalsControls();
             InitializeMixDesignsControls();
-            InitializeDatabase();
+            //InitializeDatabase();
         }
 
         private void Main_Load(object sender, EventArgs e)
