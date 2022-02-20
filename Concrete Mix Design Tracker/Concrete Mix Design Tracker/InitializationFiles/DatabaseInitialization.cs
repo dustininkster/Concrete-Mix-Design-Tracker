@@ -7,13 +7,15 @@ namespace Concrete_Mix_Design_Tracker
 {
     public partial class Main
     {
-        /**/
+        /*
+        // This section was an attempt to automatically create the database when the program is loaded the first time
+        // It quickly became apparent that this was just feature bloat.  I may come back to it later if there's time
         String str;
         SqlConnection myConn = new SqlConnection ("Server=localhost;Integrated security=SSPI;database=master");
         private void InitializeDatabase()
         {
             str = "CREATE DATABASE MixDatabase ON PRIMARY" +
-                "(NMME = MixDatabase_Data, " +
+                "(NAME = MixDatabase_Data, " +
                 "FILENAME = 'C:\\MixDatabaseData.mdf', " +
                 "SIZE = 2MB, MAXSIZE = 10 MB, FILEGROWTH = 10%)" +
                 "LOG ON (NAME = MixDatabaseLog.ldf', " +
