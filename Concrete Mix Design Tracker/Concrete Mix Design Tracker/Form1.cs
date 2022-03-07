@@ -27,7 +27,7 @@ namespace Concrete_Mix_Design_Tracker
         {
             for (byte i = 0; i < tbSelectionTabs.TabCount; i++)
             {
-                foreach (var item in Controller.GetFilters(i))
+                foreach (string item in Controller.GetFilters(i))
                     cbFilterSelect[i].Items.Add(item);
                 foreach (var item in Controller.GetList(i))
                     lstItemSelect[i].Items.Add(item);
