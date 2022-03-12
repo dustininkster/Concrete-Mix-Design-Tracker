@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="InitializationFiles\MixDesignInitialization.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,11 +84,11 @@
     <Compile Include="InitializationFiles\TabInitialization.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include=".cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include=".Designer.cs">
-      <DependentUpon>.cs</DependentUpon>
+      <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MaterialSelect.cs">
@@ -106,8 +107,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include=".resx">
-      <DependentUpon>.cs</DependentUpon>
+    <Compile Include="View.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MaterialSelect.resx">
       <DependentUpon>MaterialSelect.cs</DependentUpon>
@@ -163,9 +167,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>

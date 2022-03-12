@@ -1,7 +1,7 @@
 ﻿
 namespace Concrete_Mix_Design_Tracker
 {
-    partial class Main
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,14 +31,13 @@ namespace Concrete_Mix_Design_Tracker
         {
             this.SuspendLayout();
             // 
-            // Main
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "Main";
+            this.Name = "MainForm";
             this.Text = "Concrete Mix Tracker";
-            this.Load += new System.EventHandler(this.Main_Load);
             this.ResumeLayout(false);
 
         }

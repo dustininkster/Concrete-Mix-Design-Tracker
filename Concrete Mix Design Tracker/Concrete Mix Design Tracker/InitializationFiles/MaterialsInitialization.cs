@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Concrete_Mix_Design_Tracker
 {
-    public partial class Main
+    public partial class MainForm
     {
        private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtName;

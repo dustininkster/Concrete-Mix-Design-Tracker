@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Concrete_Mix_Design_Tracker
 {
-    public partial class Main 
+    public partial class MainForm 
    {        
         /// <summary>
         /// Declarations of global variables/constants
@@ -23,22 +23,22 @@ namespace Concrete_Mix_Design_Tracker
          /// <summary>
         /// Declarations for controls to add
         /// </summary>
-        private System.Windows.Forms.TabControl tbSelectionTabs;
-        private System.Windows.Forms.TabPage tbMaterials;
-        private System.Windows.Forms.TabPage tbPrototypes;
-        private System.Windows.Forms.TabPage tbTrialBatches;
-        private System.Windows.Forms.TabPage tbSubmittals;
-        private System.Windows.Forms.TabPage tbMixDesigns;
+        protected System.Windows.Forms.TabControl tbSelectionTabs;
+        protected System.Windows.Forms.TabPage tbMaterials;
+        protected System.Windows.Forms.TabPage tbPrototypes;
+        protected System.Windows.Forms.TabPage tbTrialBatches;
+        protected System.Windows.Forms.TabPage tbSubmittals;
+        protected System.Windows.Forms.TabPage tbMixDesigns;
         private System.Windows.Forms.SplitContainer[] spMainSplit;
         private System.Windows.Forms.SplitContainer[] spMainPanel2Split;
         private System.Windows.Forms.SplitContainer[] spImagePropSplit;
         private System.Windows.Forms.SplitContainer[] spMainPanel1Split;
-        private System.Windows.Forms.ComboBox[] cbFilterSelect;
-        private System.Windows.Forms.ListBox[] lstItemSelect;
-        private System.Windows.Forms.DataGrid[] dgProperties;
+        protected System.Windows.Forms.ComboBox[] cbFilterSelect;
+        protected System.Windows.Forms.ListBox[] lstItemSelect;
+        protected System.Windows.Forms.DataGrid[] dgProperties;
         private System.Windows.Forms.Label[] lblIDDisplay;
-        private System.Windows.Forms.Button[] btnEditSave;
-        private System.Windows.Forms.Button[] btnAdvance;
+        protected System.Windows.Forms.Button[] btnEditSave;
+        protected System.Windows.Forms.Button[] btnAdvance;
 
         /// <summary>
         /// Initializes the tabs and all of the controls that are common to all of the tabs

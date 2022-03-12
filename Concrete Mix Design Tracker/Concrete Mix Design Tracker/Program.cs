@@ -8,15 +8,17 @@ namespace Concrete_Mix_Design_Tracker
 {
     static class Program
     {
+        static View main;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            main = new View();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Application.Run(main);
         }
     }
 }
