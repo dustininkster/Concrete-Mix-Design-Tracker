@@ -431,5 +431,274 @@ namespace Concrete_Mix_Design_Tracker
             return Convert.ToDouble(GetPrototypeWater(ID) / accumulator);
         }
 
+        /// <summary>
+        /// Inserts a new record into the appropriate tables for a new material
+        /// </summary>
+        /// <param name="materialType">The type of material to make</param>
+        static public void CreateNewMaterial(byte materialType)
+        {
+            // code to get last ID number
+            var lastID = db.Materials.Max(material => material.Material_ID);
+
+            // code to create new material
+            Material mat = new Material();
+            mat.Material_ID = ++lastID;
+            db.Materials.InsertOnSubmit(mat);
+
+            // variable to store subID
+            byte lastSubID;
+            byte lastAggID;
+            // code to creat new subtable(s)
+            switch (materialType)
+            {
+                case CEMENT:
+                    // code to get last ID number
+                    lastSubID = db.Cements.Max(cement => cement.Cement_ID);
+
+                    // code to create new cement
+                    Cement cem = new Cement();
+                    cem.Cement_ID = Convert.ToByte(lastSubID + 1);
+                    db.Cements.InsertOnSubmit(cem);
+                    break;
+
+                case SCM:
+                    // code to get last ID number
+                    lastSubID = db.SCMs.Max(scm => scm.SCM_ID);
+
+                    // code to create new SCM
+                    SCM sCM = new SCM();
+                    sCM.SCM_ID = Convert.ToByte(lastSubID + 1);
+                    db.SCMs.InsertOnSubmit(sCM);
+                    break;
+                case COARSE_AGGREGATE:
+                case FINE_AGGREGATE:
+                    // code to get last ID number
+                    lastSubID = db.Aggregates.Max(aggregate => aggregate.Aggregate_ID);
+                    lastAggID = db.Coarse_Aggregates.Max(ca => ca.CA_ID);
+
+                    Aggregate agg = new Aggregate();
+                    agg.Aggregate_ID = Convert.ToByte(lastSubID + 1);
+                    db.Aggregates.InsertOnSubmit(agg);
+
+                    if (materialType == COARSE_AGGREGATE)
+                    {
+                        lastAggID = db.Coarse_Aggregates.Max(fa => fa.CA_ID);
+                        Coarse_Aggregate cAgg = new Coarse_Aggregate();
+                        cAgg.CA_ID = Convert.ToByte(lastAggID + 1);
+                        db.Coarse_Aggregates.InsertOnSubmit(cAgg);
+                    }
+                    else
+                    {
+                        lastAggID = db.Fine_Aggregates.Max(fa => fa.FN_ID);
+                        Fine_Aggregate fAgg = new Fine_Aggregate();
+                        fAgg.FN_ID = Convert.ToByte(lastAggID + 1);
+                        db.Fine_Aggregates.InsertOnSubmit(fAgg);
+                    }
+                    break;
+                case ADMIXTURE:
+                    // code to get last ID number
+                    lastSubID = db.Admixtures.Max(admixture => admixture.Admixture_ID);
+                    Admixture admix = new Admixture();
+                    admix.Admixture_ID = Convert.ToByte(lastSubID + 1);
+                    db.Admixtures.InsertOnSubmit(admix);
+                    break;
+            }
+            // submit all of the changes we made
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Creates a new record for a Prototype
+        /// </summary>
+        static public void CreateNewPrototype()
+        {
+            var LastID = db.Prototypes.Max(prototype => prototype.Prototype_ID);
+
+            Prototype proto = new Prototype();
+            proto.Prototype_ID = Convert.ToByte(LastID + 1);
+            db.Prototypes.InsertOnSubmit(proto);
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Inserts a new record for a Trial Batch
+        /// </summary>
+        static public void CreateNewTrialBatch()
+        {
+            var lastID = db.Trial_Batches.Max(trialBatch => trialBatch.TB_ID);
+            Trial_Batch trial = new Trial_Batch();
+            trial.TB_ID = Convert.ToByte(lastID + 1);
+            db.Trial_Batches.InsertOnSubmit(trial);
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Inserts a new record for a Submittal
+        /// </summary>
+        static public void CreateNewSubmittal()
+        {
+            var lastID = db.Submittals.Max(submittal => submittal.Submittal_ID);
+
+            Submittal sub = new Submittal();
+            sub.Submittal_ID = Convert.ToByte(lastID + 1);
+            db.Submittals.InsertOnSubmit(sub);
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Inserts a new record for a Mix Design
+        /// </summary>
+        static public void CreateNewMixDesign()
+        {
+            var lastID = db.Mix_Designs.Max(mix => mix.Mix_ID);
+
+            Mix_Design mix_Design = new Mix_Design();
+            mix_Design.Mix_ID = Convert.ToByte(lastID + 1);
+            db.Mix_Designs.InsertOnSubmit(mix_Design);
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Updates an existing Material record
+        /// </summary>
+        /// <param name="materialID">Material_ID</param>
+        /// <param name="materialName">Material_Name</param>
+        /// <param name="materialSource">Material_Source</param>
+        /// <param name="relativeDensity">Relative_Density</param>
+        /// <param name="materialTypeID">Material_Type_ID</param>
+        static public void UpdateMaterial(
+            byte materialID,
+            string materialName,
+            string materialSource,
+            decimal relativeDensity,
+            byte materialTypeID
+            )
+        {
+            var recordToUpdate = (from material in db.Materials
+                                 where material.Material_ID == materialID
+                                 select material).First();
+            recordToUpdate.Material_Name = materialName;
+            recordToUpdate.Material_Source = materialSource;
+            recordToUpdate.Relative_Density = relativeDensity;
+            recordToUpdate.Material_Type_ID = materialTypeID;
+
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Updates an existing cement record
+        /// </summary>
+        /// <param name="materialID">Material_ID</param>
+        /// <param name="cementType">Cement_Type</param>
+        static public void UpdateCement(
+            byte materialID,
+            string cementType
+            )
+        {
+            var recordToUpdate = (from cement in db.Cements
+                                 where cement.Material_ID == materialID
+                                 select cement).First();
+
+            recordToUpdate.Cement_Type = cementType;
+            db.SubmitChanges();
+        }
+
+        static public void UpdateSCM(
+            byte materialID,
+            string SCM_class
+            )
+        {
+            var recordToUpdate = (from scm in db.SCMs
+                                  where scm.Material_ID == materialID
+                                  select scm).First();
+            recordToUpdate.SCM_Class = SCM_class;
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Updates an existing Aggregate Record
+        /// </summary>
+        /// <param name="materialID"></param>
+        /// <param name="aggregateGrade"></param>
+        /// <param name="absorption"></param>
+        static public void UpdateAggregate(
+            byte materialID,
+            string aggregateGrade,
+            decimal absorption
+            )
+        {
+            var recordToUpdate = (from agg in db.Aggregates
+                                  where agg.Material_ID == materialID
+                                  select agg).First();
+            recordToUpdate.Aggregate_Grade = aggregateGrade;
+            recordToUpdate.Absorption = absorption;
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Updates an existing Coarse Aggregate Record
+        /// </summary>
+        /// <param name="materialID"></param>
+        /// <param name="caSize"></param>
+        /// <param name="caUnitWeight"></param>
+        static public void UpdateCoarseAggregate(
+            byte materialID,
+            decimal caSize,
+            decimal caUnitWeight)
+        {
+            byte lookUpValue = (from agg in db.Aggregates
+                              where agg.Material_ID == materialID
+                              select agg.Aggregate_ID).First();
+
+            var recordToUpdate = (from ca in db.Coarse_Aggregates
+                                  where ca.Aggregate_ID == lookUpValue
+                                  select ca).First();
+            recordToUpdate.CA_Size = caSize;
+            recordToUpdate.CA_UW = caUnitWeight;
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Updates an existing Fine Aggregate Record
+        /// </summary>
+        /// <param name="materialID">Material_ID</param>
+        /// <param name="finenessModulus">Fineness_Modulus</param>
+        static public void UpdateFineAggregate(
+            byte materialID,
+            decimal finenessModulus
+            )
+        {
+            byte lookUpValue = (from agg in db.Aggregates
+                                where agg.Material_ID == materialID
+                                select agg.Aggregate_ID).First();
+            var recordToUpdate = (from fn in db.Fine_Aggregates
+                                  where fn.Aggregate_ID == lookUpValue
+                                  select fn).First();
+            recordToUpdate.Fineness_Modulus = finenessModulus;
+            db.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Updates an existing Admixture Record
+        /// </summary>
+        /// <param name="materialID">Material_ID</param>
+        /// <param name="minDose">Minimum_Dosage</param>
+        /// <param name="maxDose">Maximum_Dosage</param>
+        /// <param name="isByCWT">Is_ByCWT</param>
+        static public void UpdateAdmixture(
+            byte materialID,
+            decimal minDose,
+            decimal maxDose,
+            bool isByCWT
+            )
+        {
+            var recordToUpdate = (from admix in db.Admixtures
+                                  where admix.Material_ID == materialID
+                                  select admix).First();
+            recordToUpdate.Minimum_Dosage = minDose;
+            recordToUpdate.Maximum_Dosage = maxDose;
+            recordToUpdate.Is_ByCWT = isByCWT;
+            db.SubmitChanges();
+        }
     }
 }

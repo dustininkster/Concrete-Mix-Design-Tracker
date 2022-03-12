@@ -8,6 +8,7 @@ namespace Concrete_Mix_Design_Tracker
     {
         private System.Windows.Forms.ListBox lstMixFileList;
         private System.Windows.Forms.RichTextBox rchMixPrototypeSummary;
+        private MaterialSelect materialSelect;
 
          private void InitializeMixDesignsControls()
         {
