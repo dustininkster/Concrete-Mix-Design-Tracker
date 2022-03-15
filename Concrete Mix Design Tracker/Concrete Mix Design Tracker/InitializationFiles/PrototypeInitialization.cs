@@ -10,18 +10,17 @@ namespace Concrete_Mix_Design_Tracker
         /// Declarations for Prototypes Controls
         /// </summary>
         private System.Windows.Forms.Label lblPrototypeWcm;
-        private System.Windows.Forms.NumericUpDown udWcm;
-        private System.Windows.Forms.Button btnWcmReset;
-        private System.Windows.Forms.Button btnPromoteToTrialBatch;
-        private System.Windows.Forms.Button btnCopyPrototype;
+        protected System.Windows.Forms.NumericUpDown udWcm;
+        protected System.Windows.Forms.Button btnWcmReset;
+        protected System.Windows.Forms.Button btnCopyPrototype;
         private System.Windows.Forms.Label lblCementMaterials;
-        private System.Windows.Forms.Button btnAddCement;
+        protected System.Windows.Forms.Button btnAddCement;
         private System.Windows.Forms.Label lblAggregateMaterials;
-        private System.Windows.Forms.Button btnAddAggregate;
+        protected System.Windows.Forms.Button btnAddAggregate;
         private System.Windows.Forms.Label lblWaterMaterials;
-        private System.Windows.Forms.Button btnAddWater;
+        protected System.Windows.Forms.Button btnAddWater;
         private System.Windows.Forms.Label lblAdmixtures;
-        private System.Windows.Forms.Button btnAddAdmixtures;
+        protected System.Windows.Forms.Button btnAddAdmixtures;
         private System.Windows.Forms.Panel pnProportionPanel;
 
 
@@ -32,7 +31,6 @@ namespace Concrete_Mix_Design_Tracker
             this.lblPrototypeWcm = new Label();
             this.udWcm = new NumericUpDown();
             this.btnWcmReset = new Button();
-            this.btnPromoteToTrialBatch = new Button();
             this.btnCopyPrototype = new Button();
             this.lblCementMaterials = new Label();
             this.btnAddCement = new Button();
@@ -52,9 +50,10 @@ namespace Concrete_Mix_Design_Tracker
             pnProportionPanel.Width = spMainPanel2Split[i].Panel1.Width - 30;
             pnProportionPanel.Anchor = (AnchorStyles.Right | AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Bottom);
 
-            btnPromoteToTrialBatch.Text = "Trial Batch";
 
             btnCopyPrototype.Text = "Copy Prototype";
+            btnCopyPrototype.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+            btnCopyPrototype.Click += buttonEventHandler;
 
             lblPrototypeWcm.Text = "Water/ Cementitious Materials";
             lblPrototypeWcm.Width = System.Convert.ToInt32(Convert.ToDouble(MAIN_PANEL2_SPLITTER_DISTANCE) / 2.5);
@@ -63,6 +62,7 @@ namespace Concrete_Mix_Design_Tracker
 
             btnWcmReset.Text = "Reset";
             btnWcmReset.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 6;
+            btnWcmReset.Click += buttonEventHandler;
 
             lblCementMaterials.Font = fntSectionHeader;
             lblCementMaterials.Text = "Cementitious Materials";
@@ -81,14 +81,6 @@ namespace Concrete_Mix_Design_Tracker
             lblAdmixtures.Width = pnProportionPanel.Width;
 
 
-            // Locate everything
-            // Test, Copy buttons
-            btnPromoteToTrialBatch.Location = pntCurrentLocation;
-            pntCurrentLocation.X += btnPromoteToTrialBatch.Width + PANEL_PADDING;
-            btnCopyPrototype.Location = pntCurrentLocation;
-            pntCurrentLocation.Y += ROW_SPACING;
-            pntCurrentLocation.X = 13;
-
             // Top row w/cm label, picker, reset
             lblPrototypeWcm.Location = pntCurrentLocation;
             pntCurrentLocation.X += lblPrototypeWcm.Width;
@@ -98,13 +90,21 @@ namespace Concrete_Mix_Design_Tracker
             pntCurrentLocation.Y += ROW_SPACING;
             pntCurrentLocation.X = 13;
 
+
             // Proportion Panel
             pnProportionPanel.Location = pntCurrentLocation;
             pnProportionPanel.Height = spMainPanel2Split[i].Panel1.Height - ROW_SPACING - btnEditSave[i].Height - pntCurrentLocation.Y;
 
+            // Locate everything
+            // Test, Copy buttons
+            pntCurrentLocation.X = btnAdvance[i].Location.X + btnAdvance[i].Width + PANEL_PADDING;
+            pntCurrentLocation.Y = btnAdvance[i].Location.Y;
+            btnCopyPrototype.Location = pntCurrentLocation;
+            pntCurrentLocation.Y += ROW_SPACING;
+            pntCurrentLocation.X = 13;
+
 
             // Add items
-            spMainPanel2Split[i].Panel1.Controls.Add(btnPromoteToTrialBatch);
             spMainPanel2Split[i].Panel1.Controls.Add(btnCopyPrototype);
             spMainPanel2Split[i].Panel1.Controls.Add(lblPrototypeWcm);
             spMainPanel2Split[i].Panel1.Controls.Add(udWcm);

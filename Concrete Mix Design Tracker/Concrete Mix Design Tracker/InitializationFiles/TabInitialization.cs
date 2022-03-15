@@ -6,6 +6,7 @@ namespace Concrete_Mix_Design_Tracker
 {
     public partial class MainForm 
    {        
+        private MaterialSelect materialSelect;
         /// <summary>
         /// Declarations of global variables/constants
         /// </summary>
@@ -13,7 +14,7 @@ namespace Concrete_Mix_Design_Tracker
         const int MAIN_PANEL2_SPLITTER_DISTANCE = 400;
         const int MAIN_PANEL1_SPLITTER_DISTANCE = 25;
         const int IMAGE_PROPERTIES_SPLITTER_DISTANCE = 200;
-        const int PANEL_PADDING = 15;
+        protected const int PANEL_PADDING = 15;
         const int IMG_PANEL_PADDING = 3;
         const int IMG_SELECT_BUTTON_SIZE = 20;
         System.Drawing.Font fntID = new System.Drawing.Font("Times New Roman", 25, System.Drawing.FontStyle.Regular);
@@ -39,6 +40,9 @@ namespace Concrete_Mix_Design_Tracker
         private System.Windows.Forms.Label[] lblIDDisplay;
         protected System.Windows.Forms.Button[] btnEditSave;
         protected System.Windows.Forms.Button[] btnAdvance;
+        protected System.EventHandler buttonEventHandler;
+        protected System.EventHandler comboEventHandler;
+        protected System.EventHandler listboxEventHandler;
 
         /// <summary>
         /// Initializes the tabs and all of the controls that are common to all of the tabs
@@ -96,6 +100,11 @@ namespace Concrete_Mix_Design_Tracker
             this.btnEditSave = new System.Windows.Forms.Button[tbSelectionTabs.TabCount];
             this.btnAdvance = new System.Windows.Forms.Button[tbSelectionTabs.TabCount];
 
+            // Here we initialize the common event handlers
+            buttonEventHandler = new EventHandler(this.Button_Click);
+            comboEventHandler = new EventHandler(this.Combo_SelectedIndexChanged);
+            listboxEventHandler = new EventHandler(this.Listbox_SelectedIndexChanged);
+            
 
             for(int i = 0; i < tbSelectionTabs.TabCount; i++)
             {
@@ -141,10 +150,12 @@ namespace Concrete_Mix_Design_Tracker
                 cbFilterSelect[i].TabIndex = 1;
                 cbFilterSelect[i].Height = 5;
                 cbFilterSelect[i].Dock = DockStyle.Top;
+                cbFilterSelect[i].SelectedIndexChanged += comboEventHandler;
 
                 // List box for selecting the appropriate item
                 lstItemSelect[i].TabIndex = 2;
                 lstItemSelect[i].Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
+                lstItemSelect[i].SelectedIndexChanged += listboxEventHandler;
 
                 // Datagrid for properties
                 dgProperties[i].TabIndex = 3;
@@ -167,9 +178,11 @@ namespace Concrete_Mix_Design_Tracker
                 // Edit Save button
                 btnEditSave[i].Text = "Edit";
                 btnEditSave[i].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+                btnEditSave[i].Click += buttonEventHandler;
 
                 // Advance button
                 btnAdvance[i].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+                btnAdvance[i].Click += buttonEventHandler;
 
                 // Add elements
                 tbSelectionTabs.TabPages[i].Controls.Add(this.spMainSplit[i]);
@@ -198,6 +211,7 @@ namespace Concrete_Mix_Design_Tracker
                 lstItemSelect[i].Size = new System.Drawing.Size(spMainPanel1Split[i].Panel2.Width, spMainPanel1Split[i].Panel2.Height);
                 spImagePropSplit[i].SplitterDistance = IMAGE_PROPERTIES_SPLITTER_DISTANCE;
             }
+
 
         }
     }

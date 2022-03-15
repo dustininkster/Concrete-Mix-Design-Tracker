@@ -7,7 +7,7 @@ namespace Concrete_Mix_Design_Tracker
     public partial class MainForm
     {
         private System.Windows.Forms.ListBox lstSubmittalFileList;
-        private System.Windows.Forms.Button btnAddSubmittalFile;
+        protected System.Windows.Forms.Button btnAddSubmittalFile;
         private System.Windows.Forms.Label lblHistory;   
        private void InitializeSubmittalsControls()
        {
@@ -31,6 +31,7 @@ namespace Concrete_Mix_Design_Tracker
             // btnAddSubmittalFile
             btnAddSubmittalFile.Text = "Add Submittal File";
             btnAddSubmittalFile.Anchor = AnchorStyles.Bottom;
+            btnAddSubmittalFile.Click += buttonEventHandler;
 
             // lblHistory
             lblHistory.Font = fntID;

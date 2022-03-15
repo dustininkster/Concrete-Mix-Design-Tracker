@@ -6,12 +6,12 @@ namespace Concrete_Mix_Design_Tracker
 {
     public partial class MainForm
     {
-       private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label lblName;
+        protected System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblSource;
-        private System.Windows.Forms.TextBox txtSource;
+        protected System.Windows.Forms.TextBox txtSource;
         private System.Windows.Forms.Label lblDensity;
-        private System.Windows.Forms.TextBox txtDensity;
+        protected System.Windows.Forms.TextBox txtDensity;
         private System.Windows.Forms.PictureBox pcMaterialImg;
         private System.Windows.Forms.Button btnAddMaterialsImg;
         private System.Windows.Forms.Button btnMaterialsImgLeft;
@@ -53,12 +53,13 @@ namespace Concrete_Mix_Design_Tracker
             lblDensity.Text = "Relative Density";
             lblDensity.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
 
-            txtDensity.Text = "Source Test";
+            txtDensity.Text = "Density Test";
             txtDensity.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
             txtDensity.Enabled = false;
 
             btnAddMaterialsImg.Text = "Add Image";
             btnAddMaterialsImg.Anchor = AnchorStyles.Bottom;
+            btnAddMaterialsImg.Click += buttonEventHandler;
 
             pcMaterialImg.Size = new System.Drawing.Size(spImagePropSplit[i].Panel1.Width, spImagePropSplit[i].Panel1.Height - btnAddMaterialsImg.Height - (IMG_PANEL_PADDING*2));
             pcMaterialImg.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
@@ -69,10 +70,12 @@ namespace Concrete_Mix_Design_Tracker
             btnMaterialsImgLeft.Text = "<";
             btnMaterialsImgLeft.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
             btnMaterialsImgLeft.Width = IMG_SELECT_BUTTON_SIZE;
+            btnMaterialsImgLeft.Click += buttonEventHandler;
 
             btnMaterialsImgRight.Text = ">";
             btnMaterialsImgRight.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
             btnMaterialsImgRight.Width = IMG_SELECT_BUTTON_SIZE;
+            btnMaterialsImgRight.Click += buttonEventHandler;
 
 
             // Locate everything

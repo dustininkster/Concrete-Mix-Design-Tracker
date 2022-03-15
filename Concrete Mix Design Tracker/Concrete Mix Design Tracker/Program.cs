@@ -15,9 +15,9 @@ namespace Concrete_Mix_Design_Tracker
         [STAThread]
         static void Main()
         {
-            main = new View();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            main = new View();
             Application.Run(main);
         }
     }

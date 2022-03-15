@@ -8,8 +8,8 @@ namespace Concrete_Mix_Design_Tracker
     {
   
         private System.Windows.Forms.Label lblNotes;
-        private System.Windows.Forms.TextBox txtNotes;
-        private System.Windows.Forms.RichTextBox rchTBPrototypeSummary;
+        protected System.Windows.Forms.TextBox txtNotes;
+        protected System.Windows.Forms.RichTextBox rchTBPrototypeSummary;
         private System.Windows.Forms.PictureBox pcTrialBatchImg;
         private System.Windows.Forms.Button btnAddTrialBatchImg;
         private System.Windows.Forms.Button btnTrialBatchImgRight;
@@ -40,6 +40,7 @@ namespace Concrete_Mix_Design_Tracker
 
             btnAddTrialBatchImg.Text = "Add Image";
             btnAddTrialBatchImg.Anchor = AnchorStyles.Bottom;
+            btnAddTrialBatchImg.Click += buttonEventHandler;
 
             pcTrialBatchImg.Size = new System.Drawing.Size(spImagePropSplit[i].Panel1.Height - btnAddMaterialsImg.Height - (IMG_PANEL_PADDING * 2), spImagePropSplit[i].Panel1.Width);
             pcTrialBatchImg.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
@@ -48,10 +49,12 @@ namespace Concrete_Mix_Design_Tracker
             btnTrialBatchImgLeft.Text = "<";
             btnTrialBatchImgLeft.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
             btnTrialBatchImgLeft.Width = IMG_SELECT_BUTTON_SIZE;
+            btnTrialBatchImgLeft.Click += buttonEventHandler;
 
             btnTrialBatchImgRight.Text = ">";
             btnTrialBatchImgRight.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
             btnTrialBatchImgRight.Width = IMG_SELECT_BUTTON_SIZE;
+            btnTrialBatchImgRight.Click += buttonEventHandler;
 
             // Locate everything
 

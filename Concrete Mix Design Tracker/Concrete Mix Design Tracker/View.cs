@@ -15,6 +15,15 @@ namespace Concrete_Mix_Design_Tracker
         {
          }
 
+
+        const byte
+            MATERIALS = 0,
+            PROTOTYPE = 1,
+            TRIAL_BATCH = 2,
+            SUBMITTAL = 3,
+            MIX_DESIGN = 4;
+
+
         /****************************************************************
          * This section has all of the output methods to each gui item  *
          ****************************************************************/
@@ -31,6 +40,11 @@ namespace Concrete_Mix_Design_Tracker
                 cbFilterSelect[tab].Items.Add(item);
         }
 
+        /// <summary>
+        /// Displays a list of strings in the listbox of a specific tab
+        /// </summary>
+        /// <param name="tab">tab in which to display the list</param>
+        /// <param name="listToDisplay">String list to display</string></param>
         public void DisplayInListBox(byte tab, List<string> listToDisplay)
         {
             lstItemSelect[tab].Items.Clear();
@@ -44,39 +58,128 @@ namespace Concrete_Mix_Design_Tracker
             dgProperties[tab].Update();
         }
 
+        /// <summary>
+        /// Freezes all the items on a specific tab
+        /// </summary>
+        /// <param name="tab">The tab to freeze</param>
         public void FreezeTab(byte tab)
         {
-            // for loop for all of the common controls
-            //switch for all of the specific controls
+            btnEditSave[tab].Text = "Edit";
+
+            switch (tab)
+            {
+                case MATERIALS:
+                    txtName.Enabled =
+                            txtSource.Enabled =
+                            txtDensity.Enabled = false;
+                    break;
+                case PROTOTYPE:
+                    udWcm.Enabled =
+                        btnWcmReset.Enabled =
+                        btnCopyPrototype.Enabled =
+                        btnCopyPrototype.Enabled =
+                        btnAddCement.Enabled =
+                        btnAddAggregate.Enabled =
+                        btnAddWater.Enabled =
+                        btnAddAdmixtures.Enabled = false;
+                    break;
+                case TRIAL_BATCH:
+                    txtNotes.Enabled =
+                       rchTBPrototypeSummary.Enabled = false; 
+                    break;
+                case SUBMITTAL:
+                    btnAddSubmittalFile.Enabled = false;
+                    break;
+                case MIX_DESIGN:
+                    break;
+
+            }
         }
-    
 
-        /************************************************
-         * This section has all of the event handlers   *
-         ************************************************/
-
-        private void View_Load(object sender, System.EventArgs e)
+        /// <summary>
+        /// Thaws all the items on a specific tab
+        /// </summary>
+        /// <param name="tab">The tab to thaw</param>
+        public void ThawTab(byte tab)
         {
+            btnEditSave[tab].Text = "Save";
+
+            switch (tab)
+            {
+                case MATERIALS:
+                    txtName.Enabled =
+                            txtSource.Enabled =
+                            txtDensity.Enabled = true;
+                    break;
+                case PROTOTYPE:
+                    udWcm.Enabled =
+                        btnWcmReset.Enabled =
+                        btnCopyPrototype.Enabled =
+                        btnCopyPrototype.Enabled =
+                        btnAddCement.Enabled =
+                        btnAddAggregate.Enabled =
+                        btnAddWater.Enabled =
+                        btnAddAdmixtures.Enabled = true;
+                    break;
+                case TRIAL_BATCH:
+                    txtNotes.Enabled =
+                       rchTBPrototypeSummary.Enabled = true;
+                    break;
+                case SUBMITTAL:
+                    btnAddSubmittalFile.Enabled = true;
+                    break;
+                case MIX_DESIGN:
+                    break;
+            }
         }
 
-        private void cbFilterSelect_SelectedIndexChanged(object sender, System.EventArgs e)
+        // Does this need to change to "display cements" or something?
+        // you could change it so that you send a parameter for what it gets and call this method for each type
+        public void DisplayMaterials(Dictionary<string,string> dictionaryOfMaterials)
         {
-        }
+            // This declaration is private and only for this scope
+            System.Windows.Forms.Label[] lblMaterialNames;
+            System.Windows.Forms.TextBox[] txtMaterialQtyOne;
+            System.Windows.Forms.Label[] lblUnitOfMeasureOne;
+            System.Windows.Forms.TextBox[] txtMaterialQtyTwo;
+            System.Windows.Forms.Label[] lblUnitOfMeasureTwo;
 
-        private void dgProperties_CurrentCellChanged(object sender, System.EventArgs e)
-        {
+            // Instantiate each array
+            lblMaterialNames = new System.Windows.Forms.Label[dictionaryOfMaterials.Count];
+            txtMaterialQtyOne = new System.Windows.Forms.TextBox[dictionaryOfMaterials.Count];
+            lblUnitOfMeasureOne = new System.Windows.Forms.Label[dictionaryOfMaterials.Count];
+            txtMaterialQtyTwo = new System.Windows.Forms.TextBox[dictionaryOfMaterials.Count];
+            lblUnitOfMeasureTwo = new System.Windows.Forms.Label[dictionaryOfMaterials.Count];
 
-        }
-        private void lstItemSelect_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
+            for (int i =0; i < dictionaryOfMaterials.Count; i++)
+            {
+                var material = dictionaryOfMaterials.ElementAt(i);
 
-        }
-        private void btnEditSave_Click(object sender, System.EventArgs e)
-        {
-        }
+                // Instantiate each element of the array
+                lblMaterialNames[i] = new System.Windows.Forms.Label();
+                txtMaterialQtyOne[i] = new System.Windows.Forms.TextBox();
+                lblUnitOfMeasureOne[i] = new System.Windows.Forms.Label();
+                txtMaterialQtyTwo[i] = new System.Windows.Forms.TextBox();
+                lblUnitOfMeasureTwo[i] = new System.Windows.Forms.Label();
 
-        private void btnAdvance_Click(object sender, System.EventArgs e)
-        {
+                // Set properties for each element
+                // lblMaterialNames
+                lblMaterialNames[i].Text = material.Key;
+
+                // continue going through each element and adding properties.
+
+                // location
+                // lay out each element line
+                // put them in the panel (make sure it's protected so you can see it)
+
+                // add everything
+
+
+
+
+                
+                
+            }
 
         }
     }
