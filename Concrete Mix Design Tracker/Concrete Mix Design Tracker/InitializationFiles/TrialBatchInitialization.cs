@@ -18,6 +18,7 @@ namespace Concrete_Mix_Design_Tracker
         {
             const int ROW_SPACING = 35;
             const int i = 2;
+            this.rchTBPrototypeSummary = new RichTextBox();
             this.lblNotes = new Label();
             this.txtNotes = new TextBox();
             this.pcTrialBatchImg = new PictureBox();
@@ -28,14 +29,19 @@ namespace Concrete_Mix_Design_Tracker
 
             //Properties
 
+            System.Drawing.Size size = new System.Drawing.Size(MAIN_PANEL2_SPLITTER_DISTANCE - (PANEL_PADDING * 2), spMainPanel2Split[i].Height/3);
             btnAdvance[i].Text = "Submit Results";
+
+            rchTBPrototypeSummary.Size = size;
+            rchTBPrototypeSummary.Anchor = (AnchorStyles.Left |  AnchorStyles.Right | AnchorStyles.Top);
+            rchTBPrototypeSummary.Enabled = false;
+
 
             lblNotes.Text = "Notes";
             lblNotes.Font = fntSectionHeader;
 
-            System.Drawing.Size size = new System.Drawing.Size(MAIN_PANEL2_SPLITTER_DISTANCE - (PANEL_PADDING * 2), spMainPanel2Split[i].Height/3);
             txtNotes.Multiline = true;
-            txtNotes.Anchor = (AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right| AnchorStyles.Top);
+            txtNotes.Anchor = (AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right|AnchorStyles.Top);
 
 
             btnAddTrialBatchImg.Text = "Add Image";
@@ -58,6 +64,8 @@ namespace Concrete_Mix_Design_Tracker
 
             // Locate everything
 
+            rchTBPrototypeSummary.Location = pntCurrentLocation;
+            pntCurrentLocation.Y += rchTBPrototypeSummary.Height + ROW_SPACING;
             lblNotes.Location = pntCurrentLocation;
             pntCurrentLocation.Y += ROW_SPACING;
             txtNotes.Location = pntCurrentLocation;
@@ -77,6 +85,7 @@ namespace Concrete_Mix_Design_Tracker
             spImagePropSplit[i].Panel1.Controls.Add(btnAddTrialBatchImg);
             spImagePropSplit[i].Panel1.Controls.Add(btnTrialBatchImgLeft);
             spImagePropSplit[i].Panel1.Controls.Add(btnTrialBatchImgRight);
+            spMainPanel2Split[i].Panel1.Controls.Add(rchTBPrototypeSummary);
             spMainPanel2Split[i].Panel1.Controls.Add(lblNotes);
             spMainPanel2Split[i].Panel1.Controls.Add(txtNotes);
         }

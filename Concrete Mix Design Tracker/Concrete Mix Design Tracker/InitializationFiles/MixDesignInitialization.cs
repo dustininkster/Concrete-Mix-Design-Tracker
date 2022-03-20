@@ -11,7 +11,6 @@ namespace Concrete_Mix_Design_Tracker
 
          private void InitializeMixDesignsControls()
         {
-            const int ROW_SPACING = 35;
             const int i = 4;
             this.lstMixFileList = new ListBox();
             this.rchMixPrototypeSummary = new RichTextBox();
@@ -40,6 +39,7 @@ namespace Concrete_Mix_Design_Tracker
                 AnchorStyles.Bottom |
                 AnchorStyles.Left |
                 AnchorStyles.Right);
+            rchMixPrototypeSummary.Enabled = false;
 
             // Locate everything
             rchMixPrototypeSummary.Location = pntCurrentLocation;

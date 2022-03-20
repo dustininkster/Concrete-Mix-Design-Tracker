@@ -11,7 +11,6 @@ namespace Concrete_Mix_Design_Tracker
         private System.Windows.Forms.Label lblHistory;   
        private void InitializeSubmittalsControls()
        {
-            const int ROW_SPACING = 35;
             const int i = 3;
             this.lstSubmittalFileList = new ListBox();
             this.btnAddSubmittalFile = new Button();

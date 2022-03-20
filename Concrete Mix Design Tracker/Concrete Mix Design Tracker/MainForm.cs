@@ -23,5 +23,18 @@ namespace Concrete_Mix_Design_Tracker
             InitializeMixDesignsControls();
         }
 
-    }
+         /// <summary>
+        /// Displays a list of items into the filter combobox on a specific tab
+        /// </summary>
+        /// <param name="tab">Tab in which to display filter data</param>
+        /// <param name="listToDisplay">List to display</param>
+        public void DisplayInFilterBox(byte tab, List<string> listToDisplay)
+        {
+            cbFilterSelect[tab].Items.Clear();
+            foreach (string item in listToDisplay)
+                cbFilterSelect[tab].Items.Add(item);
+
+        }
+
+   }
 }

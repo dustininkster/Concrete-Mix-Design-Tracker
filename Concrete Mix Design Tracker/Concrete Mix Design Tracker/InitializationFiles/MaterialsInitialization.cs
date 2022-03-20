@@ -12,20 +12,33 @@ namespace Concrete_Mix_Design_Tracker
         protected System.Windows.Forms.TextBox txtSource;
         private System.Windows.Forms.Label lblDensity;
         protected System.Windows.Forms.TextBox txtDensity;
+        private System.Windows.Forms.Label lblGrade;
+        protected System.Windows.Forms.TextBox txtGrade;
+        private System.Windows.Forms.Label lblType;
+        protected System.Windows.Forms.ComboBox cmbType;
+        protected System.Windows.Forms.Label lblAddMaterialToPrototype;
+        protected System.Windows.Forms.ListBox lstAddMaterialToPrototype;
+        protected System.Windows.Forms.Button btnAddMaterial;
         private System.Windows.Forms.PictureBox pcMaterialImg;
         private System.Windows.Forms.Button btnAddMaterialsImg;
         private System.Windows.Forms.Button btnMaterialsImgLeft;
         private System.Windows.Forms.Button btnMaterialsImgRight;
         private void InitializeMaterialsControls()
         {
-            const int ROW_SPACING = 35;
             const int i = 0;
             this.lblName = new Label();
             this.txtName = new TextBox();
             this.lblSource = new Label();
             this.txtSource = new TextBox();
+            this.lblGrade = new Label();
+            this.txtGrade = new TextBox();
             this.lblDensity = new Label();
             this.txtDensity = new TextBox();
+            this.lblType = new Label();
+            this.cmbType = new ComboBox();
+            this.lblAddMaterialToPrototype = new Label();
+            this.lstAddMaterialToPrototype = new ListBox();
+            this.btnAddMaterial = new Button();
             this.pcMaterialImg = new PictureBox();
             this.btnAddMaterialsImg = new Button();
             this.btnMaterialsImgLeft = new Button();
@@ -36,7 +49,7 @@ namespace Concrete_Mix_Design_Tracker
             // Properties
             btnAdvance[i].Text = "Add To";
 
-            lblName.Text = "Material Name";
+            lblName.Text = "Vendor Name";
             lblName.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
 
             txtName.Text = "Name Test";
@@ -50,12 +63,44 @@ namespace Concrete_Mix_Design_Tracker
             txtSource.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
             txtSource.Enabled = false;
 
+            lblGrade.Text = "Material Grade";
+            lblGrade.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
+
+            txtGrade.Text = "Grade Test";
+            txtGrade.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
+            txtGrade.Enabled = false;
+
+            lblType.Text = "Material Type";
+            lblType.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
+
+            cmbType.Text = "Type Test";
+            cmbType.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
+            cmbType.Items.Add("Cement");
+            cmbType.Items.Add("SCM");
+            cmbType.Items.Add("Coarse Aggregate");
+            cmbType.Items.Add("Fine Aggregate");
+            cmbType.Items.Add("Admixture");
+            cmbType.Enabled = false;
+
+            lblAddMaterialToPrototype.Text = "This text must be changed dynamically";
+            lblAddMaterialToPrototype.Width = MAIN_PANEL2_SPLITTER_DISTANCE;
+            lblAddMaterialToPrototype.Font = fntSectionHeader;
+            lblAddMaterialToPrototype.Visible = false;
+
+            lstAddMaterialToPrototype.Width = MAIN_PANEL2_SPLITTER_DISTANCE - (PANEL_PADDING *2);
+            lstAddMaterialToPrototype.Visible = false;
+            lstAddMaterialToPrototype.DoubleClick += lstAddToPrototypeDoubleClick;
+
             lblDensity.Text = "Relative Density";
             lblDensity.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
 
             txtDensity.Text = "Density Test";
             txtDensity.Width = MAIN_PANEL2_SPLITTER_DISTANCE / 3;
             txtDensity.Enabled = false;
+
+            btnAddMaterial.Text = "Add Material";
+            btnAddMaterial.Anchor = AnchorStyles.Bottom;
+            btnAddMaterial.Click += buttonEventHandler;
 
             btnAddMaterialsImg.Text = "Add Image";
             btnAddMaterialsImg.Anchor = AnchorStyles.Bottom;
@@ -92,11 +137,31 @@ namespace Concrete_Mix_Design_Tracker
             pntCurrentLocation.X = PANEL_PADDING;
             pntCurrentLocation.Y += ROW_SPACING;
 
+            lblGrade.Location = pntCurrentLocation;
+            pntCurrentLocation.X += lblGrade.Width + PANEL_PADDING;
+            txtGrade.Location = pntCurrentLocation;
+            pntCurrentLocation.X = PANEL_PADDING;
+            pntCurrentLocation.Y += ROW_SPACING;
+
+
             lblDensity.Location = pntCurrentLocation;
-            pntCurrentLocation.X += lblSource.Width + PANEL_PADDING;
+            pntCurrentLocation.X += lblDensity.Width + PANEL_PADDING;
             txtDensity.Location = pntCurrentLocation;
             pntCurrentLocation.X = PANEL_PADDING;
             pntCurrentLocation.Y += ROW_SPACING;
+
+            lblType.Location = pntCurrentLocation;
+            pntCurrentLocation.X += lblType.Width + PANEL_PADDING;
+            cmbType.Location = pntCurrentLocation;
+            pntCurrentLocation.X = PANEL_PADDING;
+            pntCurrentLocation.Y += ROW_SPACING;
+
+            lblAddMaterialToPrototype.Location = pntCurrentLocation;
+            pntCurrentLocation.X = PANEL_PADDING;
+            pntCurrentLocation.Y += ROW_SPACING;
+            lstAddMaterialToPrototype.Location = pntCurrentLocation;
+            
+
 
             pntCurrentLocation.X = (spImagePropSplit[i].Width - btnAddMaterialsImg.Width)/2;
             pntCurrentLocation.Y = spImagePropSplit[i].Panel1.Height - btnAddMaterialsImg.Height - IMG_PANEL_PADDING;
@@ -105,6 +170,10 @@ namespace Concrete_Mix_Design_Tracker
             btnMaterialsImgLeft.Location = pntCurrentLocation;
             pntCurrentLocation.X = spImagePropSplit[i].Panel1.Width - btnMaterialsImgRight.Width - IMG_PANEL_PADDING;
             btnMaterialsImgRight.Location = pntCurrentLocation;
+
+            pntCurrentLocation.X = btnAdvance[i].Location.X + btnAdvance[i].Width + PANEL_PADDING;
+            pntCurrentLocation.Y = btnAdvance[i].Location.Y;
+            btnAddMaterial.Location = pntCurrentLocation;
 
             // Put everything on the Materials form
             spImagePropSplit[i].Panel1.Controls.Add(pcMaterialImg);
@@ -115,8 +184,16 @@ namespace Concrete_Mix_Design_Tracker
             spMainPanel2Split[i].Panel1.Controls.Add(txtName);
             spMainPanel2Split[i].Panel1.Controls.Add(lblSource);
             spMainPanel2Split[i].Panel1.Controls.Add(txtSource);
+            spMainPanel2Split[i].Panel1.Controls.Add(lblGrade);
+            spMainPanel2Split[i].Panel1.Controls.Add(txtGrade);
             spMainPanel2Split[i].Panel1.Controls.Add(lblDensity);
             spMainPanel2Split[i].Panel1.Controls.Add(txtDensity);
+            spMainPanel2Split[i].Panel1.Controls.Add(lblType);
+            spMainPanel2Split[i].Panel1.Controls.Add(cmbType);
+            spMainPanel2Split[i].Panel1.Controls.Add(btnAddMaterial);
+            spMainPanel2Split[i].Panel1.Controls.Add(lblAddMaterialToPrototype);
+            spMainPanel2Split[i].Panel1.Controls.Add(lstAddMaterialToPrototype);
+
         }
 
 
