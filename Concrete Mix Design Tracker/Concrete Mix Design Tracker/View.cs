@@ -1,27 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Concrete_Mix_Design_Tracker
 {
-    class View : MainForm 
+    struct PrototypeInput
+    {
+        public string concreteClass;
+        public int WaterContent;
+        public List<MaterialField> CementQty;
+        public List<MaterialField> SCMQty;
+        public List<MaterialField> CAQty;
+        public List<MaterialField> FNQty;
+        public List<MaterialField> AdmixQty;
+        public bool IsAirEntrained;
+        public decimal TargetAir;
+    }
+    struct TrialBatchInput
+    {
+        public decimal Slump;
+        public decimal ActualAir;
+        public decimal FreshTemperature;
+        public decimal AmbientTemperature;
+        public decimal MeasuredUnitWeight;
+        public int CompressiveStrenigth;
+    }
+
+    //TODO: Need to encapsulate this better.
+    //What if you want to reuse this visual setup for something other than a concrete app?
+    
+    class View : MainForm
     {
         /// <summary>
         /// Constructor
         /// </summary>
         public View() : base()
         {
-         }
+        }
 
 
         const byte
             MATERIALS = 0,
             PROTOTYPE = 1,
             TRIAL_BATCH = 2,
-            SUBMITTAL = 3,
-            MIX_DESIGN = 4;
+            SUBMITTAL = 4,
+            MIX_DESIGN = 3;
+        Font printFont;
+        StreamReader streamToPrint;
 
 
         /****************************************************************
@@ -40,12 +71,17 @@ namespace Concrete_Mix_Design_Tracker
                 lstItemSelect[tab].Items.Add(item);
         }
 
+        /// <summary>
+        /// Displays a dictionary of items in the datagrid for Properties
+        /// </summary>
+        /// <param name="tab">The tab in which to display</param>
+        /// <param name="dicToDisplay">The Dictionary</param>
         public void DisplayProperties(byte tab, Dictionary<string, string> dicToDisplay)
         {
             dgProperties[tab].Rows.Clear();
             foreach (var item in dicToDisplay)
             {
-                dgProperties[tab].Rows.Add( item.Key, item.Value);
+                dgProperties[tab].Rows.Add(item.Key, item.Value);
             }
         }
 
@@ -61,6 +97,9 @@ namespace Concrete_Mix_Design_Tracker
             dgProperties[tab].Enabled = false;
             btnEditSave[tab].Enabled = true;
             btnAddMaterial.Enabled = true;
+            btnAdvance[tab].Enabled = true;
+            lblAddMaterialToPrototype.Visible = false;
+            udWcm.Visible = true;
 
             switch (tab)
             {
@@ -72,7 +111,7 @@ namespace Concrete_Mix_Design_Tracker
                     break;
                 case PROTOTYPE:
                     udWcm.Enabled = false;
-                    for (int i = pnProportionPanel.Controls.Count-1; i >= 0; i--)
+                    for (int i = pnProportionPanel.Controls.Count - 1; i >= 0; i--)
                     {
                         if (pnProportionPanel.Controls[i] is System.Windows.Forms.TextBox)
                             pnProportionPanel.Controls[i].Enabled = false;
@@ -82,7 +121,6 @@ namespace Concrete_Mix_Design_Tracker
                     txtNotes.Enabled = false;
                     break;
                 case SUBMITTAL:
-                    btnAddSubmittalFile.Enabled = false;
                     break;
                 case MIX_DESIGN:
                     break;
@@ -105,6 +143,9 @@ namespace Concrete_Mix_Design_Tracker
             btnAddMaterial.Enabled = false;
             lstAddMaterialToPrototype.Visible = false;
             lstItemSelect[MATERIALS].SelectedIndex = lstItemSelect[MATERIALS].SelectedIndex;
+            lblAddMaterialToPrototype.Visible = false;
+            udWcm.Visible = true;
+            lstConcreteClassSelect.Visible = false;
 
             switch (tab)
             {
@@ -118,17 +159,16 @@ namespace Concrete_Mix_Design_Tracker
                     break;
                 case PROTOTYPE:
                     udWcm.Enabled = false;
-                    for (int i = pnProportionPanel.Controls.Count-1; i >= 0; i--)
+                    for (int i = pnProportionPanel.Controls.Count - 1; i >= 0; i--)
                     {
                         if (pnProportionPanel.Controls[i] is System.Windows.Forms.TextBox)
                             pnProportionPanel.Controls[i].Enabled = true;
                     }
                     break;
                 case TRIAL_BATCH:
-                    txtNotes.Enabled = false;
+                    txtNotes.Enabled = true;
                     break;
                 case SUBMITTAL:
-                    btnAddSubmittalFile.Enabled = true;
                     break;
                 case MIX_DESIGN:
                     break;
@@ -151,7 +191,7 @@ namespace Concrete_Mix_Design_Tracker
         {
             byte totalMaterialCount = (byte)(cementList.Count + scmList.Count + caList.Count + fnList.Count + admixList.Count);
             const int PADDING = 5;
-            const int NAME_LABEL_WIDTH = 100;
+            const int NAME_LABEL_WIDTH = 150;
             const int TXT1_LABEL_WIDTH = 80;
             const int QTY1_LABEL_WIDTH = 60;
             const int TXT2_LABEL_WIDTH = 80;
@@ -195,6 +235,7 @@ namespace Concrete_Mix_Design_Tracker
             lblCementHeader.Location = location;
             for (int i = 0; i < cementList.Count; i++)
             {
+                Console.WriteLine("i = " + i);
 
                 // Instantiate each element of the array
                 lblMaterialNames[i] = new System.Windows.Forms.Label();
@@ -203,7 +244,7 @@ namespace Concrete_Mix_Design_Tracker
                 txtMaterialQtyTwo[i] = new System.Windows.Forms.TextBox();
                 lblUnitOfMeasureTwo[i] = new System.Windows.Forms.Label();
 
-                lblMaterialNames[i].Text = cementList[i].Name;
+                lblMaterialNames[i].Text = cementList[i].Name ;
                 txtMaterialQtyOne[i].Text = cementList[i].QuantityOne;
                 lblUnitOfMeasureOne[i].Text = "lbs";
                 txtMaterialQtyTwo[i].Text = string.Format("{0:F2}", Convert.ToDecimal(cementList[i].QuantityTwo));
@@ -240,13 +281,15 @@ namespace Concrete_Mix_Design_Tracker
                 pnProportionPanel.Controls.Add(lblUnitOfMeasureTwo[i]);
             }
 
-            byte index = (byte)cementList.Count;
+            int index = cementList.Count-1;
             location.Y += ROW_SPACING;
             location.X = PADDING;
             lblSCMHeader.Location = location;
-            for (byte i =0; i < scmList.Count; i++)
+            for (byte i = 0; i < scmList.Count; i++)
             {
-                index += i;
+                index ++;
+
+                Console.WriteLine("index = " + index);
 
                 // Instantiate each element of the array
                 lblMaterialNames[index] = new System.Windows.Forms.Label();
@@ -296,10 +339,11 @@ namespace Concrete_Mix_Design_Tracker
             location.Y += ROW_SPACING;
             location.X = PADDING;
             lblCAHeader.Location = location;
-            for (byte i =0; i < caList.Count; i++)
+            for (byte i = 0; i < caList.Count; i++)
             {
-                index += i;
+                index ++;
 
+                Console.WriteLine("index = " + index);
                 // Instantiate each element of the array
                 lblMaterialNames[index] = new System.Windows.Forms.Label();
                 txtMaterialQtyOne[index] = new System.Windows.Forms.TextBox();
@@ -348,10 +392,11 @@ namespace Concrete_Mix_Design_Tracker
             location.Y += ROW_SPACING;
             location.X = PADDING;
             lblFNHeader.Location = location;
-            for (byte i =0; i < fnList.Count; i++)
+            for (byte i = 0; i < fnList.Count; i++)
             {
-                index += i;
+                index ++;
 
+                Console.WriteLine("index = " + index);
                 // Instantiate each element of the array
                 lblMaterialNames[index] = new System.Windows.Forms.Label();
                 txtMaterialQtyOne[index] = new System.Windows.Forms.TextBox();
@@ -361,6 +406,7 @@ namespace Concrete_Mix_Design_Tracker
 
                 lblMaterialNames[index].Text = fnList[i].Name;
                 txtMaterialQtyOne[index].Text = fnList[i].QuantityOne;
+                Console.WriteLine(index + " " + fnList[i].QuantityOne);
                 lblUnitOfMeasureOne[index].Text = "lbs";
                 txtMaterialQtyTwo[index].Text = string.Format("{0:F2}", Convert.ToDecimal(fnList[i].QuantityTwo));
                 lblUnitOfMeasureTwo[index].Text = "cubic feet";
@@ -400,9 +446,9 @@ namespace Concrete_Mix_Design_Tracker
             location.Y += ROW_SPACING;
             location.X = PADDING;
             lblAdmixHeader.Location = location;
-            for (byte i =0; i < admixList.Count; i++)
+            for (byte i = 0; i < admixList.Count; i++)
             {
-                index += i;
+                index ++;
 
                 // Instantiate each element of the array
                 lblMaterialNames[index] = new System.Windows.Forms.Label();
@@ -449,6 +495,7 @@ namespace Concrete_Mix_Design_Tracker
 
             }
 
+                Console.WriteLine("index = " + index);
             pnProportionPanel.Controls.Add(lblCementHeader);
             pnProportionPanel.Controls.Add(lblSCMHeader);
             pnProportionPanel.Controls.Add(lblCAHeader);
@@ -467,7 +514,7 @@ namespace Concrete_Mix_Design_Tracker
         }
         public void ClearPrototypePanel()
         {
-            for(int i = pnProportionPanel.Controls.Count-1; i >= 0; i--)
+            for (int i = pnProportionPanel.Controls.Count - 1; i >= 0; i--)
             {
                 System.Windows.Forms.Control control = pnProportionPanel.Controls[i];
                 if (control is System.Windows.Forms.TextBox)
@@ -481,7 +528,7 @@ namespace Concrete_Mix_Design_Tracker
             }
         }
 
-        public void DisplayMaterialInfo(string name, string source, string grade, decimal density, byte type)
+        public void DisplayMaterialInfo(string name, string source, string grade, decimal density, int type)
         {
             txtName.Text = name;
             txtSource.Text = source;
@@ -490,10 +537,120 @@ namespace Concrete_Mix_Design_Tracker
             cmbType.SelectedIndex = type;
         }
 
-        public void DisplayTrialBatchSummary(string summary)
+        public void DisplaySummary(
+            int tab,
+            string prototypeName,
+            Dictionary<string, string> properties,
+            List<MaterialField> cements,
+            List<MaterialField> scms,
+            List<MaterialField> cas,
+            List<MaterialField> fns,
+            List<MaterialField> admixs,
+            int totalCementitious,
+            decimal wcmRatio,
+            int waterContent,
+            string trialBatchName = "",
+            string submittalName = "")
         {
-            rchTBPrototypeSummary.Text = summary;
+            System.Windows.Forms.RichTextBox richTextBox;
+            if (tab == TRIAL_BATCH)
+                richTextBox = rchTBPrototypeSummary;
+            else
+                richTextBox = rchMixPrototypeSummary;
+            const string newLine = "\r\n";
+            Dictionary<string, List<MaterialField>> dicMaterialsLists = new Dictionary<string, List<MaterialField>>();
+            dicMaterialsLists.Add("Cements:", cements);
+            dicMaterialsLists.Add("Supplementary Cementitious Materials:", scms);
+            dicMaterialsLists.Add("Coarse Aggregates:", cas);
+            dicMaterialsLists.Add("Fine Aggregates", fns);
+            dicMaterialsLists.Add("Admixtures:", admixs);
+            dicMaterialsLists.Add("Water:", new List<MaterialField>());
+            dicMaterialsLists["Water:"].Add(new MaterialField {
+                Name = "Water",
+                QuantityOne = waterContent.ToString(),
+                QuantityTwo = string.Format("{0:###.##}", waterContent / 8.33) });
+
+            // Set up formatting
+            int titleFontSize = (richTextBox.Width / 150) + 5;
+            System.Drawing.Font titleFont = new System.Drawing.Font("Courier Sans", titleFontSize);
+
+            int headerFontSize = (richTextBox.Width / 155) + 5;
+            System.Drawing.Font headerFont = new System.Drawing.Font("Courier Sans", headerFontSize, System.Drawing.FontStyle.Underline);
+
+            int normalFontSize = (richTextBox.Width / 170) + 5;
+            System.Drawing.Font localNormalFont = new System.Drawing.Font("Courier New", normalFontSize);
+
+
+            richTextBox.Text = prototypeName;
+            richTextBox.Text += newLine;
+            if (tab == MIX_DESIGN)
+            {
+                richTextBox.Text += trialBatchName + newLine;
+                richTextBox.Text += submittalName + newLine;
+            }
+            richTextBox.Text += string.Format("W/CM Ratio: {0:F2}{1}", wcmRatio, newLine);
+            richTextBox.Text += newLine;
+
+
+            string unitsOne = "lbs";
+            string unitsTwo = "cuft";
+            foreach (var list in dicMaterialsLists)
+            {
+                richTextBox.Text += list.Key;
+                richTextBox.Text += newLine;
+
+                unitsOne = "lbs";
+                unitsTwo = "cuft";
+                if (list.Key == "Admixtures:")
+                {
+                    unitsOne = "oz/cwt";
+                    unitsTwo = "oz/yd";
+                }
+                else if (list.Key == "Water:")
+                    unitsTwo = "gallons";
+                foreach (var item in list.Value)
+                {
+                    richTextBox.Text += string.Format("{0, -25}{1, -5}{2,-7}{3,-6}{4,-7}", item.Name, item.QuantityOne, unitsOne, item.QuantityTwo, unitsTwo);
+                    richTextBox.Text += newLine;
+                }
+                richTextBox.Text += newLine;
+            }
+
+            for (int x = 0; x < 54; x++)
+                richTextBox.Text += "-";
+            richTextBox.Text += newLine;
+            // Add the props
+            foreach (var property in properties)
+            {
+                richTextBox.Text += string.Format("{0}: {1}", property.Key, property.Value);
+                richTextBox.Text += newLine;
+            }
+            richTextBox.Text += string.Format("Total Cementitious Content: {0}", totalCementitious);
+
+            richTextBox.Font = localNormalFont;
+
+            richTextBox.SelectionStart = 0;
+            if (tab == TRIAL_BATCH)
+                richTextBox.SelectionLength = prototypeName.Length;
+            else
+                richTextBox.SelectionLength = prototypeName.Length + newLine.Length +
+                    trialBatchName.Length + newLine.Length + submittalName.Length - 1;
+            richTextBox.SelectionFont = titleFont;
+
+            foreach (var list in dicMaterialsLists)
+            {
+                richTextBox.Find(list.Key, System.Windows.Forms.RichTextBoxFinds.MatchCase);
+                richTextBox.SelectionFont = headerFont;
+            }
+
+
         }
+
+        public string GetRTBSummary()
+        {
+            return rchMixPrototypeSummary.Text;
+        }
+
         public string GetEnteredMaterialVendor()
         {
             string returnValue;
@@ -522,9 +679,9 @@ namespace Concrete_Mix_Design_Tracker
         {
             return (byte)cmbType.SelectedIndex;
         }
-        public byte GetSelectedMaterialID()
+        public byte GetSelectedID(byte tab)
         {
-            return byte.Parse(lstItemSelect[MATERIALS].Text.Substring(0,3));
+            return byte.Parse(lstItemSelect[tab].Text.Substring(0, 3));
         }
 
         public Dictionary<string, string> GetEnteredProperties()
@@ -551,7 +708,7 @@ namespace Concrete_Mix_Design_Tracker
                 txtSource.Text =
                 txtDensity.Text =
                 txtGrade.Text = "";
-                dgProperties[i].Rows.Clear();
+            dgProperties[i].Rows.Clear();
 
             btnAddMaterial.Text = "Accept Type";
             cmbType.Enabled = true;
@@ -593,7 +750,7 @@ namespace Concrete_Mix_Design_Tracker
                 lstAddMaterialToPrototype.Items.Add(item);
             }
         }
-        public void OpenTab(byte tab)
+        public void OpenTab(int tab)
         {
             tbSelectionTabs.SelectedIndex = tab;
         }
@@ -601,10 +758,185 @@ namespace Concrete_Mix_Design_Tracker
         {
             lstItemSelect[PROTOTYPE].Enabled = false;
             cbFilterSelect[PROTOTYPE].Enabled = false;
+            btnEditSave[PROTOTYPE].Enabled =
+                btnAdvance[PROTOTYPE].Enabled =
+                btnCopyPrototype.Enabled = false;
             lblIDDisplay[PROTOTYPE].Text = "Select Concrete Class for New Prototype";
             udWcm.Value = 0;
             ClearPrototypePanel();
             lstConcreteClassSelect.Visible = true;
+        }
+
+        public void PrintMixDesign()
+        {
+            // Save the contents of the rich textbox to a file
+            StreamWriter outputfile;
+            outputfile = File.CreateText("printSummary.txt");
+            foreach (var line in rchMixPrototypeSummary.Lines)
+                outputfile.WriteLine(line);
+            outputfile.Close();
+
+            // Now we print the file
+            try
+            {
+                streamToPrint = new StreamReader("printSummary.txt");
+                try
+                {
+                    printFont = new Font("Courier New", 10);
+                    PrintDocument pd = new PrintDocument();
+                    pd.PrintPage += new PrintPageEventHandler
+                        (this.pd_PrintPage);
+                    pd.Print();
+                }
+                finally
+                {
+                    streamToPrint.Close();
+                }
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// Event for printing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="ev"></param>
+        private void pd_PrintPage(object sender, PrintPageEventArgs ev)
+        {
+            float linesPerPage = 0;
+            float yPos = 0;
+            int count = 0;
+            float leftMargin = ev.MarginBounds.Left;
+            float topMargin = ev.MarginBounds.Top;
+            string line = null;
+
+            // Calculate the number of lines per page.
+            linesPerPage = ev.MarginBounds.Height /
+               printFont.GetHeight(ev.Graphics);
+
+            // Print each line of the file.
+            while (count < linesPerPage &&
+               ((line = streamToPrint.ReadLine()) != null))
+            {
+                yPos = topMargin + (count *
+                   printFont.GetHeight(ev.Graphics));
+                ev.Graphics.DrawString(line, printFont, Brushes.Black,
+                   leftMargin, yPos, new StringFormat());
+                count++;
+            }
+
+            // If more lines exist, print another page.
+            if (line != null)
+                ev.HasMorePages = true;
+            else
+                ev.HasMorePages = false;
+            }
+
+        public PrototypeInput GetPrototypeInput(
+            List<MaterialField> cementList,
+            List<MaterialField> scmList,
+            List<MaterialField> caList,
+            List<MaterialField> fnList,
+            List<MaterialField> admixList)
+        {
+            PrototypeInput returnPI = new PrototypeInput();
+            returnPI.CementQty = new List<MaterialField>();
+            returnPI.SCMQty = new List<MaterialField>();
+            returnPI.CAQty = new List<MaterialField>();
+            returnPI.FNQty = new List<MaterialField>();
+            returnPI.AdmixQty = new List<MaterialField>();
+
+
+            int i= 0;
+            int accumulator = 0;
+            int newCementTotal = 0;
+            for (; i < cementList.Count ; i++)
+            {
+                returnPI.CementQty.Add(new MaterialField
+                {
+                    MaterialType = cementList[i].MaterialType,
+                    Material_ID = cementList[i].Material_ID,
+                    Name = cementList[i].Name,
+                    QuantityOne = txtMaterialQtyOne[i].Text,
+                    QuantityTwo = ""
+                });
+                newCementTotal += Int32.Parse(txtMaterialQtyOne[i].Text);
+
+            }
+            accumulator = i;
+            for (;i < scmList.Count + accumulator ; i++)
+            {
+                returnPI.SCMQty.Add(new MaterialField
+                {
+                    MaterialType = scmList[i-accumulator].MaterialType,
+                    Material_ID = scmList[i-accumulator].Material_ID,
+                    Name = scmList[i-accumulator].Name,
+                    QuantityOne = txtMaterialQtyOne[i].Text,
+                    QuantityTwo = ""
+                });
+
+                //newCementTotal += Int32.Parse(txtMaterialQtyOne[i].Text);
+            }
+            accumulator = i;
+            for(;i < caList.Count + accumulator; i++)
+            {
+                returnPI.CAQty.Add(new MaterialField
+                {
+                    MaterialType = caList[i-accumulator].MaterialType,
+                    Material_ID = caList[i-accumulator].Material_ID,
+                    Name = caList[i-accumulator].Name,
+                    QuantityOne = txtMaterialQtyOne[i].Text,
+                    QuantityTwo = ""
+                });
+
+
+            }
+            accumulator = i;
+            for (;i < fnList.Count + accumulator; i++)
+            {
+                returnPI.FNQty.Add(new MaterialField
+                {
+                    MaterialType = fnList[i-accumulator].MaterialType,
+                    Material_ID = fnList[i-accumulator].Material_ID,
+                    Name = fnList[i-accumulator].Name,
+                    QuantityOne = txtMaterialQtyOne[i].Text,
+                    QuantityTwo = ""
+                });
+            }
+            accumulator = i;
+            for (;i < admixList.Count + accumulator; i++)
+            {
+                returnPI.AdmixQty.Add(new MaterialField
+                {
+                    MaterialType = admixList[i-accumulator].MaterialType,
+                    Material_ID = admixList[i-accumulator].Material_ID,
+                    Name = admixList[i-accumulator].Name,
+                    QuantityOne = txtMaterialQtyOne[i].Text,
+                    QuantityTwo = ""
+                });
+
+            }
+
+            returnPI.WaterContent = (int)(newCementTotal * udWcm.Value);
+            returnPI.concreteClass = dgProperties[PROTOTYPE].Rows[0].Cells[1].Value.ToString();
+            returnPI.IsAirEntrained = bool.Parse(dgProperties[PROTOTYPE].Rows[1].Cells[1].Value.ToString());
+            returnPI.TargetAir = decimal.Parse(dgProperties[PROTOTYPE].Rows[2].Cells[1].Value.ToString());
+            return returnPI;
+        }
+
+        public TrialBatchInput GetTrialBatchInput()
+        {
+            TrialBatchInput returnTBI = new TrialBatchInput();
+            returnTBI.Slump = (decimal)dgProperties[TRIAL_BATCH].Rows[0].Cells[1].Value;
+            returnTBI.ActualAir = (decimal)dgProperties[TRIAL_BATCH].Rows[1].Cells[1].Value;
+            returnTBI.FreshTemperature = (int)dgProperties[TRIAL_BATCH].Rows[2].Cells[1].Value;
+            returnTBI.AmbientTemperature = (int)dgProperties[TRIAL_BATCH].Rows[3].Cells[1].Value;
+            returnTBI.MeasuredUnitWeight = (decimal)dgProperties[TRIAL_BATCH].Rows[4].Cells[1].Value;
+            returnTBI.CompressiveStrenigth = (int)dgProperties[TRIAL_BATCH].Rows[5].Cells[1].Value;
+            return returnTBI;
         }
     }
 }

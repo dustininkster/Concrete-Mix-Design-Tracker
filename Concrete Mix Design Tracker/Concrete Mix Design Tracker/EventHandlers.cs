@@ -10,8 +10,8 @@ namespace Concrete_Mix_Design_Tracker
             MATERIALS = 0,
             PROTOTYPES = 1,
             TRIAL_BATCHES = 2,
-            SUBMITTALS = 3,
-            MIX_DESIGNS = 4;
+            SUBMITTALS = 4,
+            MIX_DESIGNS = 3;
 
         /************************************************
          * This section has all of the event handlers   *
@@ -36,8 +36,11 @@ namespace Concrete_Mix_Design_Tracker
                     Controller.Save(tab, id);
                     break;
                 case "Copy":
-                    Controller.CopyPrototype();
+                    tab = PROTOTYPES;
+                    id = byte.Parse(lstItemSelect[tab].Text.Substring(0, 3));
+                    Controller.CopyPrototype(id);
                     break;
+                    /*
                 case ">":
                     if (buttonClicked.Name == "btnMaterialsImgRight")
                         Controller.NextImage(MATERIALS);
@@ -59,6 +62,7 @@ namespace Concrete_Mix_Design_Tracker
                 case "Add":
                     Controller.AddFile();
                     break;
+                    /**/
                 case "Add Material":
                     Controller.NewMaterialSelect();
                     break;
@@ -66,8 +70,15 @@ namespace Concrete_Mix_Design_Tracker
                     Controller.NewMaterial();
                     break;
                 case "Add To":
+                case "Trial Batch":
+                case "Submit":
+                case "Approved":
                     tab = (byte)Array.IndexOf(btnAdvance, buttonClicked);
-                    Controller.Advance(tab);
+                    id = byte.Parse(lstItemSelect[tab].Text.Substring(0, 3));
+                    Controller.Advance(tab, id);
+                    break;
+                case "Print":
+                    Program.main.PrintMixDesign();
                     break;
             }    
 
@@ -102,7 +113,7 @@ namespace Concrete_Mix_Design_Tracker
                     Controller.TrialBatchSelectionChanged(lstItemSelect[index].Text);
                     break;
                 case SUBMITTALS:
-                    Controller.SubmittalSelectionChanged(lstItemSelect[index].Text);
+                    /*Controller.SubmittalSelectionChanged(lstItemSelect[index].Text);/**/
                     break;
                 case MIX_DESIGNS:
                     Controller.MixDesignSelectionChanged(lstItemSelect[index].Text);
@@ -145,6 +156,11 @@ namespace Concrete_Mix_Design_Tracker
             if (lb.Text == "")
                 return;
             Controller.PrototypeSelectedForMaterialAdd(lstAddMaterialToPrototype.Text);
+        }
+        private void lstConcreteClassSelected(object sender, System.EventArgs e)
+        {
+            ListBox lst = (ListBox)sender;
+            Controller.ClassSelectedForPrototypeAdd(lst.Text);
         }
     }
 }

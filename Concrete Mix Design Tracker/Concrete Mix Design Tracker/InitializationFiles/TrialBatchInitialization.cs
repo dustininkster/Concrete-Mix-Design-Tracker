@@ -8,12 +8,9 @@ namespace Concrete_Mix_Design_Tracker
     {
   
         private System.Windows.Forms.Label lblNotes;
+        private System.Windows.Forms.SplitContainer spTrial;
         protected System.Windows.Forms.TextBox txtNotes;
         protected System.Windows.Forms.RichTextBox rchTBPrototypeSummary;
-        private System.Windows.Forms.PictureBox pcTrialBatchImg;
-        private System.Windows.Forms.Button btnAddTrialBatchImg;
-        private System.Windows.Forms.Button btnTrialBatchImgRight;
-        private System.Windows.Forms.Button btnTrialBatchImgLeft;
         private void InitializeTrialBatchesControls()
         {
             const int ROW_SPACING = 35;
@@ -21,73 +18,55 @@ namespace Concrete_Mix_Design_Tracker
             this.rchTBPrototypeSummary = new RichTextBox();
             this.lblNotes = new Label();
             this.txtNotes = new TextBox();
-            this.pcTrialBatchImg = new PictureBox();
-            this.btnAddTrialBatchImg = new Button();
-            this.btnTrialBatchImgLeft = new Button();
-            this.btnTrialBatchImgRight = new Button();
+            this.spTrial = new SplitContainer();
             System.Drawing.Point pntCurrentLocation = new System.Drawing.Point(PANEL_PADDING, PANEL_PADDING + lblIDDisplay[i].Height + ROW_SPACING);
+            const int normalFontSize = 10;
 
             //Properties
 
-            System.Drawing.Size size = new System.Drawing.Size(MAIN_PANEL2_SPLITTER_DISTANCE - (PANEL_PADDING * 2), spMainPanel2Split[i].Height/3);
-            btnAdvance[i].Text = "Submit Results";
+            btnAdvance[i].Text = "Approved";
 
-            rchTBPrototypeSummary.Size = size;
-            rchTBPrototypeSummary.Anchor = (AnchorStyles.Left |  AnchorStyles.Right | AnchorStyles.Top);
-            rchTBPrototypeSummary.Enabled = false;
+            spTrial.Dock = DockStyle.Fill;
+            spTrial.TabStop = false;
+            spTrial.Orientation = Orientation.Horizontal;
+            spTrial.BorderStyle = BorderStyle.Fixed3D;
+
+            rchTBPrototypeSummary.Width = (int)(MAIN_PANEL2_SPLITTER_DISTANCE - (PANEL_PADDING * 2));
+            rchTBPrototypeSummary.Height = 200 - lblName.Height -(ROW_SPACING*2);
+            rchTBPrototypeSummary.Anchor = (AnchorStyles.Left |  AnchorStyles.Right | AnchorStyles.Top|AnchorStyles.Bottom);
+            rchTBPrototypeSummary.ReadOnly = true;
+            rchTBPrototypeSummary.Font = normalFont;
+            rchTBPrototypeSummary.WordWrap = false;
 
 
             lblNotes.Text = "Notes";
             lblNotes.Font = fntSectionHeader;
+            lblNotes.Anchor = (AnchorStyles.Left|AnchorStyles.Top);
 
             txtNotes.Multiline = true;
+            txtNotes.Width = (int)(MAIN_PANEL2_SPLITTER_DISTANCE - (PANEL_PADDING * 2));
+            txtNotes.Height = 300 - lblNotes.Height - btnEditSave[i].Height - (ROW_SPACING*4);
             txtNotes.Anchor = (AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right|AnchorStyles.Top);
+            txtNotes.Enabled = false;
 
-
-            btnAddTrialBatchImg.Text = "Add Image";
-            btnAddTrialBatchImg.Anchor = AnchorStyles.Bottom;
-            btnAddTrialBatchImg.Click += buttonEventHandler;
-
-            pcTrialBatchImg.Size = new System.Drawing.Size(spImagePropSplit[i].Panel1.Height - btnAddMaterialsImg.Height - (IMG_PANEL_PADDING * 2), spImagePropSplit[i].Panel1.Width);
-            pcTrialBatchImg.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
-            pcTrialBatchImg.SizeMode = PictureBoxSizeMode.CenterImage;
-
-            btnTrialBatchImgLeft.Text = "<";
-            btnTrialBatchImgLeft.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
-            btnTrialBatchImgLeft.Width = IMG_SELECT_BUTTON_SIZE;
-            btnTrialBatchImgLeft.Click += buttonEventHandler;
-
-            btnTrialBatchImgRight.Text = ">";
-            btnTrialBatchImgRight.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-            btnTrialBatchImgRight.Width = IMG_SELECT_BUTTON_SIZE;
-            btnTrialBatchImgRight.Click += buttonEventHandler;
 
             // Locate everything
 
             rchTBPrototypeSummary.Location = pntCurrentLocation;
-            pntCurrentLocation.Y += rchTBPrototypeSummary.Height + ROW_SPACING;
+            pntCurrentLocation.Y = 0;
+            pntCurrentLocation.X = PANEL_PADDING;
             lblNotes.Location = pntCurrentLocation;
             pntCurrentLocation.Y += ROW_SPACING;
             txtNotes.Location = pntCurrentLocation;
-            txtNotes.Size = new System.Drawing.Size(
+            /*txtNotes.Size = new System.Drawing.Size(
                 MAIN_PANEL2_SPLITTER_DISTANCE - (PANEL_PADDING * 2),
                 spMainPanel2Split[i].Height - pntCurrentLocation.Y - btnEditSave[i].Height - (PANEL_PADDING*2));
+            */
 
-            pntCurrentLocation.X = (spImagePropSplit[i].Width - btnAddTrialBatchImg.Width)/2;
-            pntCurrentLocation.Y = spImagePropSplit[i].Panel1.Height - btnAddTrialBatchImg.Height - IMG_PANEL_PADDING;
-            btnAddTrialBatchImg.Location = pntCurrentLocation;
-            pntCurrentLocation.X = IMG_PANEL_PADDING;
-            btnTrialBatchImgLeft.Location = pntCurrentLocation;
-            pntCurrentLocation.X = spImagePropSplit[i].Panel1.Width - btnTrialBatchImgRight.Width - IMG_PANEL_PADDING;
-            btnTrialBatchImgRight.Location = pntCurrentLocation;
-
-            spImagePropSplit[i].Panel1.Controls.Add(pcTrialBatchImg);
-            spImagePropSplit[i].Panel1.Controls.Add(btnAddTrialBatchImg);
-            spImagePropSplit[i].Panel1.Controls.Add(btnTrialBatchImgLeft);
-            spImagePropSplit[i].Panel1.Controls.Add(btnTrialBatchImgRight);
-            spMainPanel2Split[i].Panel1.Controls.Add(rchTBPrototypeSummary);
-            spMainPanel2Split[i].Panel1.Controls.Add(lblNotes);
-            spMainPanel2Split[i].Panel1.Controls.Add(txtNotes);
+            spMainPanel2Split[i].Panel1.Controls.Add(spTrial);
+            spTrial.Panel1.Controls.Add(rchTBPrototypeSummary);
+            spTrial.Panel2.Controls.Add(lblNotes);
+            spTrial.Panel2.Controls.Add(txtNotes);
         }
 
     }

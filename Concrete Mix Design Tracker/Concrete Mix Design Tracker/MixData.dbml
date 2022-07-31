@@ -1,22 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MixData" Class="MixDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\MixData.mdf;Integrated Security=True" SettingsObjectName="Concrete_Mix_Design_Tracker.Properties.Settings" SettingsPropertyName="MixDataConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Trial_Batches" Member="Trial_Batches">
+    <Type Name="Trial_Batch">
+      <Column Name="TB_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TB_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Slump" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="Actual_Air" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="Concrete_Temperature" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Ambient_Temperature" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Measured_Density" Type="System.Decimal" DbType="Decimal(4,1)" CanBeNull="true" />
+      <Column Name="Compressive_Strength" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TB_Serial" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Trial_Batch_Submittal" Member="Submittals" ThisKey="TB_ID" OtherKey="TB_ID" Type="Submittal" />
+      <Association Name="Prototype_Trial_Batch" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Submittals" Member="Submittals">
     <Type Name="Submittal">
-      <Column Name="Submittal_ID" Type="System.Byte" DbType="TinyInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Owner_Number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="TB_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="TB_Name" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Submittal_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Owner_Number" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TB_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Submittal_Mix_Design" Member="Mix_Designs" ThisKey="Submittal_ID" OtherKey="Submittal_ID" Type="Mix_Design" />
-      <Association Name="Prototype_Submittal" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
       <Association Name="Trial_Batch_Submittal" Member="Trial_Batch" ThisKey="TB_ID" OtherKey="TB_ID" Type="Trial_Batch" IsForeignKey="true" />
+      <Association Name="Prototype_Submittal" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Mix_Designs" Member="Mix_Designs">
+    <Type Name="Mix_Design">
+      <Column Name="Mix_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Mix_Name" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Submittal_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mix_Serial" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="Submittal_Mix_Design" Member="Submittal" ThisKey="Submittal_ID" OtherKey="Submittal_ID" Type="Submittal" IsForeignKey="true" />
+      <Association Name="Prototype_Mix_Design" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Prototypes" Member="Prototypes">
+    <Type Name="Prototype">
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Prototype_Name" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Prototype_Serial" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Concrete_Class" Type="System.String" DbType="VarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="Is_Air_Entrained" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Target_Air" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="Weight_of_Water" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Prototype_Trial_Batch" Member="Trial_Batches" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Trial_Batch" />
+      <Association Name="Prototype_Submittal" Member="Submittals" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Submittal" />
+      <Association Name="Prototype_Mix_Design" Member="Mix_Designs" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Mix_Design" />
+      <Association Name="Prototype_Cement_Proportion" Member="Cement_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Cement_Proportion" />
+      <Association Name="Prototype_SCM_Proportion" Member="SCM_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="SCM_Proportion" />
+      <Association Name="Prototype_CA_Proportion" Member="CA_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="CA_Proportion" />
+      <Association Name="Prototype_FN_Proportion" Member="FN_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="FN_Proportion" />
+      <Association Name="Prototype_Admixture_Proportion" Member="Admixture_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Admixture_Proportion" />
     </Type>
   </Table>
   <Table Name="dbo.Cement_Proportions" Member="Cement_Proportions">
     <Type Name="Cement_Proportion">
       <Column Name="Cement_Proportions_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="Cement_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cement_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Weight_of_Cement" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Prototype_Cement_Proportion" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
       <Association Name="Cement_Cement_Proportion" Member="Cement" ThisKey="Cement_ID" OtherKey="Cement_ID" Type="Cement" IsForeignKey="true" />
@@ -25,8 +71,8 @@
   <Table Name="dbo.SCM_Proportions" Member="SCM_Proportions">
     <Type Name="SCM_Proportion">
       <Column Name="SCM_Proportions_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="SCM_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SCM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Weight_of_SCMs" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Prototype_SCM_Proportion" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
       <Association Name="SCM_SCM_Proportion" Member="SCM" ThisKey="SCM_ID" OtherKey="SCM_ID" Type="SCM" IsForeignKey="true" />
@@ -35,8 +81,8 @@
   <Table Name="dbo.CA_Proportions" Member="CA_Proportions">
     <Type Name="CA_Proportion">
       <Column Name="CA_Proportions_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="CA_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CA_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Weight_of_CA" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Prototype_CA_Proportion" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
       <Association Name="Coarse_Aggregate_CA_Proportion" Member="Coarse_Aggregate" ThisKey="CA_ID" OtherKey="CA_ID" Type="Coarse_Aggregate" IsForeignKey="true" />
@@ -45,95 +91,85 @@
   <Table Name="dbo.FN_Proportions" Member="FN_Proportions">
     <Type Name="FN_Proportion">
       <Column Name="FN_Proportions_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="FN_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FN_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Weight_of_FN" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Prototype_FN_Proportion" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
       <Association Name="Fine_Aggregate_FN_Proportion" Member="Fine_Aggregate" ThisKey="FN_ID" OtherKey="FN_ID" Type="Fine_Aggregate" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Prototypes" Member="Prototypes">
-    <Type Name="Prototype">
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Prototype_Name" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="Prototype_Serial" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="Concrete_Class" Type="System.String" DbType="VarChar(4) NOT NULL" CanBeNull="false" />
-      <Column Name="Is_Air_Entrained" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Target_Air" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
-      <Column Name="Total_CM" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Total_CA" Type="System.Decimal" DbType="Decimal(3,2)" CanBeNull="true" />
-      <Column Name="Calculated_Density" Type="System.Decimal" DbType="Decimal(5,1)" CanBeNull="true" />
-      <Column Name="Weight_of_Water" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Prototype_Submittal" Member="Submittals" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Submittal" />
-      <Association Name="Prototype_Cement_Proportion" Member="Cement_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Cement_Proportion" />
-      <Association Name="Prototype_SCM_Proportion" Member="SCM_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="SCM_Proportion" />
-      <Association Name="Prototype_CA_Proportion" Member="CA_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="CA_Proportion" />
-      <Association Name="Prototype_FN_Proportion" Member="FN_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="FN_Proportion" />
-      <Association Name="Prototype_Mix_Design" Member="Mix_Designs" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Mix_Design" />
-      <Association Name="Prototype_Admixture_Proportion" Member="Admixture_Proportions" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Admixture_Proportion" />
-      <Association Name="Prototype_Trial_Batch" Member="Trial_Batches" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Trial_Batch" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Material_Types" Member="Material_Types">
-    <Type Name="Material_Type">
-      <Column Name="Material_Type_ID" Type="System.Byte" DbType="TinyInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Type_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Association Name="Material_Type_Material" Member="Materials" ThisKey="Material_Type_ID" OtherKey="Material_Type_ID" Type="Material" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Mix_Designs" Member="Mix_Designs">
-    <Type Name="Mix_Design">
-      <Column Name="Mix_ID" Type="System.Byte" DbType="TinyInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Mix_Name" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
-      <Column Name="Submittal_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="Mix_Serial" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Association Name="Prototype_Mix_Design" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
-      <Association Name="Submittal_Mix_Design" Member="Submittal" ThisKey="Submittal_ID" OtherKey="Submittal_ID" Type="Submittal" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Admixture_Proportions" Member="Admixture_Proportions">
     <Type Name="Admixture_Proportion">
       <Column Name="Admixture_Proportions_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="Admixture_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Prototype_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Admixture_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Admixture_Qty" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
       <Association Name="Prototype_Admixture_Proportion" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
       <Association Name="Admixture_Admixture_Proportion" Member="Admixture" ThisKey="Admixture_ID" OtherKey="Admixture_ID" Type="Admixture" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Trial_Batches" Member="Trial_Batches">
-    <Type Name="Trial_Batch">
-      <Column Name="TB_ID" Type="System.Byte" DbType="TinyInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="TB_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Slump" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
-      <Column Name="Actual_Air" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
-      <Column Name="Concrete_Temperature" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="Ambient_Temperature" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="Measured_Density" Type="System.Decimal" DbType="Decimal(4,1)" CanBeNull="true" />
-      <Column Name="Compressive_Strength" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Prototype_ID" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="TB_Serial" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Association Name="Trial_Batch_Submittal" Member="Submittals" ThisKey="TB_ID" OtherKey="TB_ID" Type="Submittal" />
-      <Association Name="Prototype_Trial_Batch" Member="Prototype" ThisKey="Prototype_ID" OtherKey="Prototype_ID" Type="Prototype" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Cements" Member="Cements">
     <Type Name="Cement">
-      <Column Name="Cement_ID" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Material_ID" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Cement_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Material_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Cement_Cement_Proportion" Member="Cement_Proportions" ThisKey="Cement_ID" OtherKey="Cement_ID" Type="Cement_Proportion" />
       <Association Name="Material_Cement" Member="Material" ThisKey="Material_ID" OtherKey="Material_ID" Type="Material" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.SCMs" Member="SCMs">
+    <Type Name="SCM">
+      <Column Name="SCM_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Material_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="SCM_SCM_Proportion" Member="SCM_Proportions" ThisKey="SCM_ID" OtherKey="SCM_ID" Type="SCM_Proportion" />
+      <Association Name="Material_SCM" Member="Material" ThisKey="Material_ID" OtherKey="Material_ID" Type="Material" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Coarse_Aggregates" Member="Coarse_Aggregates">
+    <Type Name="Coarse_Aggregate">
+      <Column Name="CA_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CA_Size" Type="System.Decimal" DbType="Decimal(4,3)" CanBeNull="true" />
+      <Column Name="CA_UW" Type="System.Decimal" DbType="Decimal(4,1)" CanBeNull="true" />
+      <Column Name="Aggregate_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Coarse_Aggregate_CA_Proportion" Member="CA_Proportions" ThisKey="CA_ID" OtherKey="CA_ID" Type="CA_Proportion" />
+      <Association Name="Aggregate_Coarse_Aggregate" Member="Aggregate" ThisKey="Aggregate_ID" OtherKey="Aggregate_ID" Type="Aggregate" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fine_Aggregates" Member="Fine_Aggregates">
+    <Type Name="Fine_Aggregate">
+      <Column Name="FN_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Fineness_Modulus" Type="System.Decimal" DbType="Decimal(2,1)" CanBeNull="true" />
+      <Column Name="Aggregate_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Fine_Aggregate_FN_Proportion" Member="FN_Proportions" ThisKey="FN_ID" OtherKey="FN_ID" Type="FN_Proportion" />
+      <Association Name="Aggregate_Fine_Aggregate" Member="Aggregate" ThisKey="Aggregate_ID" OtherKey="Aggregate_ID" Type="Aggregate" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Admixtures" Member="Admixtures">
+    <Type Name="Admixture">
+      <Column Name="Admixture_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Minimum_Dosage" Type="System.Decimal" DbType="Decimal(3,1)" CanBeNull="true" />
+      <Column Name="Maximum_Dosage" Type="System.Decimal" DbType="Decimal(3,1)" CanBeNull="true" />
+      <Column Name="Material_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Admixture_Admixture_Proportion" Member="Admixture_Proportions" ThisKey="Admixture_ID" OtherKey="Admixture_ID" Type="Admixture_Proportion" />
+      <Association Name="Material_Admixture" Member="Material" ThisKey="Material_ID" OtherKey="Material_ID" Type="Material" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Aggregates" Member="Aggregates">
+    <Type Name="Aggregate">
+      <Column Name="Aggregate_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Absorption" Type="System.Decimal" DbType="Decimal(2,1)" CanBeNull="true" />
+      <Column Name="Material_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Aggregate_Coarse_Aggregate" Member="Coarse_Aggregates" ThisKey="Aggregate_ID" OtherKey="Aggregate_ID" Type="Coarse_Aggregate" />
+      <Association Name="Aggregate_Fine_Aggregate" Member="Fine_Aggregates" ThisKey="Aggregate_ID" OtherKey="Aggregate_ID" Type="Fine_Aggregate" />
+      <Association Name="Material_Aggregate" Member="Material" ThisKey="Material_ID" OtherKey="Material_ID" Type="Material" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Materials" Member="Materials">
     <Type Name="Material">
-      <Column Name="Material_ID" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Material_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Material_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Material_Source" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Relative_Density" Type="System.Decimal" DbType="Decimal(3,2)" CanBeNull="true" />
-      <Column Name="Material_Type_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Material_Type_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Grade" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="Material_Cement" Member="Cements" ThisKey="Material_ID" OtherKey="Material_ID" Type="Cement" />
       <Association Name="Material_SCM" Member="SCMs" ThisKey="Material_ID" OtherKey="Material_ID" Type="SCM" />
@@ -142,52 +178,11 @@
       <Association Name="Material_Type_Material" Member="Material_Type" ThisKey="Material_Type_ID" OtherKey="Material_Type_ID" Type="Material_Type" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.SCMs" Member="SCMs">
-    <Type Name="SCM">
-      <Column Name="SCM_ID" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Material_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="SCM_SCM_Proportion" Member="SCM_Proportions" ThisKey="SCM_ID" OtherKey="SCM_ID" Type="SCM_Proportion" />
-      <Association Name="Material_SCM" Member="Material" ThisKey="Material_ID" OtherKey="Material_ID" Type="Material" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Coarse_Aggregates" Member="Coarse_Aggregates">
-    <Type Name="Coarse_Aggregate">
-      <Column Name="CA_ID" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CA_Size" Type="System.Decimal" DbType="Decimal(4,3)" CanBeNull="true" />
-      <Column Name="CA_UW" Type="System.Decimal" DbType="Decimal(4,1)" CanBeNull="true" />
-      <Column Name="Aggregate_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="Coarse_Aggregate_CA_Proportion" Member="CA_Proportions" ThisKey="CA_ID" OtherKey="CA_ID" Type="CA_Proportion" />
-      <Association Name="Aggregate_Coarse_Aggregate" Member="Aggregate" ThisKey="Aggregate_ID" OtherKey="Aggregate_ID" Type="Aggregate" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Fine_Aggregates" Member="Fine_Aggregates">
-    <Type Name="Fine_Aggregate">
-      <Column Name="FN_ID" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Fineness_Modulus" Type="System.Decimal" DbType="Decimal(2,1)" CanBeNull="true" />
-      <Column Name="Aggregate_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="Fine_Aggregate_FN_Proportion" Member="FN_Proportions" ThisKey="FN_ID" OtherKey="FN_ID" Type="FN_Proportion" />
-      <Association Name="Aggregate_Fine_Aggregate" Member="Aggregate" ThisKey="Aggregate_ID" OtherKey="Aggregate_ID" Type="Aggregate" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Admixtures" Member="Admixtures">
-    <Type Name="Admixture">
-      <Column Name="Admixture_ID" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Minimum_Dosage" Type="System.Decimal" DbType="Decimal(3,1)" CanBeNull="true" />
-      <Column Name="Maximum_Dosage" Type="System.Decimal" DbType="Decimal(3,1)" CanBeNull="true" />
-      <Column Name="Is_ByCWT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Material_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="Admixture_Admixture_Proportion" Member="Admixture_Proportions" ThisKey="Admixture_ID" OtherKey="Admixture_ID" Type="Admixture_Proportion" />
-      <Association Name="Material_Admixture" Member="Material" ThisKey="Material_ID" OtherKey="Material_ID" Type="Material" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Aggregates" Member="Aggregates">
-    <Type Name="Aggregate">
-      <Column Name="Aggregate_ID" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Absorption" Type="System.Decimal" DbType="Decimal(2,1)" CanBeNull="true" />
-      <Column Name="Material_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="Aggregate_Coarse_Aggregate" Member="Coarse_Aggregates" ThisKey="Aggregate_ID" OtherKey="Aggregate_ID" Type="Coarse_Aggregate" />
-      <Association Name="Aggregate_Fine_Aggregate" Member="Fine_Aggregates" ThisKey="Aggregate_ID" OtherKey="Aggregate_ID" Type="Fine_Aggregate" />
-      <Association Name="Material_Aggregate" Member="Material" ThisKey="Material_ID" OtherKey="Material_ID" Type="Material" IsForeignKey="true" />
+  <Table Name="dbo.Material_Types" Member="Material_Types">
+    <Type Name="Material_Type">
+      <Column Name="Material_Type_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Type_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Material_Type_Material" Member="Materials" ThisKey="Material_Type_ID" OtherKey="Material_Type_ID" Type="Material" />
     </Type>
   </Table>
 </Database>

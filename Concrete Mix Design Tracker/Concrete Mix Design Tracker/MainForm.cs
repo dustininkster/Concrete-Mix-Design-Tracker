@@ -19,7 +19,7 @@ namespace Concrete_Mix_Design_Tracker
             InitializeMaterialsControls();
             InitializePrototypesControls();
             InitializeTrialBatchesControls();
-            InitializeSubmittalsControls();
+            /*InitializeSubmittalsControls()/**/;
             InitializeMixDesignsControls();
         }
 
@@ -36,5 +36,10 @@ namespace Concrete_Mix_Design_Tracker
 
         }
 
-   }
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            Controller.TrialBatchSelectionChanged(lstItemSelect[TRIAL_BATCHES].Text);
+            Controller.MixDesignSelectionChanged(lstItemSelect[MIX_DESIGNS].Text);
+        }
+    }
 }

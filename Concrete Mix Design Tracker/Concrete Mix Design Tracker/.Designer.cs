@@ -39,6 +39,7 @@ namespace Concrete_Mix_Design_Tracker
             this.Name = "MainForm";
             this.Text = "Concrete Mix Tracker";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.ResumeLayout(false);
 
         }

@@ -35,7 +35,7 @@ namespace Concrete_Mix_Design_Tracker
             pnProportionPanel.Anchor = (AnchorStyles.Right | AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Bottom);
 
 
-            btnCopyPrototype.Text = "Copy Prototype";
+            btnCopyPrototype.Text = "Copy";
             btnCopyPrototype.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
             btnCopyPrototype.Click += buttonEventHandler;
 
@@ -62,6 +62,7 @@ namespace Concrete_Mix_Design_Tracker
             lstConcreteClassSelect.Items.Add("Class H");
             lstConcreteClassSelect.Items.Add("Class HES");
             lstConcreteClassSelect.Items.Add("Class M");
+            lstConcreteClassSelect.DoubleClick += lstConcreteClassSelected;
 
 
 

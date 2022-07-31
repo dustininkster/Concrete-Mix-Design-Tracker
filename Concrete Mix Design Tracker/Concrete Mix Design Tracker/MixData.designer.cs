@@ -30,9 +30,18 @@ namespace Concrete_Mix_Design_Tracker
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertTrial_Batch(Trial_Batch instance);
+    partial void UpdateTrial_Batch(Trial_Batch instance);
+    partial void DeleteTrial_Batch(Trial_Batch instance);
     partial void InsertSubmittal(Submittal instance);
     partial void UpdateSubmittal(Submittal instance);
     partial void DeleteSubmittal(Submittal instance);
+    partial void InsertMix_Design(Mix_Design instance);
+    partial void UpdateMix_Design(Mix_Design instance);
+    partial void DeleteMix_Design(Mix_Design instance);
+    partial void InsertPrototype(Prototype instance);
+    partial void UpdatePrototype(Prototype instance);
+    partial void DeletePrototype(Prototype instance);
     partial void InsertCement_Proportion(Cement_Proportion instance);
     partial void UpdateCement_Proportion(Cement_Proportion instance);
     partial void DeleteCement_Proportion(Cement_Proportion instance);
@@ -45,27 +54,12 @@ namespace Concrete_Mix_Design_Tracker
     partial void InsertFN_Proportion(FN_Proportion instance);
     partial void UpdateFN_Proportion(FN_Proportion instance);
     partial void DeleteFN_Proportion(FN_Proportion instance);
-    partial void InsertPrototype(Prototype instance);
-    partial void UpdatePrototype(Prototype instance);
-    partial void DeletePrototype(Prototype instance);
-    partial void InsertMaterial_Type(Material_Type instance);
-    partial void UpdateMaterial_Type(Material_Type instance);
-    partial void DeleteMaterial_Type(Material_Type instance);
-    partial void InsertMix_Design(Mix_Design instance);
-    partial void UpdateMix_Design(Mix_Design instance);
-    partial void DeleteMix_Design(Mix_Design instance);
     partial void InsertAdmixture_Proportion(Admixture_Proportion instance);
     partial void UpdateAdmixture_Proportion(Admixture_Proportion instance);
     partial void DeleteAdmixture_Proportion(Admixture_Proportion instance);
-    partial void InsertTrial_Batch(Trial_Batch instance);
-    partial void UpdateTrial_Batch(Trial_Batch instance);
-    partial void DeleteTrial_Batch(Trial_Batch instance);
     partial void InsertCement(Cement instance);
     partial void UpdateCement(Cement instance);
     partial void DeleteCement(Cement instance);
-    partial void InsertMaterial(Material instance);
-    partial void UpdateMaterial(Material instance);
-    partial void DeleteMaterial(Material instance);
     partial void InsertSCM(SCM instance);
     partial void UpdateSCM(SCM instance);
     partial void DeleteSCM(SCM instance);
@@ -81,6 +75,12 @@ namespace Concrete_Mix_Design_Tracker
     partial void InsertAggregate(Aggregate instance);
     partial void UpdateAggregate(Aggregate instance);
     partial void DeleteAggregate(Aggregate instance);
+    partial void InsertMaterial(Material instance);
+    partial void UpdateMaterial(Material instance);
+    partial void DeleteMaterial(Material instance);
+    partial void InsertMaterial_Type(Material_Type instance);
+    partial void UpdateMaterial_Type(Material_Type instance);
+    partial void DeleteMaterial_Type(Material_Type instance);
     #endregion
 		
 		public MixDataDataContext() : 
@@ -113,11 +113,35 @@ namespace Concrete_Mix_Design_Tracker
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Trial_Batch> Trial_Batches
+		{
+			get
+			{
+				return this.GetTable<Trial_Batch>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Submittal> Submittals
 		{
 			get
 			{
 				return this.GetTable<Submittal>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Mix_Design> Mix_Designs
+		{
+			get
+			{
+				return this.GetTable<Mix_Design>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Prototype> Prototypes
+		{
+			get
+			{
+				return this.GetTable<Prototype>();
 			}
 		}
 		
@@ -153,30 +177,6 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		public System.Data.Linq.Table<Prototype> Prototypes
-		{
-			get
-			{
-				return this.GetTable<Prototype>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Material_Type> Material_Types
-		{
-			get
-			{
-				return this.GetTable<Material_Type>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Mix_Design> Mix_Designs
-		{
-			get
-			{
-				return this.GetTable<Mix_Design>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Admixture_Proportion> Admixture_Proportions
 		{
 			get
@@ -185,27 +185,11 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		public System.Data.Linq.Table<Trial_Batch> Trial_Batches
-		{
-			get
-			{
-				return this.GetTable<Trial_Batch>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Cement> Cements
 		{
 			get
 			{
 				return this.GetTable<Cement>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Material> Materials
-		{
-			get
-			{
-				return this.GetTable<Material>();
 			}
 		}
 		
@@ -248,2208 +232,20 @@ namespace Concrete_Mix_Design_Tracker
 				return this.GetTable<Aggregate>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Submittals")]
-	public partial class Submittal : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private byte _Submittal_ID;
-		
-		private int _Owner_Number;
-		
-		private byte _TB_ID;
-		
-		private string _TB_Name;
-		
-		private byte _Prototype_ID;
-		
-		private EntitySet<Mix_Design> _Mix_Designs;
-		
-		private EntityRef<Prototype> _Prototype;
-		
-		private EntityRef<Trial_Batch> _Trial_Batch;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSubmittal_IDChanging(byte value);
-    partial void OnSubmittal_IDChanged();
-    partial void OnOwner_NumberChanging(int value);
-    partial void OnOwner_NumberChanged();
-    partial void OnTB_IDChanging(byte value);
-    partial void OnTB_IDChanged();
-    partial void OnTB_NameChanging(string value);
-    partial void OnTB_NameChanged();
-    partial void OnPrototype_IDChanging(byte value);
-    partial void OnPrototype_IDChanged();
-    #endregion
-		
-		public Submittal()
-		{
-			this._Mix_Designs = new EntitySet<Mix_Design>(new Action<Mix_Design>(this.attach_Mix_Designs), new Action<Mix_Design>(this.detach_Mix_Designs));
-			this._Prototype = default(EntityRef<Prototype>);
-			this._Trial_Batch = default(EntityRef<Trial_Batch>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Submittal_ID", AutoSync=AutoSync.OnInsert, DbType="TinyInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public byte Submittal_ID
-		{
-			get
-			{
-				return this._Submittal_ID;
-			}
-			set
-			{
-				if ((this._Submittal_ID != value))
-				{
-					this.OnSubmittal_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Submittal_ID = value;
-					this.SendPropertyChanged("Submittal_ID");
-					this.OnSubmittal_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner_Number", DbType="Int NOT NULL")]
-		public int Owner_Number
-		{
-			get
-			{
-				return this._Owner_Number;
-			}
-			set
-			{
-				if ((this._Owner_Number != value))
-				{
-					this.OnOwner_NumberChanging(value);
-					this.SendPropertyChanging();
-					this._Owner_Number = value;
-					this.SendPropertyChanged("Owner_Number");
-					this.OnOwner_NumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_ID", DbType="TinyInt NOT NULL")]
-		public byte TB_ID
-		{
-			get
-			{
-				return this._TB_ID;
-			}
-			set
-			{
-				if ((this._TB_ID != value))
-				{
-					if (this._Trial_Batch.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnTB_IDChanging(value);
-					this.SendPropertyChanging();
-					this._TB_ID = value;
-					this.SendPropertyChanged("TB_ID");
-					this.OnTB_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_Name", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
-		public string TB_Name
-		{
-			get
-			{
-				return this._TB_Name;
-			}
-			set
-			{
-				if ((this._TB_Name != value))
-				{
-					this.OnTB_NameChanging(value);
-					this.SendPropertyChanging();
-					this._TB_Name = value;
-					this.SendPropertyChanged("TB_Name");
-					this.OnTB_NameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="TinyInt NOT NULL")]
-		public byte Prototype_ID
-		{
-			get
-			{
-				return this._Prototype_ID;
-			}
-			set
-			{
-				if ((this._Prototype_ID != value))
-				{
-					if (this._Prototype.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPrototype_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_ID = value;
-					this.SendPropertyChanged("Prototype_ID");
-					this.OnPrototype_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Submittal_Mix_Design", Storage="_Mix_Designs", ThisKey="Submittal_ID", OtherKey="Submittal_ID")]
-		public EntitySet<Mix_Design> Mix_Designs
-		{
-			get
-			{
-				return this._Mix_Designs;
-			}
-			set
-			{
-				this._Mix_Designs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Submittal", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
-		public Prototype Prototype
-		{
-			get
-			{
-				return this._Prototype.Entity;
-			}
-			set
-			{
-				Prototype previousValue = this._Prototype.Entity;
-				if (((previousValue != value) 
-							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Prototype.Entity = null;
-						previousValue.Submittals.Remove(this);
-					}
-					this._Prototype.Entity = value;
-					if ((value != null))
-					{
-						value.Submittals.Add(this);
-						this._Prototype_ID = value.Prototype_ID;
-					}
-					else
-					{
-						this._Prototype_ID = default(byte);
-					}
-					this.SendPropertyChanged("Prototype");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Trial_Batch_Submittal", Storage="_Trial_Batch", ThisKey="TB_ID", OtherKey="TB_ID", IsForeignKey=true)]
-		public Trial_Batch Trial_Batch
-		{
-			get
-			{
-				return this._Trial_Batch.Entity;
-			}
-			set
-			{
-				Trial_Batch previousValue = this._Trial_Batch.Entity;
-				if (((previousValue != value) 
-							|| (this._Trial_Batch.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Trial_Batch.Entity = null;
-						previousValue.Submittals.Remove(this);
-					}
-					this._Trial_Batch.Entity = value;
-					if ((value != null))
-					{
-						value.Submittals.Add(this);
-						this._TB_ID = value.TB_ID;
-					}
-					else
-					{
-						this._TB_ID = default(byte);
-					}
-					this.SendPropertyChanged("Trial_Batch");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Mix_Designs(Mix_Design entity)
-		{
-			this.SendPropertyChanging();
-			entity.Submittal = this;
-		}
-		
-		private void detach_Mix_Designs(Mix_Design entity)
-		{
-			this.SendPropertyChanging();
-			entity.Submittal = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cement_Proportions")]
-	public partial class Cement_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Cement_Proportions_ID;
-		
-		private byte _Prototype_ID;
-		
-		private byte _Cement_ID;
-		
-		private System.Nullable<int> _Weight_of_Cement;
-		
-		private EntityRef<Prototype> _Prototype;
-		
-		private EntityRef<Cement> _Cement;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCement_Proportions_IDChanging(int value);
-    partial void OnCement_Proportions_IDChanged();
-    partial void OnPrototype_IDChanging(byte value);
-    partial void OnPrototype_IDChanged();
-    partial void OnCement_IDChanging(byte value);
-    partial void OnCement_IDChanged();
-    partial void OnWeight_of_CementChanging(System.Nullable<int> value);
-    partial void OnWeight_of_CementChanged();
-    #endregion
-		
-		public Cement_Proportion()
-		{
-			this._Prototype = default(EntityRef<Prototype>);
-			this._Cement = default(EntityRef<Cement>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cement_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Cement_Proportions_ID
-		{
-			get
-			{
-				return this._Cement_Proportions_ID;
-			}
-			set
-			{
-				if ((this._Cement_Proportions_ID != value))
-				{
-					this.OnCement_Proportions_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Cement_Proportions_ID = value;
-					this.SendPropertyChanged("Cement_Proportions_ID");
-					this.OnCement_Proportions_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="TinyInt NOT NULL")]
-		public byte Prototype_ID
-		{
-			get
-			{
-				return this._Prototype_ID;
-			}
-			set
-			{
-				if ((this._Prototype_ID != value))
-				{
-					if (this._Prototype.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPrototype_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_ID = value;
-					this.SendPropertyChanged("Prototype_ID");
-					this.OnPrototype_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cement_ID", DbType="TinyInt NOT NULL")]
-		public byte Cement_ID
-		{
-			get
-			{
-				return this._Cement_ID;
-			}
-			set
-			{
-				if ((this._Cement_ID != value))
-				{
-					if (this._Cement.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCement_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Cement_ID = value;
-					this.SendPropertyChanged("Cement_ID");
-					this.OnCement_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_Cement", DbType="Int")]
-		public System.Nullable<int> Weight_of_Cement
-		{
-			get
-			{
-				return this._Weight_of_Cement;
-			}
-			set
-			{
-				if ((this._Weight_of_Cement != value))
-				{
-					this.OnWeight_of_CementChanging(value);
-					this.SendPropertyChanging();
-					this._Weight_of_Cement = value;
-					this.SendPropertyChanged("Weight_of_Cement");
-					this.OnWeight_of_CementChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Cement_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
-		public Prototype Prototype
-		{
-			get
-			{
-				return this._Prototype.Entity;
-			}
-			set
-			{
-				Prototype previousValue = this._Prototype.Entity;
-				if (((previousValue != value) 
-							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Prototype.Entity = null;
-						previousValue.Cement_Proportions.Remove(this);
-					}
-					this._Prototype.Entity = value;
-					if ((value != null))
-					{
-						value.Cement_Proportions.Add(this);
-						this._Prototype_ID = value.Prototype_ID;
-					}
-					else
-					{
-						this._Prototype_ID = default(byte);
-					}
-					this.SendPropertyChanged("Prototype");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cement_Cement_Proportion", Storage="_Cement", ThisKey="Cement_ID", OtherKey="Cement_ID", IsForeignKey=true)]
-		public Cement Cement
-		{
-			get
-			{
-				return this._Cement.Entity;
-			}
-			set
-			{
-				Cement previousValue = this._Cement.Entity;
-				if (((previousValue != value) 
-							|| (this._Cement.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Cement.Entity = null;
-						previousValue.Cement_Proportions.Remove(this);
-					}
-					this._Cement.Entity = value;
-					if ((value != null))
-					{
-						value.Cement_Proportions.Add(this);
-						this._Cement_ID = value.Cement_ID;
-					}
-					else
-					{
-						this._Cement_ID = default(byte);
-					}
-					this.SendPropertyChanged("Cement");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SCM_Proportions")]
-	public partial class SCM_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _SCM_Proportions_ID;
-		
-		private byte _Prototype_ID;
-		
-		private byte _SCM_ID;
-		
-		private System.Nullable<int> _Weight_of_SCMs;
-		
-		private EntityRef<Prototype> _Prototype;
-		
-		private EntityRef<SCM> _SCM;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSCM_Proportions_IDChanging(int value);
-    partial void OnSCM_Proportions_IDChanged();
-    partial void OnPrototype_IDChanging(byte value);
-    partial void OnPrototype_IDChanged();
-    partial void OnSCM_IDChanging(byte value);
-    partial void OnSCM_IDChanged();
-    partial void OnWeight_of_SCMsChanging(System.Nullable<int> value);
-    partial void OnWeight_of_SCMsChanged();
-    #endregion
-		
-		public SCM_Proportion()
-		{
-			this._Prototype = default(EntityRef<Prototype>);
-			this._SCM = default(EntityRef<SCM>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCM_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int SCM_Proportions_ID
-		{
-			get
-			{
-				return this._SCM_Proportions_ID;
-			}
-			set
-			{
-				if ((this._SCM_Proportions_ID != value))
-				{
-					this.OnSCM_Proportions_IDChanging(value);
-					this.SendPropertyChanging();
-					this._SCM_Proportions_ID = value;
-					this.SendPropertyChanged("SCM_Proportions_ID");
-					this.OnSCM_Proportions_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="TinyInt NOT NULL")]
-		public byte Prototype_ID
-		{
-			get
-			{
-				return this._Prototype_ID;
-			}
-			set
-			{
-				if ((this._Prototype_ID != value))
-				{
-					if (this._Prototype.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPrototype_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_ID = value;
-					this.SendPropertyChanged("Prototype_ID");
-					this.OnPrototype_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCM_ID", DbType="TinyInt NOT NULL")]
-		public byte SCM_ID
-		{
-			get
-			{
-				return this._SCM_ID;
-			}
-			set
-			{
-				if ((this._SCM_ID != value))
-				{
-					if (this._SCM.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSCM_IDChanging(value);
-					this.SendPropertyChanging();
-					this._SCM_ID = value;
-					this.SendPropertyChanged("SCM_ID");
-					this.OnSCM_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_SCMs", DbType="Int")]
-		public System.Nullable<int> Weight_of_SCMs
-		{
-			get
-			{
-				return this._Weight_of_SCMs;
-			}
-			set
-			{
-				if ((this._Weight_of_SCMs != value))
-				{
-					this.OnWeight_of_SCMsChanging(value);
-					this.SendPropertyChanging();
-					this._Weight_of_SCMs = value;
-					this.SendPropertyChanged("Weight_of_SCMs");
-					this.OnWeight_of_SCMsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_SCM_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
-		public Prototype Prototype
-		{
-			get
-			{
-				return this._Prototype.Entity;
-			}
-			set
-			{
-				Prototype previousValue = this._Prototype.Entity;
-				if (((previousValue != value) 
-							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Prototype.Entity = null;
-						previousValue.SCM_Proportions.Remove(this);
-					}
-					this._Prototype.Entity = value;
-					if ((value != null))
-					{
-						value.SCM_Proportions.Add(this);
-						this._Prototype_ID = value.Prototype_ID;
-					}
-					else
-					{
-						this._Prototype_ID = default(byte);
-					}
-					this.SendPropertyChanged("Prototype");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SCM_SCM_Proportion", Storage="_SCM", ThisKey="SCM_ID", OtherKey="SCM_ID", IsForeignKey=true)]
-		public SCM SCM
-		{
-			get
-			{
-				return this._SCM.Entity;
-			}
-			set
-			{
-				SCM previousValue = this._SCM.Entity;
-				if (((previousValue != value) 
-							|| (this._SCM.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._SCM.Entity = null;
-						previousValue.SCM_Proportions.Remove(this);
-					}
-					this._SCM.Entity = value;
-					if ((value != null))
-					{
-						value.SCM_Proportions.Add(this);
-						this._SCM_ID = value.SCM_ID;
-					}
-					else
-					{
-						this._SCM_ID = default(byte);
-					}
-					this.SendPropertyChanged("SCM");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CA_Proportions")]
-	public partial class CA_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _CA_Proportions_ID;
-		
-		private byte _Prototype_ID;
-		
-		private byte _CA_ID;
-		
-		private System.Nullable<int> _Weight_of_CA;
-		
-		private EntityRef<Prototype> _Prototype;
-		
-		private EntityRef<Coarse_Aggregate> _Coarse_Aggregate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCA_Proportions_IDChanging(int value);
-    partial void OnCA_Proportions_IDChanged();
-    partial void OnPrototype_IDChanging(byte value);
-    partial void OnPrototype_IDChanged();
-    partial void OnCA_IDChanging(byte value);
-    partial void OnCA_IDChanged();
-    partial void OnWeight_of_CAChanging(System.Nullable<int> value);
-    partial void OnWeight_of_CAChanged();
-    #endregion
-		
-		public CA_Proportion()
-		{
-			this._Prototype = default(EntityRef<Prototype>);
-			this._Coarse_Aggregate = default(EntityRef<Coarse_Aggregate>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int CA_Proportions_ID
-		{
-			get
-			{
-				return this._CA_Proportions_ID;
-			}
-			set
-			{
-				if ((this._CA_Proportions_ID != value))
-				{
-					this.OnCA_Proportions_IDChanging(value);
-					this.SendPropertyChanging();
-					this._CA_Proportions_ID = value;
-					this.SendPropertyChanged("CA_Proportions_ID");
-					this.OnCA_Proportions_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="TinyInt NOT NULL")]
-		public byte Prototype_ID
-		{
-			get
-			{
-				return this._Prototype_ID;
-			}
-			set
-			{
-				if ((this._Prototype_ID != value))
-				{
-					if (this._Prototype.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPrototype_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_ID = value;
-					this.SendPropertyChanged("Prototype_ID");
-					this.OnPrototype_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_ID", DbType="TinyInt NOT NULL")]
-		public byte CA_ID
-		{
-			get
-			{
-				return this._CA_ID;
-			}
-			set
-			{
-				if ((this._CA_ID != value))
-				{
-					if (this._Coarse_Aggregate.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCA_IDChanging(value);
-					this.SendPropertyChanging();
-					this._CA_ID = value;
-					this.SendPropertyChanged("CA_ID");
-					this.OnCA_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_CA", DbType="Int")]
-		public System.Nullable<int> Weight_of_CA
-		{
-			get
-			{
-				return this._Weight_of_CA;
-			}
-			set
-			{
-				if ((this._Weight_of_CA != value))
-				{
-					this.OnWeight_of_CAChanging(value);
-					this.SendPropertyChanging();
-					this._Weight_of_CA = value;
-					this.SendPropertyChanged("Weight_of_CA");
-					this.OnWeight_of_CAChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_CA_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
-		public Prototype Prototype
-		{
-			get
-			{
-				return this._Prototype.Entity;
-			}
-			set
-			{
-				Prototype previousValue = this._Prototype.Entity;
-				if (((previousValue != value) 
-							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Prototype.Entity = null;
-						previousValue.CA_Proportions.Remove(this);
-					}
-					this._Prototype.Entity = value;
-					if ((value != null))
-					{
-						value.CA_Proportions.Add(this);
-						this._Prototype_ID = value.Prototype_ID;
-					}
-					else
-					{
-						this._Prototype_ID = default(byte);
-					}
-					this.SendPropertyChanged("Prototype");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Coarse_Aggregate_CA_Proportion", Storage="_Coarse_Aggregate", ThisKey="CA_ID", OtherKey="CA_ID", IsForeignKey=true)]
-		public Coarse_Aggregate Coarse_Aggregate
-		{
-			get
-			{
-				return this._Coarse_Aggregate.Entity;
-			}
-			set
-			{
-				Coarse_Aggregate previousValue = this._Coarse_Aggregate.Entity;
-				if (((previousValue != value) 
-							|| (this._Coarse_Aggregate.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Coarse_Aggregate.Entity = null;
-						previousValue.CA_Proportions.Remove(this);
-					}
-					this._Coarse_Aggregate.Entity = value;
-					if ((value != null))
-					{
-						value.CA_Proportions.Add(this);
-						this._CA_ID = value.CA_ID;
-					}
-					else
-					{
-						this._CA_ID = default(byte);
-					}
-					this.SendPropertyChanged("Coarse_Aggregate");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FN_Proportions")]
-	public partial class FN_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _FN_Proportions_ID;
-		
-		private byte _Prototype_ID;
-		
-		private byte _FN_ID;
-		
-		private System.Nullable<int> _Weight_of_FN;
-		
-		private EntityRef<Prototype> _Prototype;
-		
-		private EntityRef<Fine_Aggregate> _Fine_Aggregate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnFN_Proportions_IDChanging(int value);
-    partial void OnFN_Proportions_IDChanged();
-    partial void OnPrototype_IDChanging(byte value);
-    partial void OnPrototype_IDChanged();
-    partial void OnFN_IDChanging(byte value);
-    partial void OnFN_IDChanged();
-    partial void OnWeight_of_FNChanging(System.Nullable<int> value);
-    partial void OnWeight_of_FNChanged();
-    #endregion
-		
-		public FN_Proportion()
-		{
-			this._Prototype = default(EntityRef<Prototype>);
-			this._Fine_Aggregate = default(EntityRef<Fine_Aggregate>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FN_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int FN_Proportions_ID
-		{
-			get
-			{
-				return this._FN_Proportions_ID;
-			}
-			set
-			{
-				if ((this._FN_Proportions_ID != value))
-				{
-					this.OnFN_Proportions_IDChanging(value);
-					this.SendPropertyChanging();
-					this._FN_Proportions_ID = value;
-					this.SendPropertyChanged("FN_Proportions_ID");
-					this.OnFN_Proportions_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="TinyInt NOT NULL")]
-		public byte Prototype_ID
-		{
-			get
-			{
-				return this._Prototype_ID;
-			}
-			set
-			{
-				if ((this._Prototype_ID != value))
-				{
-					if (this._Prototype.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPrototype_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_ID = value;
-					this.SendPropertyChanged("Prototype_ID");
-					this.OnPrototype_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FN_ID", DbType="TinyInt NOT NULL")]
-		public byte FN_ID
-		{
-			get
-			{
-				return this._FN_ID;
-			}
-			set
-			{
-				if ((this._FN_ID != value))
-				{
-					if (this._Fine_Aggregate.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFN_IDChanging(value);
-					this.SendPropertyChanging();
-					this._FN_ID = value;
-					this.SendPropertyChanged("FN_ID");
-					this.OnFN_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_FN", DbType="Int")]
-		public System.Nullable<int> Weight_of_FN
-		{
-			get
-			{
-				return this._Weight_of_FN;
-			}
-			set
-			{
-				if ((this._Weight_of_FN != value))
-				{
-					this.OnWeight_of_FNChanging(value);
-					this.SendPropertyChanging();
-					this._Weight_of_FN = value;
-					this.SendPropertyChanged("Weight_of_FN");
-					this.OnWeight_of_FNChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_FN_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
-		public Prototype Prototype
-		{
-			get
-			{
-				return this._Prototype.Entity;
-			}
-			set
-			{
-				Prototype previousValue = this._Prototype.Entity;
-				if (((previousValue != value) 
-							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Prototype.Entity = null;
-						previousValue.FN_Proportions.Remove(this);
-					}
-					this._Prototype.Entity = value;
-					if ((value != null))
-					{
-						value.FN_Proportions.Add(this);
-						this._Prototype_ID = value.Prototype_ID;
-					}
-					else
-					{
-						this._Prototype_ID = default(byte);
-					}
-					this.SendPropertyChanged("Prototype");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fine_Aggregate_FN_Proportion", Storage="_Fine_Aggregate", ThisKey="FN_ID", OtherKey="FN_ID", IsForeignKey=true)]
-		public Fine_Aggregate Fine_Aggregate
-		{
-			get
-			{
-				return this._Fine_Aggregate.Entity;
-			}
-			set
-			{
-				Fine_Aggregate previousValue = this._Fine_Aggregate.Entity;
-				if (((previousValue != value) 
-							|| (this._Fine_Aggregate.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Fine_Aggregate.Entity = null;
-						previousValue.FN_Proportions.Remove(this);
-					}
-					this._Fine_Aggregate.Entity = value;
-					if ((value != null))
-					{
-						value.FN_Proportions.Add(this);
-						this._FN_ID = value.FN_ID;
-					}
-					else
-					{
-						this._FN_ID = default(byte);
-					}
-					this.SendPropertyChanged("Fine_Aggregate");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Prototypes")]
-	public partial class Prototype : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private byte _Prototype_ID;
-		
-		private string _Prototype_Name;
-		
-		private byte _Prototype_Serial;
-		
-		private string _Concrete_Class;
-		
-		private bool _Is_Air_Entrained;
-		
-		private System.Nullable<decimal> _Target_Air;
-		
-		private System.Nullable<int> _Total_CM;
-		
-		private System.Nullable<decimal> _Total_CA;
-		
-		private System.Nullable<decimal> _Calculated_Density;
-		
-		private System.Nullable<int> _Weight_of_Water;
-		
-		private EntitySet<Submittal> _Submittals;
-		
-		private EntitySet<Cement_Proportion> _Cement_Proportions;
-		
-		private EntitySet<SCM_Proportion> _SCM_Proportions;
-		
-		private EntitySet<CA_Proportion> _CA_Proportions;
-		
-		private EntitySet<FN_Proportion> _FN_Proportions;
-		
-		private EntitySet<Mix_Design> _Mix_Designs;
-		
-		private EntitySet<Admixture_Proportion> _Admixture_Proportions;
-		
-		private EntitySet<Trial_Batch> _Trial_Batches;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnPrototype_IDChanging(byte value);
-    partial void OnPrototype_IDChanged();
-    partial void OnPrototype_NameChanging(string value);
-    partial void OnPrototype_NameChanged();
-    partial void OnPrototype_SerialChanging(byte value);
-    partial void OnPrototype_SerialChanged();
-    partial void OnConcrete_ClassChanging(string value);
-    partial void OnConcrete_ClassChanged();
-    partial void OnIs_Air_EntrainedChanging(bool value);
-    partial void OnIs_Air_EntrainedChanged();
-    partial void OnTarget_AirChanging(System.Nullable<decimal> value);
-    partial void OnTarget_AirChanged();
-    partial void OnTotal_CMChanging(System.Nullable<int> value);
-    partial void OnTotal_CMChanged();
-    partial void OnTotal_CAChanging(System.Nullable<decimal> value);
-    partial void OnTotal_CAChanged();
-    partial void OnCalculated_DensityChanging(System.Nullable<decimal> value);
-    partial void OnCalculated_DensityChanged();
-    partial void OnWeight_of_WaterChanging(System.Nullable<int> value);
-    partial void OnWeight_of_WaterChanged();
-    #endregion
-		
-		public Prototype()
-		{
-			this._Submittals = new EntitySet<Submittal>(new Action<Submittal>(this.attach_Submittals), new Action<Submittal>(this.detach_Submittals));
-			this._Cement_Proportions = new EntitySet<Cement_Proportion>(new Action<Cement_Proportion>(this.attach_Cement_Proportions), new Action<Cement_Proportion>(this.detach_Cement_Proportions));
-			this._SCM_Proportions = new EntitySet<SCM_Proportion>(new Action<SCM_Proportion>(this.attach_SCM_Proportions), new Action<SCM_Proportion>(this.detach_SCM_Proportions));
-			this._CA_Proportions = new EntitySet<CA_Proportion>(new Action<CA_Proportion>(this.attach_CA_Proportions), new Action<CA_Proportion>(this.detach_CA_Proportions));
-			this._FN_Proportions = new EntitySet<FN_Proportion>(new Action<FN_Proportion>(this.attach_FN_Proportions), new Action<FN_Proportion>(this.detach_FN_Proportions));
-			this._Mix_Designs = new EntitySet<Mix_Design>(new Action<Mix_Design>(this.attach_Mix_Designs), new Action<Mix_Design>(this.detach_Mix_Designs));
-			this._Admixture_Proportions = new EntitySet<Admixture_Proportion>(new Action<Admixture_Proportion>(this.attach_Admixture_Proportions), new Action<Admixture_Proportion>(this.detach_Admixture_Proportions));
-			this._Trial_Batches = new EntitySet<Trial_Batch>(new Action<Trial_Batch>(this.attach_Trial_Batches), new Action<Trial_Batch>(this.detach_Trial_Batches));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", AutoSync=AutoSync.OnInsert, DbType="TinyInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public byte Prototype_ID
-		{
-			get
-			{
-				return this._Prototype_ID;
-			}
-			set
-			{
-				if ((this._Prototype_ID != value))
-				{
-					this.OnPrototype_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_ID = value;
-					this.SendPropertyChanged("Prototype_ID");
-					this.OnPrototype_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_Name", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string Prototype_Name
-		{
-			get
-			{
-				return this._Prototype_Name;
-			}
-			set
-			{
-				if ((this._Prototype_Name != value))
-				{
-					this.OnPrototype_NameChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_Name = value;
-					this.SendPropertyChanged("Prototype_Name");
-					this.OnPrototype_NameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_Serial", DbType="TinyInt NOT NULL")]
-		public byte Prototype_Serial
-		{
-			get
-			{
-				return this._Prototype_Serial;
-			}
-			set
-			{
-				if ((this._Prototype_Serial != value))
-				{
-					this.OnPrototype_SerialChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_Serial = value;
-					this.SendPropertyChanged("Prototype_Serial");
-					this.OnPrototype_SerialChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Concrete_Class", DbType="VarChar(4) NOT NULL", CanBeNull=false)]
-		public string Concrete_Class
-		{
-			get
-			{
-				return this._Concrete_Class;
-			}
-			set
-			{
-				if ((this._Concrete_Class != value))
-				{
-					this.OnConcrete_ClassChanging(value);
-					this.SendPropertyChanging();
-					this._Concrete_Class = value;
-					this.SendPropertyChanged("Concrete_Class");
-					this.OnConcrete_ClassChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Is_Air_Entrained", DbType="Bit NOT NULL")]
-		public bool Is_Air_Entrained
-		{
-			get
-			{
-				return this._Is_Air_Entrained;
-			}
-			set
-			{
-				if ((this._Is_Air_Entrained != value))
-				{
-					this.OnIs_Air_EntrainedChanging(value);
-					this.SendPropertyChanging();
-					this._Is_Air_Entrained = value;
-					this.SendPropertyChanged("Is_Air_Entrained");
-					this.OnIs_Air_EntrainedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Target_Air", DbType="Decimal(4,2)")]
-		public System.Nullable<decimal> Target_Air
-		{
-			get
-			{
-				return this._Target_Air;
-			}
-			set
-			{
-				if ((this._Target_Air != value))
-				{
-					this.OnTarget_AirChanging(value);
-					this.SendPropertyChanging();
-					this._Target_Air = value;
-					this.SendPropertyChanged("Target_Air");
-					this.OnTarget_AirChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total_CM", DbType="Int")]
-		public System.Nullable<int> Total_CM
-		{
-			get
-			{
-				return this._Total_CM;
-			}
-			set
-			{
-				if ((this._Total_CM != value))
-				{
-					this.OnTotal_CMChanging(value);
-					this.SendPropertyChanging();
-					this._Total_CM = value;
-					this.SendPropertyChanged("Total_CM");
-					this.OnTotal_CMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total_CA", DbType="Decimal(3,2)")]
-		public System.Nullable<decimal> Total_CA
-		{
-			get
-			{
-				return this._Total_CA;
-			}
-			set
-			{
-				if ((this._Total_CA != value))
-				{
-					this.OnTotal_CAChanging(value);
-					this.SendPropertyChanging();
-					this._Total_CA = value;
-					this.SendPropertyChanged("Total_CA");
-					this.OnTotal_CAChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Calculated_Density", DbType="Decimal(5,1)")]
-		public System.Nullable<decimal> Calculated_Density
-		{
-			get
-			{
-				return this._Calculated_Density;
-			}
-			set
-			{
-				if ((this._Calculated_Density != value))
-				{
-					this.OnCalculated_DensityChanging(value);
-					this.SendPropertyChanging();
-					this._Calculated_Density = value;
-					this.SendPropertyChanged("Calculated_Density");
-					this.OnCalculated_DensityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_Water", DbType="Int")]
-		public System.Nullable<int> Weight_of_Water
-		{
-			get
-			{
-				return this._Weight_of_Water;
-			}
-			set
-			{
-				if ((this._Weight_of_Water != value))
-				{
-					this.OnWeight_of_WaterChanging(value);
-					this.SendPropertyChanging();
-					this._Weight_of_Water = value;
-					this.SendPropertyChanged("Weight_of_Water");
-					this.OnWeight_of_WaterChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Submittal", Storage="_Submittals", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
-		public EntitySet<Submittal> Submittals
-		{
-			get
-			{
-				return this._Submittals;
-			}
-			set
-			{
-				this._Submittals.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Cement_Proportion", Storage="_Cement_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
-		public EntitySet<Cement_Proportion> Cement_Proportions
-		{
-			get
-			{
-				return this._Cement_Proportions;
-			}
-			set
-			{
-				this._Cement_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_SCM_Proportion", Storage="_SCM_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
-		public EntitySet<SCM_Proportion> SCM_Proportions
-		{
-			get
-			{
-				return this._SCM_Proportions;
-			}
-			set
-			{
-				this._SCM_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_CA_Proportion", Storage="_CA_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
-		public EntitySet<CA_Proportion> CA_Proportions
-		{
-			get
-			{
-				return this._CA_Proportions;
-			}
-			set
-			{
-				this._CA_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_FN_Proportion", Storage="_FN_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
-		public EntitySet<FN_Proportion> FN_Proportions
-		{
-			get
-			{
-				return this._FN_Proportions;
-			}
-			set
-			{
-				this._FN_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Mix_Design", Storage="_Mix_Designs", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
-		public EntitySet<Mix_Design> Mix_Designs
-		{
-			get
-			{
-				return this._Mix_Designs;
-			}
-			set
-			{
-				this._Mix_Designs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Admixture_Proportion", Storage="_Admixture_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
-		public EntitySet<Admixture_Proportion> Admixture_Proportions
-		{
-			get
-			{
-				return this._Admixture_Proportions;
-			}
-			set
-			{
-				this._Admixture_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Trial_Batch", Storage="_Trial_Batches", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
-		public EntitySet<Trial_Batch> Trial_Batches
+		public System.Data.Linq.Table<Material> Materials
 		{
 			get
 			{
-				return this._Trial_Batches;
+				return this.GetTable<Material>();
 			}
-			set
-			{
-				this._Trial_Batches.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Submittals(Submittal entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = this;
-		}
-		
-		private void detach_Submittals(Submittal entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = null;
-		}
-		
-		private void attach_Cement_Proportions(Cement_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = this;
-		}
-		
-		private void detach_Cement_Proportions(Cement_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = null;
-		}
-		
-		private void attach_SCM_Proportions(SCM_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = this;
-		}
-		
-		private void detach_SCM_Proportions(SCM_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = null;
-		}
-		
-		private void attach_CA_Proportions(CA_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = this;
-		}
-		
-		private void detach_CA_Proportions(CA_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = null;
-		}
-		
-		private void attach_FN_Proportions(FN_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = this;
-		}
-		
-		private void detach_FN_Proportions(FN_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = null;
-		}
-		
-		private void attach_Mix_Designs(Mix_Design entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = this;
-		}
-		
-		private void detach_Mix_Designs(Mix_Design entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = null;
-		}
-		
-		private void attach_Admixture_Proportions(Admixture_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = this;
-		}
-		
-		private void detach_Admixture_Proportions(Admixture_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = null;
-		}
-		
-		private void attach_Trial_Batches(Trial_Batch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = this;
-		}
-		
-		private void detach_Trial_Batches(Trial_Batch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Prototype = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Material_Types")]
-	public partial class Material_Type : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private byte _Material_Type_ID;
-		
-		private string _Type_Name;
-		
-		private EntitySet<Material> _Materials;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMaterial_Type_IDChanging(byte value);
-    partial void OnMaterial_Type_IDChanged();
-    partial void OnType_NameChanging(string value);
-    partial void OnType_NameChanged();
-    #endregion
-		
-		public Material_Type()
-		{
-			this._Materials = new EntitySet<Material>(new Action<Material>(this.attach_Materials), new Action<Material>(this.detach_Materials));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_Type_ID", AutoSync=AutoSync.OnInsert, DbType="TinyInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public byte Material_Type_ID
-		{
-			get
-			{
-				return this._Material_Type_ID;
-			}
-			set
-			{
-				if ((this._Material_Type_ID != value))
-				{
-					this.OnMaterial_Type_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Material_Type_ID = value;
-					this.SendPropertyChanged("Material_Type_ID");
-					this.OnMaterial_Type_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type_Name", DbType="VarChar(50)")]
-		public string Type_Name
-		{
-			get
-			{
-				return this._Type_Name;
-			}
-			set
-			{
-				if ((this._Type_Name != value))
-				{
-					this.OnType_NameChanging(value);
-					this.SendPropertyChanging();
-					this._Type_Name = value;
-					this.SendPropertyChanged("Type_Name");
-					this.OnType_NameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Material_Type_Material", Storage="_Materials", ThisKey="Material_Type_ID", OtherKey="Material_Type_ID")]
-		public EntitySet<Material> Materials
-		{
-			get
-			{
-				return this._Materials;
-			}
-			set
-			{
-				this._Materials.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Materials(Material entity)
-		{
-			this.SendPropertyChanging();
-			entity.Material_Type = this;
-		}
-		
-		private void detach_Materials(Material entity)
-		{
-			this.SendPropertyChanging();
-			entity.Material_Type = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mix_Designs")]
-	public partial class Mix_Design : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private byte _Mix_ID;
-		
-		private string _Mix_Name;
-		
-		private byte _Submittal_ID;
-		
-		private byte _Prototype_ID;
-		
-		private System.Nullable<byte> _Mix_Serial;
-		
-		private EntityRef<Prototype> _Prototype;
-		
-		private EntityRef<Submittal> _Submittal;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMix_IDChanging(byte value);
-    partial void OnMix_IDChanged();
-    partial void OnMix_NameChanging(string value);
-    partial void OnMix_NameChanged();
-    partial void OnSubmittal_IDChanging(byte value);
-    partial void OnSubmittal_IDChanged();
-    partial void OnPrototype_IDChanging(byte value);
-    partial void OnPrototype_IDChanged();
-    partial void OnMix_SerialChanging(System.Nullable<byte> value);
-    partial void OnMix_SerialChanged();
-    #endregion
-		
-		public Mix_Design()
-		{
-			this._Prototype = default(EntityRef<Prototype>);
-			this._Submittal = default(EntityRef<Submittal>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mix_ID", AutoSync=AutoSync.OnInsert, DbType="TinyInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public byte Mix_ID
-		{
-			get
-			{
-				return this._Mix_ID;
-			}
-			set
-			{
-				if ((this._Mix_ID != value))
-				{
-					this.OnMix_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Mix_ID = value;
-					this.SendPropertyChanged("Mix_ID");
-					this.OnMix_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mix_Name", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
-		public string Mix_Name
-		{
-			get
-			{
-				return this._Mix_Name;
-			}
-			set
-			{
-				if ((this._Mix_Name != value))
-				{
-					this.OnMix_NameChanging(value);
-					this.SendPropertyChanging();
-					this._Mix_Name = value;
-					this.SendPropertyChanged("Mix_Name");
-					this.OnMix_NameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Submittal_ID", DbType="TinyInt NOT NULL")]
-		public byte Submittal_ID
-		{
-			get
-			{
-				return this._Submittal_ID;
-			}
-			set
-			{
-				if ((this._Submittal_ID != value))
-				{
-					if (this._Submittal.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSubmittal_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Submittal_ID = value;
-					this.SendPropertyChanged("Submittal_ID");
-					this.OnSubmittal_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="TinyInt NOT NULL")]
-		public byte Prototype_ID
-		{
-			get
-			{
-				return this._Prototype_ID;
-			}
-			set
-			{
-				if ((this._Prototype_ID != value))
-				{
-					if (this._Prototype.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPrototype_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_ID = value;
-					this.SendPropertyChanged("Prototype_ID");
-					this.OnPrototype_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mix_Serial", DbType="TinyInt")]
-		public System.Nullable<byte> Mix_Serial
-		{
-			get
-			{
-				return this._Mix_Serial;
-			}
-			set
-			{
-				if ((this._Mix_Serial != value))
-				{
-					this.OnMix_SerialChanging(value);
-					this.SendPropertyChanging();
-					this._Mix_Serial = value;
-					this.SendPropertyChanged("Mix_Serial");
-					this.OnMix_SerialChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Mix_Design", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
-		public Prototype Prototype
-		{
-			get
-			{
-				return this._Prototype.Entity;
-			}
-			set
-			{
-				Prototype previousValue = this._Prototype.Entity;
-				if (((previousValue != value) 
-							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Prototype.Entity = null;
-						previousValue.Mix_Designs.Remove(this);
-					}
-					this._Prototype.Entity = value;
-					if ((value != null))
-					{
-						value.Mix_Designs.Add(this);
-						this._Prototype_ID = value.Prototype_ID;
-					}
-					else
-					{
-						this._Prototype_ID = default(byte);
-					}
-					this.SendPropertyChanged("Prototype");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Submittal_Mix_Design", Storage="_Submittal", ThisKey="Submittal_ID", OtherKey="Submittal_ID", IsForeignKey=true)]
-		public Submittal Submittal
-		{
-			get
-			{
-				return this._Submittal.Entity;
-			}
-			set
-			{
-				Submittal previousValue = this._Submittal.Entity;
-				if (((previousValue != value) 
-							|| (this._Submittal.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Submittal.Entity = null;
-						previousValue.Mix_Designs.Remove(this);
-					}
-					this._Submittal.Entity = value;
-					if ((value != null))
-					{
-						value.Mix_Designs.Add(this);
-						this._Submittal_ID = value.Submittal_ID;
-					}
-					else
-					{
-						this._Submittal_ID = default(byte);
-					}
-					this.SendPropertyChanged("Submittal");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Admixture_Proportions")]
-	public partial class Admixture_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Admixture_Proportions_ID;
-		
-		private byte _Prototype_ID;
-		
-		private byte _Admixture_ID;
-		
-		private System.Nullable<decimal> _Admixture_Qty;
-		
-		private EntityRef<Prototype> _Prototype;
-		
-		private EntityRef<Admixture> _Admixture;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAdmixture_Proportions_IDChanging(int value);
-    partial void OnAdmixture_Proportions_IDChanged();
-    partial void OnPrototype_IDChanging(byte value);
-    partial void OnPrototype_IDChanged();
-    partial void OnAdmixture_IDChanging(byte value);
-    partial void OnAdmixture_IDChanged();
-    partial void OnAdmixture_QtyChanging(System.Nullable<decimal> value);
-    partial void OnAdmixture_QtyChanged();
-    #endregion
-		
-		public Admixture_Proportion()
-		{
-			this._Prototype = default(EntityRef<Prototype>);
-			this._Admixture = default(EntityRef<Admixture>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admixture_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Admixture_Proportions_ID
-		{
-			get
-			{
-				return this._Admixture_Proportions_ID;
-			}
-			set
-			{
-				if ((this._Admixture_Proportions_ID != value))
-				{
-					this.OnAdmixture_Proportions_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Admixture_Proportions_ID = value;
-					this.SendPropertyChanged("Admixture_Proportions_ID");
-					this.OnAdmixture_Proportions_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="TinyInt NOT NULL")]
-		public byte Prototype_ID
-		{
-			get
-			{
-				return this._Prototype_ID;
-			}
-			set
-			{
-				if ((this._Prototype_ID != value))
-				{
-					if (this._Prototype.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPrototype_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Prototype_ID = value;
-					this.SendPropertyChanged("Prototype_ID");
-					this.OnPrototype_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admixture_ID", DbType="TinyInt NOT NULL")]
-		public byte Admixture_ID
-		{
-			get
-			{
-				return this._Admixture_ID;
-			}
-			set
-			{
-				if ((this._Admixture_ID != value))
-				{
-					if (this._Admixture.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAdmixture_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Admixture_ID = value;
-					this.SendPropertyChanged("Admixture_ID");
-					this.OnAdmixture_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admixture_Qty", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> Admixture_Qty
-		{
-			get
-			{
-				return this._Admixture_Qty;
-			}
-			set
-			{
-				if ((this._Admixture_Qty != value))
-				{
-					this.OnAdmixture_QtyChanging(value);
-					this.SendPropertyChanging();
-					this._Admixture_Qty = value;
-					this.SendPropertyChanged("Admixture_Qty");
-					this.OnAdmixture_QtyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Admixture_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
-		public Prototype Prototype
-		{
-			get
-			{
-				return this._Prototype.Entity;
-			}
-			set
-			{
-				Prototype previousValue = this._Prototype.Entity;
-				if (((previousValue != value) 
-							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Prototype.Entity = null;
-						previousValue.Admixture_Proportions.Remove(this);
-					}
-					this._Prototype.Entity = value;
-					if ((value != null))
-					{
-						value.Admixture_Proportions.Add(this);
-						this._Prototype_ID = value.Prototype_ID;
-					}
-					else
-					{
-						this._Prototype_ID = default(byte);
-					}
-					this.SendPropertyChanged("Prototype");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Admixture_Admixture_Proportion", Storage="_Admixture", ThisKey="Admixture_ID", OtherKey="Admixture_ID", IsForeignKey=true)]
-		public Admixture Admixture
+		public System.Data.Linq.Table<Material_Type> Material_Types
 		{
 			get
-			{
-				return this._Admixture.Entity;
-			}
-			set
-			{
-				Admixture previousValue = this._Admixture.Entity;
-				if (((previousValue != value) 
-							|| (this._Admixture.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Admixture.Entity = null;
-						previousValue.Admixture_Proportions.Remove(this);
-					}
-					this._Admixture.Entity = value;
-					if ((value != null))
-					{
-						value.Admixture_Proportions.Add(this);
-						this._Admixture_ID = value.Admixture_ID;
-					}
-					else
-					{
-						this._Admixture_ID = default(byte);
-					}
-					this.SendPropertyChanged("Admixture");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
 			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<Material_Type>();
 			}
 		}
 	}
@@ -2460,7 +256,7 @@ namespace Concrete_Mix_Design_Tracker
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private byte _TB_ID;
+		private int _TB_ID;
 		
 		private string _TB_Name;
 		
@@ -2476,9 +272,9 @@ namespace Concrete_Mix_Design_Tracker
 		
 		private System.Nullable<int> _Compressive_Strength;
 		
-		private System.Nullable<byte> _Prototype_ID;
+		private int _Prototype_ID;
 		
-		private System.Nullable<byte> _TB_Serial;
+		private int _TB_Serial;
 		
 		private string _Notes;
 		
@@ -2490,7 +286,7 @@ namespace Concrete_Mix_Design_Tracker
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnTB_IDChanging(byte value);
+    partial void OnTB_IDChanging(int value);
     partial void OnTB_IDChanged();
     partial void OnTB_NameChanging(string value);
     partial void OnTB_NameChanged();
@@ -2506,9 +302,9 @@ namespace Concrete_Mix_Design_Tracker
     partial void OnMeasured_DensityChanged();
     partial void OnCompressive_StrengthChanging(System.Nullable<int> value);
     partial void OnCompressive_StrengthChanged();
-    partial void OnPrototype_IDChanging(System.Nullable<byte> value);
+    partial void OnPrototype_IDChanging(int value);
     partial void OnPrototype_IDChanged();
-    partial void OnTB_SerialChanging(System.Nullable<byte> value);
+    partial void OnTB_SerialChanging(int value);
     partial void OnTB_SerialChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
@@ -2521,8 +317,8 @@ namespace Concrete_Mix_Design_Tracker
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_ID", AutoSync=AutoSync.OnInsert, DbType="TinyInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public byte TB_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int TB_ID
 		{
 			get
 			{
@@ -2541,7 +337,7 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_Name", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
 		public string TB_Name
 		{
 			get
@@ -2681,8 +477,8 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="TinyInt")]
-		public System.Nullable<byte> Prototype_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL")]
+		public int Prototype_ID
 		{
 			get
 			{
@@ -2705,8 +501,8 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_Serial", DbType="TinyInt")]
-		public System.Nullable<byte> TB_Serial
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_Serial", DbType="Int NOT NULL")]
+		public int TB_Serial
 		{
 			get
 			{
@@ -2725,7 +521,7 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="VarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -2785,7 +581,7 @@ namespace Concrete_Mix_Design_Tracker
 					}
 					else
 					{
-						this._Prototype_ID = default(Nullable<byte>);
+						this._Prototype_ID = default(int);
 					}
 					this.SendPropertyChanged("Prototype");
 				}
@@ -2825,15 +621,2009 @@ namespace Concrete_Mix_Design_Tracker
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Submittals")]
+	public partial class Submittal : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Submittal_ID;
+		
+		private System.Nullable<int> _Owner_Number;
+		
+		private int _TB_ID;
+		
+		private int _Prototype_ID;
+		
+		private EntitySet<Mix_Design> _Mix_Designs;
+		
+		private EntityRef<Trial_Batch> _Trial_Batch;
+		
+		private EntityRef<Prototype> _Prototype;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSubmittal_IDChanging(int value);
+    partial void OnSubmittal_IDChanged();
+    partial void OnOwner_NumberChanging(System.Nullable<int> value);
+    partial void OnOwner_NumberChanged();
+    partial void OnTB_IDChanging(int value);
+    partial void OnTB_IDChanged();
+    partial void OnPrototype_IDChanging(int value);
+    partial void OnPrototype_IDChanged();
+    #endregion
+		
+		public Submittal()
+		{
+			this._Mix_Designs = new EntitySet<Mix_Design>(new Action<Mix_Design>(this.attach_Mix_Designs), new Action<Mix_Design>(this.detach_Mix_Designs));
+			this._Trial_Batch = default(EntityRef<Trial_Batch>);
+			this._Prototype = default(EntityRef<Prototype>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Submittal_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Submittal_ID
+		{
+			get
+			{
+				return this._Submittal_ID;
+			}
+			set
+			{
+				if ((this._Submittal_ID != value))
+				{
+					this.OnSubmittal_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Submittal_ID = value;
+					this.SendPropertyChanged("Submittal_ID");
+					this.OnSubmittal_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner_Number", DbType="Int")]
+		public System.Nullable<int> Owner_Number
+		{
+			get
+			{
+				return this._Owner_Number;
+			}
+			set
+			{
+				if ((this._Owner_Number != value))
+				{
+					this.OnOwner_NumberChanging(value);
+					this.SendPropertyChanging();
+					this._Owner_Number = value;
+					this.SendPropertyChanged("Owner_Number");
+					this.OnOwner_NumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TB_ID", DbType="Int NOT NULL")]
+		public int TB_ID
+		{
+			get
+			{
+				return this._TB_ID;
+			}
+			set
+			{
+				if ((this._TB_ID != value))
+				{
+					if (this._Trial_Batch.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTB_IDChanging(value);
+					this.SendPropertyChanging();
+					this._TB_ID = value;
+					this.SendPropertyChanged("TB_ID");
+					this.OnTB_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL")]
+		public int Prototype_ID
+		{
+			get
+			{
+				return this._Prototype_ID;
+			}
+			set
+			{
+				if ((this._Prototype_ID != value))
+				{
+					if (this._Prototype.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPrototype_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_ID = value;
+					this.SendPropertyChanged("Prototype_ID");
+					this.OnPrototype_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Submittal_Mix_Design", Storage="_Mix_Designs", ThisKey="Submittal_ID", OtherKey="Submittal_ID")]
+		public EntitySet<Mix_Design> Mix_Designs
+		{
+			get
+			{
+				return this._Mix_Designs;
+			}
+			set
+			{
+				this._Mix_Designs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Trial_Batch_Submittal", Storage="_Trial_Batch", ThisKey="TB_ID", OtherKey="TB_ID", IsForeignKey=true)]
+		public Trial_Batch Trial_Batch
+		{
+			get
+			{
+				return this._Trial_Batch.Entity;
+			}
+			set
+			{
+				Trial_Batch previousValue = this._Trial_Batch.Entity;
+				if (((previousValue != value) 
+							|| (this._Trial_Batch.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Trial_Batch.Entity = null;
+						previousValue.Submittals.Remove(this);
+					}
+					this._Trial_Batch.Entity = value;
+					if ((value != null))
+					{
+						value.Submittals.Add(this);
+						this._TB_ID = value.TB_ID;
+					}
+					else
+					{
+						this._TB_ID = default(int);
+					}
+					this.SendPropertyChanged("Trial_Batch");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Submittal", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
+		public Prototype Prototype
+		{
+			get
+			{
+				return this._Prototype.Entity;
+			}
+			set
+			{
+				Prototype previousValue = this._Prototype.Entity;
+				if (((previousValue != value) 
+							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Prototype.Entity = null;
+						previousValue.Submittals.Remove(this);
+					}
+					this._Prototype.Entity = value;
+					if ((value != null))
+					{
+						value.Submittals.Add(this);
+						this._Prototype_ID = value.Prototype_ID;
+					}
+					else
+					{
+						this._Prototype_ID = default(int);
+					}
+					this.SendPropertyChanged("Prototype");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Mix_Designs(Mix_Design entity)
+		{
+			this.SendPropertyChanging();
+			entity.Submittal = this;
+		}
+		
+		private void detach_Mix_Designs(Mix_Design entity)
+		{
+			this.SendPropertyChanging();
+			entity.Submittal = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mix_Designs")]
+	public partial class Mix_Design : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Mix_ID;
+		
+		private string _Mix_Name;
+		
+		private int _Submittal_ID;
+		
+		private int _Prototype_ID;
+		
+		private byte _Mix_Serial;
+		
+		private EntityRef<Submittal> _Submittal;
+		
+		private EntityRef<Prototype> _Prototype;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMix_IDChanging(int value);
+    partial void OnMix_IDChanged();
+    partial void OnMix_NameChanging(string value);
+    partial void OnMix_NameChanged();
+    partial void OnSubmittal_IDChanging(int value);
+    partial void OnSubmittal_IDChanged();
+    partial void OnPrototype_IDChanging(int value);
+    partial void OnPrototype_IDChanged();
+    partial void OnMix_SerialChanging(byte value);
+    partial void OnMix_SerialChanged();
+    #endregion
+		
+		public Mix_Design()
+		{
+			this._Submittal = default(EntityRef<Submittal>);
+			this._Prototype = default(EntityRef<Prototype>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mix_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Mix_ID
+		{
+			get
+			{
+				return this._Mix_ID;
+			}
+			set
+			{
+				if ((this._Mix_ID != value))
+				{
+					this.OnMix_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Mix_ID = value;
+					this.SendPropertyChanged("Mix_ID");
+					this.OnMix_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mix_Name", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
+		public string Mix_Name
+		{
+			get
+			{
+				return this._Mix_Name;
+			}
+			set
+			{
+				if ((this._Mix_Name != value))
+				{
+					this.OnMix_NameChanging(value);
+					this.SendPropertyChanging();
+					this._Mix_Name = value;
+					this.SendPropertyChanged("Mix_Name");
+					this.OnMix_NameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Submittal_ID", DbType="Int NOT NULL")]
+		public int Submittal_ID
+		{
+			get
+			{
+				return this._Submittal_ID;
+			}
+			set
+			{
+				if ((this._Submittal_ID != value))
+				{
+					if (this._Submittal.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSubmittal_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Submittal_ID = value;
+					this.SendPropertyChanged("Submittal_ID");
+					this.OnSubmittal_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL")]
+		public int Prototype_ID
+		{
+			get
+			{
+				return this._Prototype_ID;
+			}
+			set
+			{
+				if ((this._Prototype_ID != value))
+				{
+					if (this._Prototype.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPrototype_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_ID = value;
+					this.SendPropertyChanged("Prototype_ID");
+					this.OnPrototype_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mix_Serial", DbType="TinyInt NOT NULL")]
+		public byte Mix_Serial
+		{
+			get
+			{
+				return this._Mix_Serial;
+			}
+			set
+			{
+				if ((this._Mix_Serial != value))
+				{
+					this.OnMix_SerialChanging(value);
+					this.SendPropertyChanging();
+					this._Mix_Serial = value;
+					this.SendPropertyChanged("Mix_Serial");
+					this.OnMix_SerialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Submittal_Mix_Design", Storage="_Submittal", ThisKey="Submittal_ID", OtherKey="Submittal_ID", IsForeignKey=true)]
+		public Submittal Submittal
+		{
+			get
+			{
+				return this._Submittal.Entity;
+			}
+			set
+			{
+				Submittal previousValue = this._Submittal.Entity;
+				if (((previousValue != value) 
+							|| (this._Submittal.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Submittal.Entity = null;
+						previousValue.Mix_Designs.Remove(this);
+					}
+					this._Submittal.Entity = value;
+					if ((value != null))
+					{
+						value.Mix_Designs.Add(this);
+						this._Submittal_ID = value.Submittal_ID;
+					}
+					else
+					{
+						this._Submittal_ID = default(int);
+					}
+					this.SendPropertyChanged("Submittal");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Mix_Design", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
+		public Prototype Prototype
+		{
+			get
+			{
+				return this._Prototype.Entity;
+			}
+			set
+			{
+				Prototype previousValue = this._Prototype.Entity;
+				if (((previousValue != value) 
+							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Prototype.Entity = null;
+						previousValue.Mix_Designs.Remove(this);
+					}
+					this._Prototype.Entity = value;
+					if ((value != null))
+					{
+						value.Mix_Designs.Add(this);
+						this._Prototype_ID = value.Prototype_ID;
+					}
+					else
+					{
+						this._Prototype_ID = default(int);
+					}
+					this.SendPropertyChanged("Prototype");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Prototypes")]
+	public partial class Prototype : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Prototype_ID;
+		
+		private string _Prototype_Name;
+		
+		private byte _Prototype_Serial;
+		
+		private string _Concrete_Class;
+		
+		private System.Nullable<bool> _Is_Air_Entrained;
+		
+		private System.Nullable<decimal> _Target_Air;
+		
+		private System.Nullable<int> _Weight_of_Water;
+		
+		private EntitySet<Trial_Batch> _Trial_Batches;
+		
+		private EntitySet<Submittal> _Submittals;
+		
+		private EntitySet<Mix_Design> _Mix_Designs;
+		
+		private EntitySet<Cement_Proportion> _Cement_Proportions;
+		
+		private EntitySet<SCM_Proportion> _SCM_Proportions;
+		
+		private EntitySet<CA_Proportion> _CA_Proportions;
+		
+		private EntitySet<FN_Proportion> _FN_Proportions;
+		
+		private EntitySet<Admixture_Proportion> _Admixture_Proportions;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPrototype_IDChanging(int value);
+    partial void OnPrototype_IDChanged();
+    partial void OnPrototype_NameChanging(string value);
+    partial void OnPrototype_NameChanged();
+    partial void OnPrototype_SerialChanging(byte value);
+    partial void OnPrototype_SerialChanged();
+    partial void OnConcrete_ClassChanging(string value);
+    partial void OnConcrete_ClassChanged();
+    partial void OnIs_Air_EntrainedChanging(System.Nullable<bool> value);
+    partial void OnIs_Air_EntrainedChanged();
+    partial void OnTarget_AirChanging(System.Nullable<decimal> value);
+    partial void OnTarget_AirChanged();
+    partial void OnWeight_of_WaterChanging(System.Nullable<int> value);
+    partial void OnWeight_of_WaterChanged();
+    #endregion
+		
+		public Prototype()
+		{
+			this._Trial_Batches = new EntitySet<Trial_Batch>(new Action<Trial_Batch>(this.attach_Trial_Batches), new Action<Trial_Batch>(this.detach_Trial_Batches));
+			this._Submittals = new EntitySet<Submittal>(new Action<Submittal>(this.attach_Submittals), new Action<Submittal>(this.detach_Submittals));
+			this._Mix_Designs = new EntitySet<Mix_Design>(new Action<Mix_Design>(this.attach_Mix_Designs), new Action<Mix_Design>(this.detach_Mix_Designs));
+			this._Cement_Proportions = new EntitySet<Cement_Proportion>(new Action<Cement_Proportion>(this.attach_Cement_Proportions), new Action<Cement_Proportion>(this.detach_Cement_Proportions));
+			this._SCM_Proportions = new EntitySet<SCM_Proportion>(new Action<SCM_Proportion>(this.attach_SCM_Proportions), new Action<SCM_Proportion>(this.detach_SCM_Proportions));
+			this._CA_Proportions = new EntitySet<CA_Proportion>(new Action<CA_Proportion>(this.attach_CA_Proportions), new Action<CA_Proportion>(this.detach_CA_Proportions));
+			this._FN_Proportions = new EntitySet<FN_Proportion>(new Action<FN_Proportion>(this.attach_FN_Proportions), new Action<FN_Proportion>(this.detach_FN_Proportions));
+			this._Admixture_Proportions = new EntitySet<Admixture_Proportion>(new Action<Admixture_Proportion>(this.attach_Admixture_Proportions), new Action<Admixture_Proportion>(this.detach_Admixture_Proportions));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Prototype_ID
+		{
+			get
+			{
+				return this._Prototype_ID;
+			}
+			set
+			{
+				if ((this._Prototype_ID != value))
+				{
+					this.OnPrototype_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_ID = value;
+					this.SendPropertyChanged("Prototype_ID");
+					this.OnPrototype_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_Name", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string Prototype_Name
+		{
+			get
+			{
+				return this._Prototype_Name;
+			}
+			set
+			{
+				if ((this._Prototype_Name != value))
+				{
+					this.OnPrototype_NameChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_Name = value;
+					this.SendPropertyChanged("Prototype_Name");
+					this.OnPrototype_NameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_Serial", DbType="TinyInt NOT NULL")]
+		public byte Prototype_Serial
+		{
+			get
+			{
+				return this._Prototype_Serial;
+			}
+			set
+			{
+				if ((this._Prototype_Serial != value))
+				{
+					this.OnPrototype_SerialChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_Serial = value;
+					this.SendPropertyChanged("Prototype_Serial");
+					this.OnPrototype_SerialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Concrete_Class", DbType="VarChar(4) NOT NULL", CanBeNull=false)]
+		public string Concrete_Class
+		{
+			get
+			{
+				return this._Concrete_Class;
+			}
+			set
+			{
+				if ((this._Concrete_Class != value))
+				{
+					this.OnConcrete_ClassChanging(value);
+					this.SendPropertyChanging();
+					this._Concrete_Class = value;
+					this.SendPropertyChanged("Concrete_Class");
+					this.OnConcrete_ClassChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Is_Air_Entrained", DbType="Bit")]
+		public System.Nullable<bool> Is_Air_Entrained
+		{
+			get
+			{
+				return this._Is_Air_Entrained;
+			}
+			set
+			{
+				if ((this._Is_Air_Entrained != value))
+				{
+					this.OnIs_Air_EntrainedChanging(value);
+					this.SendPropertyChanging();
+					this._Is_Air_Entrained = value;
+					this.SendPropertyChanged("Is_Air_Entrained");
+					this.OnIs_Air_EntrainedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Target_Air", DbType="Decimal(4,2)")]
+		public System.Nullable<decimal> Target_Air
+		{
+			get
+			{
+				return this._Target_Air;
+			}
+			set
+			{
+				if ((this._Target_Air != value))
+				{
+					this.OnTarget_AirChanging(value);
+					this.SendPropertyChanging();
+					this._Target_Air = value;
+					this.SendPropertyChanged("Target_Air");
+					this.OnTarget_AirChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_Water", DbType="Int")]
+		public System.Nullable<int> Weight_of_Water
+		{
+			get
+			{
+				return this._Weight_of_Water;
+			}
+			set
+			{
+				if ((this._Weight_of_Water != value))
+				{
+					this.OnWeight_of_WaterChanging(value);
+					this.SendPropertyChanging();
+					this._Weight_of_Water = value;
+					this.SendPropertyChanged("Weight_of_Water");
+					this.OnWeight_of_WaterChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Trial_Batch", Storage="_Trial_Batches", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
+		public EntitySet<Trial_Batch> Trial_Batches
+		{
+			get
+			{
+				return this._Trial_Batches;
+			}
+			set
+			{
+				this._Trial_Batches.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Submittal", Storage="_Submittals", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
+		public EntitySet<Submittal> Submittals
+		{
+			get
+			{
+				return this._Submittals;
+			}
+			set
+			{
+				this._Submittals.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Mix_Design", Storage="_Mix_Designs", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
+		public EntitySet<Mix_Design> Mix_Designs
+		{
+			get
+			{
+				return this._Mix_Designs;
+			}
+			set
+			{
+				this._Mix_Designs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Cement_Proportion", Storage="_Cement_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
+		public EntitySet<Cement_Proportion> Cement_Proportions
+		{
+			get
+			{
+				return this._Cement_Proportions;
+			}
+			set
+			{
+				this._Cement_Proportions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_SCM_Proportion", Storage="_SCM_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
+		public EntitySet<SCM_Proportion> SCM_Proportions
+		{
+			get
+			{
+				return this._SCM_Proportions;
+			}
+			set
+			{
+				this._SCM_Proportions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_CA_Proportion", Storage="_CA_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
+		public EntitySet<CA_Proportion> CA_Proportions
+		{
+			get
+			{
+				return this._CA_Proportions;
+			}
+			set
+			{
+				this._CA_Proportions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_FN_Proportion", Storage="_FN_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
+		public EntitySet<FN_Proportion> FN_Proportions
+		{
+			get
+			{
+				return this._FN_Proportions;
+			}
+			set
+			{
+				this._FN_Proportions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Admixture_Proportion", Storage="_Admixture_Proportions", ThisKey="Prototype_ID", OtherKey="Prototype_ID")]
+		public EntitySet<Admixture_Proportion> Admixture_Proportions
+		{
+			get
+			{
+				return this._Admixture_Proportions;
+			}
+			set
+			{
+				this._Admixture_Proportions.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Trial_Batches(Trial_Batch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = this;
+		}
+		
+		private void detach_Trial_Batches(Trial_Batch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = null;
+		}
+		
+		private void attach_Submittals(Submittal entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = this;
+		}
+		
+		private void detach_Submittals(Submittal entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = null;
+		}
+		
+		private void attach_Mix_Designs(Mix_Design entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = this;
+		}
+		
+		private void detach_Mix_Designs(Mix_Design entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = null;
+		}
+		
+		private void attach_Cement_Proportions(Cement_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = this;
+		}
+		
+		private void detach_Cement_Proportions(Cement_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = null;
+		}
+		
+		private void attach_SCM_Proportions(SCM_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = this;
+		}
+		
+		private void detach_SCM_Proportions(SCM_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = null;
+		}
+		
+		private void attach_CA_Proportions(CA_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = this;
+		}
+		
+		private void detach_CA_Proportions(CA_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = null;
+		}
+		
+		private void attach_FN_Proportions(FN_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = this;
+		}
+		
+		private void detach_FN_Proportions(FN_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = null;
+		}
+		
+		private void attach_Admixture_Proportions(Admixture_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = this;
+		}
+		
+		private void detach_Admixture_Proportions(Admixture_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Prototype = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cement_Proportions")]
+	public partial class Cement_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Cement_Proportions_ID;
+		
+		private int _Prototype_ID;
+		
+		private int _Cement_ID;
+		
+		private System.Nullable<int> _Weight_of_Cement;
+		
+		private EntityRef<Prototype> _Prototype;
+		
+		private EntityRef<Cement> _Cement;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCement_Proportions_IDChanging(int value);
+    partial void OnCement_Proportions_IDChanged();
+    partial void OnPrototype_IDChanging(int value);
+    partial void OnPrototype_IDChanged();
+    partial void OnCement_IDChanging(int value);
+    partial void OnCement_IDChanged();
+    partial void OnWeight_of_CementChanging(System.Nullable<int> value);
+    partial void OnWeight_of_CementChanged();
+    #endregion
+		
+		public Cement_Proportion()
+		{
+			this._Prototype = default(EntityRef<Prototype>);
+			this._Cement = default(EntityRef<Cement>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cement_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Cement_Proportions_ID
+		{
+			get
+			{
+				return this._Cement_Proportions_ID;
+			}
+			set
+			{
+				if ((this._Cement_Proportions_ID != value))
+				{
+					this.OnCement_Proportions_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Cement_Proportions_ID = value;
+					this.SendPropertyChanged("Cement_Proportions_ID");
+					this.OnCement_Proportions_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL")]
+		public int Prototype_ID
+		{
+			get
+			{
+				return this._Prototype_ID;
+			}
+			set
+			{
+				if ((this._Prototype_ID != value))
+				{
+					if (this._Prototype.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPrototype_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_ID = value;
+					this.SendPropertyChanged("Prototype_ID");
+					this.OnPrototype_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cement_ID", DbType="Int NOT NULL")]
+		public int Cement_ID
+		{
+			get
+			{
+				return this._Cement_ID;
+			}
+			set
+			{
+				if ((this._Cement_ID != value))
+				{
+					if (this._Cement.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCement_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Cement_ID = value;
+					this.SendPropertyChanged("Cement_ID");
+					this.OnCement_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_Cement", DbType="Int")]
+		public System.Nullable<int> Weight_of_Cement
+		{
+			get
+			{
+				return this._Weight_of_Cement;
+			}
+			set
+			{
+				if ((this._Weight_of_Cement != value))
+				{
+					this.OnWeight_of_CementChanging(value);
+					this.SendPropertyChanging();
+					this._Weight_of_Cement = value;
+					this.SendPropertyChanged("Weight_of_Cement");
+					this.OnWeight_of_CementChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Cement_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
+		public Prototype Prototype
+		{
+			get
+			{
+				return this._Prototype.Entity;
+			}
+			set
+			{
+				Prototype previousValue = this._Prototype.Entity;
+				if (((previousValue != value) 
+							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Prototype.Entity = null;
+						previousValue.Cement_Proportions.Remove(this);
+					}
+					this._Prototype.Entity = value;
+					if ((value != null))
+					{
+						value.Cement_Proportions.Add(this);
+						this._Prototype_ID = value.Prototype_ID;
+					}
+					else
+					{
+						this._Prototype_ID = default(int);
+					}
+					this.SendPropertyChanged("Prototype");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cement_Cement_Proportion", Storage="_Cement", ThisKey="Cement_ID", OtherKey="Cement_ID", IsForeignKey=true)]
+		public Cement Cement
+		{
+			get
+			{
+				return this._Cement.Entity;
+			}
+			set
+			{
+				Cement previousValue = this._Cement.Entity;
+				if (((previousValue != value) 
+							|| (this._Cement.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Cement.Entity = null;
+						previousValue.Cement_Proportions.Remove(this);
+					}
+					this._Cement.Entity = value;
+					if ((value != null))
+					{
+						value.Cement_Proportions.Add(this);
+						this._Cement_ID = value.Cement_ID;
+					}
+					else
+					{
+						this._Cement_ID = default(int);
+					}
+					this.SendPropertyChanged("Cement");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SCM_Proportions")]
+	public partial class SCM_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _SCM_Proportions_ID;
+		
+		private int _Prototype_ID;
+		
+		private int _SCM_ID;
+		
+		private System.Nullable<int> _Weight_of_SCMs;
+		
+		private EntityRef<Prototype> _Prototype;
+		
+		private EntityRef<SCM> _SCM;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSCM_Proportions_IDChanging(int value);
+    partial void OnSCM_Proportions_IDChanged();
+    partial void OnPrototype_IDChanging(int value);
+    partial void OnPrototype_IDChanged();
+    partial void OnSCM_IDChanging(int value);
+    partial void OnSCM_IDChanged();
+    partial void OnWeight_of_SCMsChanging(System.Nullable<int> value);
+    partial void OnWeight_of_SCMsChanged();
+    #endregion
+		
+		public SCM_Proportion()
+		{
+			this._Prototype = default(EntityRef<Prototype>);
+			this._SCM = default(EntityRef<SCM>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCM_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int SCM_Proportions_ID
+		{
+			get
+			{
+				return this._SCM_Proportions_ID;
+			}
+			set
+			{
+				if ((this._SCM_Proportions_ID != value))
+				{
+					this.OnSCM_Proportions_IDChanging(value);
+					this.SendPropertyChanging();
+					this._SCM_Proportions_ID = value;
+					this.SendPropertyChanged("SCM_Proportions_ID");
+					this.OnSCM_Proportions_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL")]
+		public int Prototype_ID
+		{
+			get
+			{
+				return this._Prototype_ID;
+			}
+			set
+			{
+				if ((this._Prototype_ID != value))
+				{
+					if (this._Prototype.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPrototype_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_ID = value;
+					this.SendPropertyChanged("Prototype_ID");
+					this.OnPrototype_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCM_ID", DbType="Int NOT NULL")]
+		public int SCM_ID
+		{
+			get
+			{
+				return this._SCM_ID;
+			}
+			set
+			{
+				if ((this._SCM_ID != value))
+				{
+					if (this._SCM.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSCM_IDChanging(value);
+					this.SendPropertyChanging();
+					this._SCM_ID = value;
+					this.SendPropertyChanged("SCM_ID");
+					this.OnSCM_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_SCMs", DbType="Int")]
+		public System.Nullable<int> Weight_of_SCMs
+		{
+			get
+			{
+				return this._Weight_of_SCMs;
+			}
+			set
+			{
+				if ((this._Weight_of_SCMs != value))
+				{
+					this.OnWeight_of_SCMsChanging(value);
+					this.SendPropertyChanging();
+					this._Weight_of_SCMs = value;
+					this.SendPropertyChanged("Weight_of_SCMs");
+					this.OnWeight_of_SCMsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_SCM_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
+		public Prototype Prototype
+		{
+			get
+			{
+				return this._Prototype.Entity;
+			}
+			set
+			{
+				Prototype previousValue = this._Prototype.Entity;
+				if (((previousValue != value) 
+							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Prototype.Entity = null;
+						previousValue.SCM_Proportions.Remove(this);
+					}
+					this._Prototype.Entity = value;
+					if ((value != null))
+					{
+						value.SCM_Proportions.Add(this);
+						this._Prototype_ID = value.Prototype_ID;
+					}
+					else
+					{
+						this._Prototype_ID = default(int);
+					}
+					this.SendPropertyChanged("Prototype");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SCM_SCM_Proportion", Storage="_SCM", ThisKey="SCM_ID", OtherKey="SCM_ID", IsForeignKey=true)]
+		public SCM SCM
+		{
+			get
+			{
+				return this._SCM.Entity;
+			}
+			set
+			{
+				SCM previousValue = this._SCM.Entity;
+				if (((previousValue != value) 
+							|| (this._SCM.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SCM.Entity = null;
+						previousValue.SCM_Proportions.Remove(this);
+					}
+					this._SCM.Entity = value;
+					if ((value != null))
+					{
+						value.SCM_Proportions.Add(this);
+						this._SCM_ID = value.SCM_ID;
+					}
+					else
+					{
+						this._SCM_ID = default(int);
+					}
+					this.SendPropertyChanged("SCM");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CA_Proportions")]
+	public partial class CA_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _CA_Proportions_ID;
+		
+		private int _Prototype_ID;
+		
+		private int _CA_ID;
+		
+		private System.Nullable<int> _Weight_of_CA;
+		
+		private EntityRef<Prototype> _Prototype;
+		
+		private EntityRef<Coarse_Aggregate> _Coarse_Aggregate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCA_Proportions_IDChanging(int value);
+    partial void OnCA_Proportions_IDChanged();
+    partial void OnPrototype_IDChanging(int value);
+    partial void OnPrototype_IDChanged();
+    partial void OnCA_IDChanging(int value);
+    partial void OnCA_IDChanged();
+    partial void OnWeight_of_CAChanging(System.Nullable<int> value);
+    partial void OnWeight_of_CAChanged();
+    #endregion
+		
+		public CA_Proportion()
+		{
+			this._Prototype = default(EntityRef<Prototype>);
+			this._Coarse_Aggregate = default(EntityRef<Coarse_Aggregate>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int CA_Proportions_ID
+		{
+			get
+			{
+				return this._CA_Proportions_ID;
+			}
+			set
+			{
+				if ((this._CA_Proportions_ID != value))
+				{
+					this.OnCA_Proportions_IDChanging(value);
+					this.SendPropertyChanging();
+					this._CA_Proportions_ID = value;
+					this.SendPropertyChanged("CA_Proportions_ID");
+					this.OnCA_Proportions_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL")]
+		public int Prototype_ID
+		{
+			get
+			{
+				return this._Prototype_ID;
+			}
+			set
+			{
+				if ((this._Prototype_ID != value))
+				{
+					if (this._Prototype.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPrototype_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_ID = value;
+					this.SendPropertyChanged("Prototype_ID");
+					this.OnPrototype_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_ID", DbType="Int NOT NULL")]
+		public int CA_ID
+		{
+			get
+			{
+				return this._CA_ID;
+			}
+			set
+			{
+				if ((this._CA_ID != value))
+				{
+					if (this._Coarse_Aggregate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCA_IDChanging(value);
+					this.SendPropertyChanging();
+					this._CA_ID = value;
+					this.SendPropertyChanged("CA_ID");
+					this.OnCA_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_CA", DbType="Int")]
+		public System.Nullable<int> Weight_of_CA
+		{
+			get
+			{
+				return this._Weight_of_CA;
+			}
+			set
+			{
+				if ((this._Weight_of_CA != value))
+				{
+					this.OnWeight_of_CAChanging(value);
+					this.SendPropertyChanging();
+					this._Weight_of_CA = value;
+					this.SendPropertyChanged("Weight_of_CA");
+					this.OnWeight_of_CAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_CA_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
+		public Prototype Prototype
+		{
+			get
+			{
+				return this._Prototype.Entity;
+			}
+			set
+			{
+				Prototype previousValue = this._Prototype.Entity;
+				if (((previousValue != value) 
+							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Prototype.Entity = null;
+						previousValue.CA_Proportions.Remove(this);
+					}
+					this._Prototype.Entity = value;
+					if ((value != null))
+					{
+						value.CA_Proportions.Add(this);
+						this._Prototype_ID = value.Prototype_ID;
+					}
+					else
+					{
+						this._Prototype_ID = default(int);
+					}
+					this.SendPropertyChanged("Prototype");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Coarse_Aggregate_CA_Proportion", Storage="_Coarse_Aggregate", ThisKey="CA_ID", OtherKey="CA_ID", IsForeignKey=true)]
+		public Coarse_Aggregate Coarse_Aggregate
+		{
+			get
+			{
+				return this._Coarse_Aggregate.Entity;
+			}
+			set
+			{
+				Coarse_Aggregate previousValue = this._Coarse_Aggregate.Entity;
+				if (((previousValue != value) 
+							|| (this._Coarse_Aggregate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Coarse_Aggregate.Entity = null;
+						previousValue.CA_Proportions.Remove(this);
+					}
+					this._Coarse_Aggregate.Entity = value;
+					if ((value != null))
+					{
+						value.CA_Proportions.Add(this);
+						this._CA_ID = value.CA_ID;
+					}
+					else
+					{
+						this._CA_ID = default(int);
+					}
+					this.SendPropertyChanged("Coarse_Aggregate");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FN_Proportions")]
+	public partial class FN_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _FN_Proportions_ID;
+		
+		private int _Prototype_ID;
+		
+		private int _FN_ID;
+		
+		private System.Nullable<int> _Weight_of_FN;
+		
+		private EntityRef<Prototype> _Prototype;
+		
+		private EntityRef<Fine_Aggregate> _Fine_Aggregate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnFN_Proportions_IDChanging(int value);
+    partial void OnFN_Proportions_IDChanged();
+    partial void OnPrototype_IDChanging(int value);
+    partial void OnPrototype_IDChanged();
+    partial void OnFN_IDChanging(int value);
+    partial void OnFN_IDChanged();
+    partial void OnWeight_of_FNChanging(System.Nullable<int> value);
+    partial void OnWeight_of_FNChanged();
+    #endregion
+		
+		public FN_Proportion()
+		{
+			this._Prototype = default(EntityRef<Prototype>);
+			this._Fine_Aggregate = default(EntityRef<Fine_Aggregate>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FN_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int FN_Proportions_ID
+		{
+			get
+			{
+				return this._FN_Proportions_ID;
+			}
+			set
+			{
+				if ((this._FN_Proportions_ID != value))
+				{
+					this.OnFN_Proportions_IDChanging(value);
+					this.SendPropertyChanging();
+					this._FN_Proportions_ID = value;
+					this.SendPropertyChanged("FN_Proportions_ID");
+					this.OnFN_Proportions_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL")]
+		public int Prototype_ID
+		{
+			get
+			{
+				return this._Prototype_ID;
+			}
+			set
+			{
+				if ((this._Prototype_ID != value))
+				{
+					if (this._Prototype.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPrototype_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_ID = value;
+					this.SendPropertyChanged("Prototype_ID");
+					this.OnPrototype_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FN_ID", DbType="Int NOT NULL")]
+		public int FN_ID
+		{
+			get
+			{
+				return this._FN_ID;
+			}
+			set
+			{
+				if ((this._FN_ID != value))
+				{
+					if (this._Fine_Aggregate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFN_IDChanging(value);
+					this.SendPropertyChanging();
+					this._FN_ID = value;
+					this.SendPropertyChanged("FN_ID");
+					this.OnFN_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight_of_FN", DbType="Int")]
+		public System.Nullable<int> Weight_of_FN
+		{
+			get
+			{
+				return this._Weight_of_FN;
+			}
+			set
+			{
+				if ((this._Weight_of_FN != value))
+				{
+					this.OnWeight_of_FNChanging(value);
+					this.SendPropertyChanging();
+					this._Weight_of_FN = value;
+					this.SendPropertyChanged("Weight_of_FN");
+					this.OnWeight_of_FNChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_FN_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
+		public Prototype Prototype
+		{
+			get
+			{
+				return this._Prototype.Entity;
+			}
+			set
+			{
+				Prototype previousValue = this._Prototype.Entity;
+				if (((previousValue != value) 
+							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Prototype.Entity = null;
+						previousValue.FN_Proportions.Remove(this);
+					}
+					this._Prototype.Entity = value;
+					if ((value != null))
+					{
+						value.FN_Proportions.Add(this);
+						this._Prototype_ID = value.Prototype_ID;
+					}
+					else
+					{
+						this._Prototype_ID = default(int);
+					}
+					this.SendPropertyChanged("Prototype");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fine_Aggregate_FN_Proportion", Storage="_Fine_Aggregate", ThisKey="FN_ID", OtherKey="FN_ID", IsForeignKey=true)]
+		public Fine_Aggregate Fine_Aggregate
+		{
+			get
+			{
+				return this._Fine_Aggregate.Entity;
+			}
+			set
+			{
+				Fine_Aggregate previousValue = this._Fine_Aggregate.Entity;
+				if (((previousValue != value) 
+							|| (this._Fine_Aggregate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Fine_Aggregate.Entity = null;
+						previousValue.FN_Proportions.Remove(this);
+					}
+					this._Fine_Aggregate.Entity = value;
+					if ((value != null))
+					{
+						value.FN_Proportions.Add(this);
+						this._FN_ID = value.FN_ID;
+					}
+					else
+					{
+						this._FN_ID = default(int);
+					}
+					this.SendPropertyChanged("Fine_Aggregate");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Admixture_Proportions")]
+	public partial class Admixture_Proportion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Admixture_Proportions_ID;
+		
+		private int _Prototype_ID;
+		
+		private int _Admixture_ID;
+		
+		private System.Nullable<decimal> _Admixture_Qty;
+		
+		private EntityRef<Prototype> _Prototype;
+		
+		private EntityRef<Admixture> _Admixture;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAdmixture_Proportions_IDChanging(int value);
+    partial void OnAdmixture_Proportions_IDChanged();
+    partial void OnPrototype_IDChanging(int value);
+    partial void OnPrototype_IDChanged();
+    partial void OnAdmixture_IDChanging(int value);
+    partial void OnAdmixture_IDChanged();
+    partial void OnAdmixture_QtyChanging(System.Nullable<decimal> value);
+    partial void OnAdmixture_QtyChanged();
+    #endregion
+		
+		public Admixture_Proportion()
+		{
+			this._Prototype = default(EntityRef<Prototype>);
+			this._Admixture = default(EntityRef<Admixture>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admixture_Proportions_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Admixture_Proportions_ID
+		{
+			get
+			{
+				return this._Admixture_Proportions_ID;
+			}
+			set
+			{
+				if ((this._Admixture_Proportions_ID != value))
+				{
+					this.OnAdmixture_Proportions_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Admixture_Proportions_ID = value;
+					this.SendPropertyChanged("Admixture_Proportions_ID");
+					this.OnAdmixture_Proportions_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prototype_ID", DbType="Int NOT NULL")]
+		public int Prototype_ID
+		{
+			get
+			{
+				return this._Prototype_ID;
+			}
+			set
+			{
+				if ((this._Prototype_ID != value))
+				{
+					if (this._Prototype.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPrototype_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Prototype_ID = value;
+					this.SendPropertyChanged("Prototype_ID");
+					this.OnPrototype_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admixture_ID", DbType="Int NOT NULL")]
+		public int Admixture_ID
+		{
+			get
+			{
+				return this._Admixture_ID;
+			}
+			set
+			{
+				if ((this._Admixture_ID != value))
+				{
+					if (this._Admixture.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAdmixture_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Admixture_ID = value;
+					this.SendPropertyChanged("Admixture_ID");
+					this.OnAdmixture_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admixture_Qty", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> Admixture_Qty
+		{
+			get
+			{
+				return this._Admixture_Qty;
+			}
+			set
+			{
+				if ((this._Admixture_Qty != value))
+				{
+					this.OnAdmixture_QtyChanging(value);
+					this.SendPropertyChanging();
+					this._Admixture_Qty = value;
+					this.SendPropertyChanged("Admixture_Qty");
+					this.OnAdmixture_QtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Prototype_Admixture_Proportion", Storage="_Prototype", ThisKey="Prototype_ID", OtherKey="Prototype_ID", IsForeignKey=true)]
+		public Prototype Prototype
+		{
+			get
+			{
+				return this._Prototype.Entity;
+			}
+			set
+			{
+				Prototype previousValue = this._Prototype.Entity;
+				if (((previousValue != value) 
+							|| (this._Prototype.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Prototype.Entity = null;
+						previousValue.Admixture_Proportions.Remove(this);
+					}
+					this._Prototype.Entity = value;
+					if ((value != null))
+					{
+						value.Admixture_Proportions.Add(this);
+						this._Prototype_ID = value.Prototype_ID;
+					}
+					else
+					{
+						this._Prototype_ID = default(int);
+					}
+					this.SendPropertyChanged("Prototype");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Admixture_Admixture_Proportion", Storage="_Admixture", ThisKey="Admixture_ID", OtherKey="Admixture_ID", IsForeignKey=true)]
+		public Admixture Admixture
+		{
+			get
+			{
+				return this._Admixture.Entity;
+			}
+			set
+			{
+				Admixture previousValue = this._Admixture.Entity;
+				if (((previousValue != value) 
+							|| (this._Admixture.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Admixture.Entity = null;
+						previousValue.Admixture_Proportions.Remove(this);
+					}
+					this._Admixture.Entity = value;
+					if ((value != null))
+					{
+						value.Admixture_Proportions.Add(this);
+						this._Admixture_ID = value.Admixture_ID;
+					}
+					else
+					{
+						this._Admixture_ID = default(int);
+					}
+					this.SendPropertyChanged("Admixture");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cements")]
 	public partial class Cement : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private byte _Cement_ID;
+		private int _Cement_ID;
 		
-		private System.Nullable<byte> _Material_ID;
+		private int _Material_ID;
 		
 		private EntitySet<Cement_Proportion> _Cement_Proportions;
 		
@@ -2843,9 +2633,9 @@ namespace Concrete_Mix_Design_Tracker
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnCement_IDChanging(byte value);
+    partial void OnCement_IDChanging(int value);
     partial void OnCement_IDChanged();
-    partial void OnMaterial_IDChanging(System.Nullable<byte> value);
+    partial void OnMaterial_IDChanging(int value);
     partial void OnMaterial_IDChanged();
     #endregion
 		
@@ -2856,8 +2646,8 @@ namespace Concrete_Mix_Design_Tracker
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cement_ID", DbType="TinyInt NOT NULL", IsPrimaryKey=true)]
-		public byte Cement_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cement_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Cement_ID
 		{
 			get
 			{
@@ -2876,8 +2666,8 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="TinyInt")]
-		public System.Nullable<byte> Material_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="Int NOT NULL")]
+		public int Material_ID
 		{
 			get
 			{
@@ -2940,7 +2730,7 @@ namespace Concrete_Mix_Design_Tracker
 					}
 					else
 					{
-						this._Material_ID = default(Nullable<byte>);
+						this._Material_ID = default(int);
 					}
 					this.SendPropertyChanged("Material");
 				}
@@ -2980,13 +2770,960 @@ namespace Concrete_Mix_Design_Tracker
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SCMs")]
+	public partial class SCM : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _SCM_ID;
+		
+		private int _Material_ID;
+		
+		private EntitySet<SCM_Proportion> _SCM_Proportions;
+		
+		private EntityRef<Material> _Material;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSCM_IDChanging(int value);
+    partial void OnSCM_IDChanged();
+    partial void OnMaterial_IDChanging(int value);
+    partial void OnMaterial_IDChanged();
+    #endregion
+		
+		public SCM()
+		{
+			this._SCM_Proportions = new EntitySet<SCM_Proportion>(new Action<SCM_Proportion>(this.attach_SCM_Proportions), new Action<SCM_Proportion>(this.detach_SCM_Proportions));
+			this._Material = default(EntityRef<Material>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCM_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int SCM_ID
+		{
+			get
+			{
+				return this._SCM_ID;
+			}
+			set
+			{
+				if ((this._SCM_ID != value))
+				{
+					this.OnSCM_IDChanging(value);
+					this.SendPropertyChanging();
+					this._SCM_ID = value;
+					this.SendPropertyChanged("SCM_ID");
+					this.OnSCM_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="Int NOT NULL")]
+		public int Material_ID
+		{
+			get
+			{
+				return this._Material_ID;
+			}
+			set
+			{
+				if ((this._Material_ID != value))
+				{
+					if (this._Material.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaterial_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Material_ID = value;
+					this.SendPropertyChanged("Material_ID");
+					this.OnMaterial_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SCM_SCM_Proportion", Storage="_SCM_Proportions", ThisKey="SCM_ID", OtherKey="SCM_ID")]
+		public EntitySet<SCM_Proportion> SCM_Proportions
+		{
+			get
+			{
+				return this._SCM_Proportions;
+			}
+			set
+			{
+				this._SCM_Proportions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Material_SCM", Storage="_Material", ThisKey="Material_ID", OtherKey="Material_ID", IsForeignKey=true)]
+		public Material Material
+		{
+			get
+			{
+				return this._Material.Entity;
+			}
+			set
+			{
+				Material previousValue = this._Material.Entity;
+				if (((previousValue != value) 
+							|| (this._Material.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Material.Entity = null;
+						previousValue.SCMs.Remove(this);
+					}
+					this._Material.Entity = value;
+					if ((value != null))
+					{
+						value.SCMs.Add(this);
+						this._Material_ID = value.Material_ID;
+					}
+					else
+					{
+						this._Material_ID = default(int);
+					}
+					this.SendPropertyChanged("Material");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_SCM_Proportions(SCM_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.SCM = this;
+		}
+		
+		private void detach_SCM_Proportions(SCM_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.SCM = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Coarse_Aggregates")]
+	public partial class Coarse_Aggregate : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _CA_ID;
+		
+		private System.Nullable<decimal> _CA_Size;
+		
+		private System.Nullable<decimal> _CA_UW;
+		
+		private int _Aggregate_ID;
+		
+		private EntitySet<CA_Proportion> _CA_Proportions;
+		
+		private EntityRef<Aggregate> _Aggregate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCA_IDChanging(int value);
+    partial void OnCA_IDChanged();
+    partial void OnCA_SizeChanging(System.Nullable<decimal> value);
+    partial void OnCA_SizeChanged();
+    partial void OnCA_UWChanging(System.Nullable<decimal> value);
+    partial void OnCA_UWChanged();
+    partial void OnAggregate_IDChanging(int value);
+    partial void OnAggregate_IDChanged();
+    #endregion
+		
+		public Coarse_Aggregate()
+		{
+			this._CA_Proportions = new EntitySet<CA_Proportion>(new Action<CA_Proportion>(this.attach_CA_Proportions), new Action<CA_Proportion>(this.detach_CA_Proportions));
+			this._Aggregate = default(EntityRef<Aggregate>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int CA_ID
+		{
+			get
+			{
+				return this._CA_ID;
+			}
+			set
+			{
+				if ((this._CA_ID != value))
+				{
+					this.OnCA_IDChanging(value);
+					this.SendPropertyChanging();
+					this._CA_ID = value;
+					this.SendPropertyChanged("CA_ID");
+					this.OnCA_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_Size", DbType="Decimal(4,3)")]
+		public System.Nullable<decimal> CA_Size
+		{
+			get
+			{
+				return this._CA_Size;
+			}
+			set
+			{
+				if ((this._CA_Size != value))
+				{
+					this.OnCA_SizeChanging(value);
+					this.SendPropertyChanging();
+					this._CA_Size = value;
+					this.SendPropertyChanged("CA_Size");
+					this.OnCA_SizeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_UW", DbType="Decimal(4,1)")]
+		public System.Nullable<decimal> CA_UW
+		{
+			get
+			{
+				return this._CA_UW;
+			}
+			set
+			{
+				if ((this._CA_UW != value))
+				{
+					this.OnCA_UWChanging(value);
+					this.SendPropertyChanging();
+					this._CA_UW = value;
+					this.SendPropertyChanged("CA_UW");
+					this.OnCA_UWChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Aggregate_ID", DbType="Int NOT NULL")]
+		public int Aggregate_ID
+		{
+			get
+			{
+				return this._Aggregate_ID;
+			}
+			set
+			{
+				if ((this._Aggregate_ID != value))
+				{
+					if (this._Aggregate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAggregate_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Aggregate_ID = value;
+					this.SendPropertyChanged("Aggregate_ID");
+					this.OnAggregate_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Coarse_Aggregate_CA_Proportion", Storage="_CA_Proportions", ThisKey="CA_ID", OtherKey="CA_ID")]
+		public EntitySet<CA_Proportion> CA_Proportions
+		{
+			get
+			{
+				return this._CA_Proportions;
+			}
+			set
+			{
+				this._CA_Proportions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Aggregate_Coarse_Aggregate", Storage="_Aggregate", ThisKey="Aggregate_ID", OtherKey="Aggregate_ID", IsForeignKey=true)]
+		public Aggregate Aggregate
+		{
+			get
+			{
+				return this._Aggregate.Entity;
+			}
+			set
+			{
+				Aggregate previousValue = this._Aggregate.Entity;
+				if (((previousValue != value) 
+							|| (this._Aggregate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Aggregate.Entity = null;
+						previousValue.Coarse_Aggregates.Remove(this);
+					}
+					this._Aggregate.Entity = value;
+					if ((value != null))
+					{
+						value.Coarse_Aggregates.Add(this);
+						this._Aggregate_ID = value.Aggregate_ID;
+					}
+					else
+					{
+						this._Aggregate_ID = default(int);
+					}
+					this.SendPropertyChanged("Aggregate");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CA_Proportions(CA_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Coarse_Aggregate = this;
+		}
+		
+		private void detach_CA_Proportions(CA_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Coarse_Aggregate = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Fine_Aggregates")]
+	public partial class Fine_Aggregate : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _FN_ID;
+		
+		private System.Nullable<decimal> _Fineness_Modulus;
+		
+		private int _Aggregate_ID;
+		
+		private EntitySet<FN_Proportion> _FN_Proportions;
+		
+		private EntityRef<Aggregate> _Aggregate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnFN_IDChanging(int value);
+    partial void OnFN_IDChanged();
+    partial void OnFineness_ModulusChanging(System.Nullable<decimal> value);
+    partial void OnFineness_ModulusChanged();
+    partial void OnAggregate_IDChanging(int value);
+    partial void OnAggregate_IDChanged();
+    #endregion
+		
+		public Fine_Aggregate()
+		{
+			this._FN_Proportions = new EntitySet<FN_Proportion>(new Action<FN_Proportion>(this.attach_FN_Proportions), new Action<FN_Proportion>(this.detach_FN_Proportions));
+			this._Aggregate = default(EntityRef<Aggregate>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FN_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int FN_ID
+		{
+			get
+			{
+				return this._FN_ID;
+			}
+			set
+			{
+				if ((this._FN_ID != value))
+				{
+					this.OnFN_IDChanging(value);
+					this.SendPropertyChanging();
+					this._FN_ID = value;
+					this.SendPropertyChanged("FN_ID");
+					this.OnFN_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fineness_Modulus", DbType="Decimal(2,1)")]
+		public System.Nullable<decimal> Fineness_Modulus
+		{
+			get
+			{
+				return this._Fineness_Modulus;
+			}
+			set
+			{
+				if ((this._Fineness_Modulus != value))
+				{
+					this.OnFineness_ModulusChanging(value);
+					this.SendPropertyChanging();
+					this._Fineness_Modulus = value;
+					this.SendPropertyChanged("Fineness_Modulus");
+					this.OnFineness_ModulusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Aggregate_ID", DbType="Int NOT NULL")]
+		public int Aggregate_ID
+		{
+			get
+			{
+				return this._Aggregate_ID;
+			}
+			set
+			{
+				if ((this._Aggregate_ID != value))
+				{
+					if (this._Aggregate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAggregate_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Aggregate_ID = value;
+					this.SendPropertyChanged("Aggregate_ID");
+					this.OnAggregate_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fine_Aggregate_FN_Proportion", Storage="_FN_Proportions", ThisKey="FN_ID", OtherKey="FN_ID")]
+		public EntitySet<FN_Proportion> FN_Proportions
+		{
+			get
+			{
+				return this._FN_Proportions;
+			}
+			set
+			{
+				this._FN_Proportions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Aggregate_Fine_Aggregate", Storage="_Aggregate", ThisKey="Aggregate_ID", OtherKey="Aggregate_ID", IsForeignKey=true)]
+		public Aggregate Aggregate
+		{
+			get
+			{
+				return this._Aggregate.Entity;
+			}
+			set
+			{
+				Aggregate previousValue = this._Aggregate.Entity;
+				if (((previousValue != value) 
+							|| (this._Aggregate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Aggregate.Entity = null;
+						previousValue.Fine_Aggregates.Remove(this);
+					}
+					this._Aggregate.Entity = value;
+					if ((value != null))
+					{
+						value.Fine_Aggregates.Add(this);
+						this._Aggregate_ID = value.Aggregate_ID;
+					}
+					else
+					{
+						this._Aggregate_ID = default(int);
+					}
+					this.SendPropertyChanged("Aggregate");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_FN_Proportions(FN_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Fine_Aggregate = this;
+		}
+		
+		private void detach_FN_Proportions(FN_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Fine_Aggregate = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Admixtures")]
+	public partial class Admixture : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Admixture_ID;
+		
+		private System.Nullable<decimal> _Minimum_Dosage;
+		
+		private System.Nullable<decimal> _Maximum_Dosage;
+		
+		private int _Material_ID;
+		
+		private EntitySet<Admixture_Proportion> _Admixture_Proportions;
+		
+		private EntityRef<Material> _Material;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAdmixture_IDChanging(int value);
+    partial void OnAdmixture_IDChanged();
+    partial void OnMinimum_DosageChanging(System.Nullable<decimal> value);
+    partial void OnMinimum_DosageChanged();
+    partial void OnMaximum_DosageChanging(System.Nullable<decimal> value);
+    partial void OnMaximum_DosageChanged();
+    partial void OnMaterial_IDChanging(int value);
+    partial void OnMaterial_IDChanged();
+    #endregion
+		
+		public Admixture()
+		{
+			this._Admixture_Proportions = new EntitySet<Admixture_Proportion>(new Action<Admixture_Proportion>(this.attach_Admixture_Proportions), new Action<Admixture_Proportion>(this.detach_Admixture_Proportions));
+			this._Material = default(EntityRef<Material>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admixture_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Admixture_ID
+		{
+			get
+			{
+				return this._Admixture_ID;
+			}
+			set
+			{
+				if ((this._Admixture_ID != value))
+				{
+					this.OnAdmixture_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Admixture_ID = value;
+					this.SendPropertyChanged("Admixture_ID");
+					this.OnAdmixture_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Minimum_Dosage", DbType="Decimal(3,1)")]
+		public System.Nullable<decimal> Minimum_Dosage
+		{
+			get
+			{
+				return this._Minimum_Dosage;
+			}
+			set
+			{
+				if ((this._Minimum_Dosage != value))
+				{
+					this.OnMinimum_DosageChanging(value);
+					this.SendPropertyChanging();
+					this._Minimum_Dosage = value;
+					this.SendPropertyChanged("Minimum_Dosage");
+					this.OnMinimum_DosageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Maximum_Dosage", DbType="Decimal(3,1)")]
+		public System.Nullable<decimal> Maximum_Dosage
+		{
+			get
+			{
+				return this._Maximum_Dosage;
+			}
+			set
+			{
+				if ((this._Maximum_Dosage != value))
+				{
+					this.OnMaximum_DosageChanging(value);
+					this.SendPropertyChanging();
+					this._Maximum_Dosage = value;
+					this.SendPropertyChanged("Maximum_Dosage");
+					this.OnMaximum_DosageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="Int NOT NULL")]
+		public int Material_ID
+		{
+			get
+			{
+				return this._Material_ID;
+			}
+			set
+			{
+				if ((this._Material_ID != value))
+				{
+					if (this._Material.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaterial_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Material_ID = value;
+					this.SendPropertyChanged("Material_ID");
+					this.OnMaterial_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Admixture_Admixture_Proportion", Storage="_Admixture_Proportions", ThisKey="Admixture_ID", OtherKey="Admixture_ID")]
+		public EntitySet<Admixture_Proportion> Admixture_Proportions
+		{
+			get
+			{
+				return this._Admixture_Proportions;
+			}
+			set
+			{
+				this._Admixture_Proportions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Material_Admixture", Storage="_Material", ThisKey="Material_ID", OtherKey="Material_ID", IsForeignKey=true)]
+		public Material Material
+		{
+			get
+			{
+				return this._Material.Entity;
+			}
+			set
+			{
+				Material previousValue = this._Material.Entity;
+				if (((previousValue != value) 
+							|| (this._Material.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Material.Entity = null;
+						previousValue.Admixtures.Remove(this);
+					}
+					this._Material.Entity = value;
+					if ((value != null))
+					{
+						value.Admixtures.Add(this);
+						this._Material_ID = value.Material_ID;
+					}
+					else
+					{
+						this._Material_ID = default(int);
+					}
+					this.SendPropertyChanged("Material");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Admixture_Proportions(Admixture_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Admixture = this;
+		}
+		
+		private void detach_Admixture_Proportions(Admixture_Proportion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Admixture = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Aggregates")]
+	public partial class Aggregate : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Aggregate_ID;
+		
+		private System.Nullable<decimal> _Absorption;
+		
+		private int _Material_ID;
+		
+		private EntitySet<Coarse_Aggregate> _Coarse_Aggregates;
+		
+		private EntitySet<Fine_Aggregate> _Fine_Aggregates;
+		
+		private EntityRef<Material> _Material;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAggregate_IDChanging(int value);
+    partial void OnAggregate_IDChanged();
+    partial void OnAbsorptionChanging(System.Nullable<decimal> value);
+    partial void OnAbsorptionChanged();
+    partial void OnMaterial_IDChanging(int value);
+    partial void OnMaterial_IDChanged();
+    #endregion
+		
+		public Aggregate()
+		{
+			this._Coarse_Aggregates = new EntitySet<Coarse_Aggregate>(new Action<Coarse_Aggregate>(this.attach_Coarse_Aggregates), new Action<Coarse_Aggregate>(this.detach_Coarse_Aggregates));
+			this._Fine_Aggregates = new EntitySet<Fine_Aggregate>(new Action<Fine_Aggregate>(this.attach_Fine_Aggregates), new Action<Fine_Aggregate>(this.detach_Fine_Aggregates));
+			this._Material = default(EntityRef<Material>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Aggregate_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Aggregate_ID
+		{
+			get
+			{
+				return this._Aggregate_ID;
+			}
+			set
+			{
+				if ((this._Aggregate_ID != value))
+				{
+					this.OnAggregate_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Aggregate_ID = value;
+					this.SendPropertyChanged("Aggregate_ID");
+					this.OnAggregate_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Absorption", DbType="Decimal(2,1)")]
+		public System.Nullable<decimal> Absorption
+		{
+			get
+			{
+				return this._Absorption;
+			}
+			set
+			{
+				if ((this._Absorption != value))
+				{
+					this.OnAbsorptionChanging(value);
+					this.SendPropertyChanging();
+					this._Absorption = value;
+					this.SendPropertyChanged("Absorption");
+					this.OnAbsorptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="Int NOT NULL")]
+		public int Material_ID
+		{
+			get
+			{
+				return this._Material_ID;
+			}
+			set
+			{
+				if ((this._Material_ID != value))
+				{
+					if (this._Material.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaterial_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Material_ID = value;
+					this.SendPropertyChanged("Material_ID");
+					this.OnMaterial_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Aggregate_Coarse_Aggregate", Storage="_Coarse_Aggregates", ThisKey="Aggregate_ID", OtherKey="Aggregate_ID")]
+		public EntitySet<Coarse_Aggregate> Coarse_Aggregates
+		{
+			get
+			{
+				return this._Coarse_Aggregates;
+			}
+			set
+			{
+				this._Coarse_Aggregates.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Aggregate_Fine_Aggregate", Storage="_Fine_Aggregates", ThisKey="Aggregate_ID", OtherKey="Aggregate_ID")]
+		public EntitySet<Fine_Aggregate> Fine_Aggregates
+		{
+			get
+			{
+				return this._Fine_Aggregates;
+			}
+			set
+			{
+				this._Fine_Aggregates.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Material_Aggregate", Storage="_Material", ThisKey="Material_ID", OtherKey="Material_ID", IsForeignKey=true)]
+		public Material Material
+		{
+			get
+			{
+				return this._Material.Entity;
+			}
+			set
+			{
+				Material previousValue = this._Material.Entity;
+				if (((previousValue != value) 
+							|| (this._Material.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Material.Entity = null;
+						previousValue.Aggregates.Remove(this);
+					}
+					this._Material.Entity = value;
+					if ((value != null))
+					{
+						value.Aggregates.Add(this);
+						this._Material_ID = value.Material_ID;
+					}
+					else
+					{
+						this._Material_ID = default(int);
+					}
+					this.SendPropertyChanged("Material");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Coarse_Aggregates(Coarse_Aggregate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Aggregate = this;
+		}
+		
+		private void detach_Coarse_Aggregates(Coarse_Aggregate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Aggregate = null;
+		}
+		
+		private void attach_Fine_Aggregates(Fine_Aggregate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Aggregate = this;
+		}
+		
+		private void detach_Fine_Aggregates(Fine_Aggregate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Aggregate = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Materials")]
 	public partial class Material : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private byte _Material_ID;
+		private int _Material_ID;
 		
 		private string _Material_Name;
 		
@@ -2994,7 +3731,7 @@ namespace Concrete_Mix_Design_Tracker
 		
 		private System.Nullable<decimal> _Relative_Density;
 		
-		private byte _Material_Type_ID;
+		private int _Material_Type_ID;
 		
 		private string _Grade;
 		
@@ -3012,7 +3749,7 @@ namespace Concrete_Mix_Design_Tracker
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnMaterial_IDChanging(byte value);
+    partial void OnMaterial_IDChanging(int value);
     partial void OnMaterial_IDChanged();
     partial void OnMaterial_NameChanging(string value);
     partial void OnMaterial_NameChanged();
@@ -3020,7 +3757,7 @@ namespace Concrete_Mix_Design_Tracker
     partial void OnMaterial_SourceChanged();
     partial void OnRelative_DensityChanging(System.Nullable<decimal> value);
     partial void OnRelative_DensityChanged();
-    partial void OnMaterial_Type_IDChanging(byte value);
+    partial void OnMaterial_Type_IDChanging(int value);
     partial void OnMaterial_Type_IDChanged();
     partial void OnGradeChanging(string value);
     partial void OnGradeChanged();
@@ -3036,8 +3773,8 @@ namespace Concrete_Mix_Design_Tracker
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="TinyInt NOT NULL", IsPrimaryKey=true)]
-		public byte Material_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Material_ID
 		{
 			get
 			{
@@ -3116,8 +3853,8 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_Type_ID", DbType="TinyInt NOT NULL")]
-		public byte Material_Type_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_Type_ID", DbType="Int NOT NULL")]
+		public int Material_Type_ID
 		{
 			get
 			{
@@ -3239,7 +3976,7 @@ namespace Concrete_Mix_Design_Tracker
 					}
 					else
 					{
-						this._Material_Type_ID = default(byte);
+						this._Material_Type_ID = default(int);
 					}
 					this.SendPropertyChanged("Material_Type");
 				}
@@ -3315,125 +4052,84 @@ namespace Concrete_Mix_Design_Tracker
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SCMs")]
-	public partial class SCM : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Material_Types")]
+	public partial class Material_Type : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private byte _SCM_ID;
+		private int _Material_Type_ID;
 		
-		private byte _Material_ID;
+		private string _Type_Name;
 		
-		private EntitySet<SCM_Proportion> _SCM_Proportions;
-		
-		private EntityRef<Material> _Material;
+		private EntitySet<Material> _Materials;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnSCM_IDChanging(byte value);
-    partial void OnSCM_IDChanged();
-    partial void OnMaterial_IDChanging(byte value);
-    partial void OnMaterial_IDChanged();
+    partial void OnMaterial_Type_IDChanging(int value);
+    partial void OnMaterial_Type_IDChanged();
+    partial void OnType_NameChanging(string value);
+    partial void OnType_NameChanged();
     #endregion
 		
-		public SCM()
+		public Material_Type()
 		{
-			this._SCM_Proportions = new EntitySet<SCM_Proportion>(new Action<SCM_Proportion>(this.attach_SCM_Proportions), new Action<SCM_Proportion>(this.detach_SCM_Proportions));
-			this._Material = default(EntityRef<Material>);
+			this._Materials = new EntitySet<Material>(new Action<Material>(this.attach_Materials), new Action<Material>(this.detach_Materials));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCM_ID", DbType="TinyInt NOT NULL", IsPrimaryKey=true)]
-		public byte SCM_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_Type_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Material_Type_ID
 		{
 			get
 			{
-				return this._SCM_ID;
+				return this._Material_Type_ID;
 			}
 			set
 			{
-				if ((this._SCM_ID != value))
+				if ((this._Material_Type_ID != value))
 				{
-					this.OnSCM_IDChanging(value);
+					this.OnMaterial_Type_IDChanging(value);
 					this.SendPropertyChanging();
-					this._SCM_ID = value;
-					this.SendPropertyChanged("SCM_ID");
-					this.OnSCM_IDChanged();
+					this._Material_Type_ID = value;
+					this.SendPropertyChanged("Material_Type_ID");
+					this.OnMaterial_Type_IDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="TinyInt NOT NULL")]
-		public byte Material_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type_Name", DbType="VarChar(50)")]
+		public string Type_Name
 		{
 			get
 			{
-				return this._Material_ID;
+				return this._Type_Name;
 			}
 			set
 			{
-				if ((this._Material_ID != value))
+				if ((this._Type_Name != value))
 				{
-					if (this._Material.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMaterial_IDChanging(value);
+					this.OnType_NameChanging(value);
 					this.SendPropertyChanging();
-					this._Material_ID = value;
-					this.SendPropertyChanged("Material_ID");
-					this.OnMaterial_IDChanged();
+					this._Type_Name = value;
+					this.SendPropertyChanged("Type_Name");
+					this.OnType_NameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SCM_SCM_Proportion", Storage="_SCM_Proportions", ThisKey="SCM_ID", OtherKey="SCM_ID")]
-		public EntitySet<SCM_Proportion> SCM_Proportions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Material_Type_Material", Storage="_Materials", ThisKey="Material_Type_ID", OtherKey="Material_Type_ID")]
+		public EntitySet<Material> Materials
 		{
 			get
 			{
-				return this._SCM_Proportions;
+				return this._Materials;
 			}
 			set
 			{
-				this._SCM_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Material_SCM", Storage="_Material", ThisKey="Material_ID", OtherKey="Material_ID", IsForeignKey=true)]
-		public Material Material
-		{
-			get
-			{
-				return this._Material.Entity;
-			}
-			set
-			{
-				Material previousValue = this._Material.Entity;
-				if (((previousValue != value) 
-							|| (this._Material.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Material.Entity = null;
-						previousValue.SCMs.Remove(this);
-					}
-					this._Material.Entity = value;
-					if ((value != null))
-					{
-						value.SCMs.Add(this);
-						this._Material_ID = value.Material_ID;
-					}
-					else
-					{
-						this._Material_ID = default(byte);
-					}
-					this.SendPropertyChanged("Material");
-				}
+				this._Materials.Assign(value);
 			}
 		}
 		
@@ -3457,832 +4153,16 @@ namespace Concrete_Mix_Design_Tracker
 			}
 		}
 		
-		private void attach_SCM_Proportions(SCM_Proportion entity)
+		private void attach_Materials(Material entity)
 		{
 			this.SendPropertyChanging();
-			entity.SCM = this;
+			entity.Material_Type = this;
 		}
 		
-		private void detach_SCM_Proportions(SCM_Proportion entity)
+		private void detach_Materials(Material entity)
 		{
 			this.SendPropertyChanging();
-			entity.SCM = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Coarse_Aggregates")]
-	public partial class Coarse_Aggregate : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private byte _CA_ID;
-		
-		private System.Nullable<decimal> _CA_Size;
-		
-		private System.Nullable<decimal> _CA_UW;
-		
-		private byte _Aggregate_ID;
-		
-		private EntitySet<CA_Proportion> _CA_Proportions;
-		
-		private EntityRef<Aggregate> _Aggregate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCA_IDChanging(byte value);
-    partial void OnCA_IDChanged();
-    partial void OnCA_SizeChanging(System.Nullable<decimal> value);
-    partial void OnCA_SizeChanged();
-    partial void OnCA_UWChanging(System.Nullable<decimal> value);
-    partial void OnCA_UWChanged();
-    partial void OnAggregate_IDChanging(byte value);
-    partial void OnAggregate_IDChanged();
-    #endregion
-		
-		public Coarse_Aggregate()
-		{
-			this._CA_Proportions = new EntitySet<CA_Proportion>(new Action<CA_Proportion>(this.attach_CA_Proportions), new Action<CA_Proportion>(this.detach_CA_Proportions));
-			this._Aggregate = default(EntityRef<Aggregate>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_ID", DbType="TinyInt NOT NULL", IsPrimaryKey=true)]
-		public byte CA_ID
-		{
-			get
-			{
-				return this._CA_ID;
-			}
-			set
-			{
-				if ((this._CA_ID != value))
-				{
-					this.OnCA_IDChanging(value);
-					this.SendPropertyChanging();
-					this._CA_ID = value;
-					this.SendPropertyChanged("CA_ID");
-					this.OnCA_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_Size", DbType="Decimal(4,3)")]
-		public System.Nullable<decimal> CA_Size
-		{
-			get
-			{
-				return this._CA_Size;
-			}
-			set
-			{
-				if ((this._CA_Size != value))
-				{
-					this.OnCA_SizeChanging(value);
-					this.SendPropertyChanging();
-					this._CA_Size = value;
-					this.SendPropertyChanged("CA_Size");
-					this.OnCA_SizeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CA_UW", DbType="Decimal(4,1)")]
-		public System.Nullable<decimal> CA_UW
-		{
-			get
-			{
-				return this._CA_UW;
-			}
-			set
-			{
-				if ((this._CA_UW != value))
-				{
-					this.OnCA_UWChanging(value);
-					this.SendPropertyChanging();
-					this._CA_UW = value;
-					this.SendPropertyChanged("CA_UW");
-					this.OnCA_UWChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Aggregate_ID", DbType="TinyInt NOT NULL")]
-		public byte Aggregate_ID
-		{
-			get
-			{
-				return this._Aggregate_ID;
-			}
-			set
-			{
-				if ((this._Aggregate_ID != value))
-				{
-					if (this._Aggregate.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAggregate_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Aggregate_ID = value;
-					this.SendPropertyChanged("Aggregate_ID");
-					this.OnAggregate_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Coarse_Aggregate_CA_Proportion", Storage="_CA_Proportions", ThisKey="CA_ID", OtherKey="CA_ID")]
-		public EntitySet<CA_Proportion> CA_Proportions
-		{
-			get
-			{
-				return this._CA_Proportions;
-			}
-			set
-			{
-				this._CA_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Aggregate_Coarse_Aggregate", Storage="_Aggregate", ThisKey="Aggregate_ID", OtherKey="Aggregate_ID", IsForeignKey=true)]
-		public Aggregate Aggregate
-		{
-			get
-			{
-				return this._Aggregate.Entity;
-			}
-			set
-			{
-				Aggregate previousValue = this._Aggregate.Entity;
-				if (((previousValue != value) 
-							|| (this._Aggregate.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Aggregate.Entity = null;
-						previousValue.Coarse_Aggregates.Remove(this);
-					}
-					this._Aggregate.Entity = value;
-					if ((value != null))
-					{
-						value.Coarse_Aggregates.Add(this);
-						this._Aggregate_ID = value.Aggregate_ID;
-					}
-					else
-					{
-						this._Aggregate_ID = default(byte);
-					}
-					this.SendPropertyChanged("Aggregate");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CA_Proportions(CA_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Coarse_Aggregate = this;
-		}
-		
-		private void detach_CA_Proportions(CA_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Coarse_Aggregate = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Fine_Aggregates")]
-	public partial class Fine_Aggregate : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private byte _FN_ID;
-		
-		private System.Nullable<decimal> _Fineness_Modulus;
-		
-		private byte _Aggregate_ID;
-		
-		private EntitySet<FN_Proportion> _FN_Proportions;
-		
-		private EntityRef<Aggregate> _Aggregate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnFN_IDChanging(byte value);
-    partial void OnFN_IDChanged();
-    partial void OnFineness_ModulusChanging(System.Nullable<decimal> value);
-    partial void OnFineness_ModulusChanged();
-    partial void OnAggregate_IDChanging(byte value);
-    partial void OnAggregate_IDChanged();
-    #endregion
-		
-		public Fine_Aggregate()
-		{
-			this._FN_Proportions = new EntitySet<FN_Proportion>(new Action<FN_Proportion>(this.attach_FN_Proportions), new Action<FN_Proportion>(this.detach_FN_Proportions));
-			this._Aggregate = default(EntityRef<Aggregate>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FN_ID", DbType="TinyInt NOT NULL", IsPrimaryKey=true)]
-		public byte FN_ID
-		{
-			get
-			{
-				return this._FN_ID;
-			}
-			set
-			{
-				if ((this._FN_ID != value))
-				{
-					this.OnFN_IDChanging(value);
-					this.SendPropertyChanging();
-					this._FN_ID = value;
-					this.SendPropertyChanged("FN_ID");
-					this.OnFN_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fineness_Modulus", DbType="Decimal(2,1)")]
-		public System.Nullable<decimal> Fineness_Modulus
-		{
-			get
-			{
-				return this._Fineness_Modulus;
-			}
-			set
-			{
-				if ((this._Fineness_Modulus != value))
-				{
-					this.OnFineness_ModulusChanging(value);
-					this.SendPropertyChanging();
-					this._Fineness_Modulus = value;
-					this.SendPropertyChanged("Fineness_Modulus");
-					this.OnFineness_ModulusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Aggregate_ID", DbType="TinyInt NOT NULL")]
-		public byte Aggregate_ID
-		{
-			get
-			{
-				return this._Aggregate_ID;
-			}
-			set
-			{
-				if ((this._Aggregate_ID != value))
-				{
-					if (this._Aggregate.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAggregate_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Aggregate_ID = value;
-					this.SendPropertyChanged("Aggregate_ID");
-					this.OnAggregate_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fine_Aggregate_FN_Proportion", Storage="_FN_Proportions", ThisKey="FN_ID", OtherKey="FN_ID")]
-		public EntitySet<FN_Proportion> FN_Proportions
-		{
-			get
-			{
-				return this._FN_Proportions;
-			}
-			set
-			{
-				this._FN_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Aggregate_Fine_Aggregate", Storage="_Aggregate", ThisKey="Aggregate_ID", OtherKey="Aggregate_ID", IsForeignKey=true)]
-		public Aggregate Aggregate
-		{
-			get
-			{
-				return this._Aggregate.Entity;
-			}
-			set
-			{
-				Aggregate previousValue = this._Aggregate.Entity;
-				if (((previousValue != value) 
-							|| (this._Aggregate.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Aggregate.Entity = null;
-						previousValue.Fine_Aggregates.Remove(this);
-					}
-					this._Aggregate.Entity = value;
-					if ((value != null))
-					{
-						value.Fine_Aggregates.Add(this);
-						this._Aggregate_ID = value.Aggregate_ID;
-					}
-					else
-					{
-						this._Aggregate_ID = default(byte);
-					}
-					this.SendPropertyChanged("Aggregate");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_FN_Proportions(FN_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Fine_Aggregate = this;
-		}
-		
-		private void detach_FN_Proportions(FN_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Fine_Aggregate = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Admixtures")]
-	public partial class Admixture : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private byte _Admixture_ID;
-		
-		private System.Nullable<decimal> _Minimum_Dosage;
-		
-		private System.Nullable<decimal> _Maximum_Dosage;
-		
-		private System.Nullable<bool> _Is_ByCWT;
-		
-		private byte _Material_ID;
-		
-		private EntitySet<Admixture_Proportion> _Admixture_Proportions;
-		
-		private EntityRef<Material> _Material;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAdmixture_IDChanging(byte value);
-    partial void OnAdmixture_IDChanged();
-    partial void OnMinimum_DosageChanging(System.Nullable<decimal> value);
-    partial void OnMinimum_DosageChanged();
-    partial void OnMaximum_DosageChanging(System.Nullable<decimal> value);
-    partial void OnMaximum_DosageChanged();
-    partial void OnIs_ByCWTChanging(System.Nullable<bool> value);
-    partial void OnIs_ByCWTChanged();
-    partial void OnMaterial_IDChanging(byte value);
-    partial void OnMaterial_IDChanged();
-    #endregion
-		
-		public Admixture()
-		{
-			this._Admixture_Proportions = new EntitySet<Admixture_Proportion>(new Action<Admixture_Proportion>(this.attach_Admixture_Proportions), new Action<Admixture_Proportion>(this.detach_Admixture_Proportions));
-			this._Material = default(EntityRef<Material>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admixture_ID", DbType="TinyInt NOT NULL", IsPrimaryKey=true)]
-		public byte Admixture_ID
-		{
-			get
-			{
-				return this._Admixture_ID;
-			}
-			set
-			{
-				if ((this._Admixture_ID != value))
-				{
-					this.OnAdmixture_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Admixture_ID = value;
-					this.SendPropertyChanged("Admixture_ID");
-					this.OnAdmixture_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Minimum_Dosage", DbType="Decimal(3,1)")]
-		public System.Nullable<decimal> Minimum_Dosage
-		{
-			get
-			{
-				return this._Minimum_Dosage;
-			}
-			set
-			{
-				if ((this._Minimum_Dosage != value))
-				{
-					this.OnMinimum_DosageChanging(value);
-					this.SendPropertyChanging();
-					this._Minimum_Dosage = value;
-					this.SendPropertyChanged("Minimum_Dosage");
-					this.OnMinimum_DosageChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Maximum_Dosage", DbType="Decimal(3,1)")]
-		public System.Nullable<decimal> Maximum_Dosage
-		{
-			get
-			{
-				return this._Maximum_Dosage;
-			}
-			set
-			{
-				if ((this._Maximum_Dosage != value))
-				{
-					this.OnMaximum_DosageChanging(value);
-					this.SendPropertyChanging();
-					this._Maximum_Dosage = value;
-					this.SendPropertyChanged("Maximum_Dosage");
-					this.OnMaximum_DosageChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Is_ByCWT", DbType="Bit")]
-		public System.Nullable<bool> Is_ByCWT
-		{
-			get
-			{
-				return this._Is_ByCWT;
-			}
-			set
-			{
-				if ((this._Is_ByCWT != value))
-				{
-					this.OnIs_ByCWTChanging(value);
-					this.SendPropertyChanging();
-					this._Is_ByCWT = value;
-					this.SendPropertyChanged("Is_ByCWT");
-					this.OnIs_ByCWTChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="TinyInt NOT NULL")]
-		public byte Material_ID
-		{
-			get
-			{
-				return this._Material_ID;
-			}
-			set
-			{
-				if ((this._Material_ID != value))
-				{
-					if (this._Material.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMaterial_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Material_ID = value;
-					this.SendPropertyChanged("Material_ID");
-					this.OnMaterial_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Admixture_Admixture_Proportion", Storage="_Admixture_Proportions", ThisKey="Admixture_ID", OtherKey="Admixture_ID")]
-		public EntitySet<Admixture_Proportion> Admixture_Proportions
-		{
-			get
-			{
-				return this._Admixture_Proportions;
-			}
-			set
-			{
-				this._Admixture_Proportions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Material_Admixture", Storage="_Material", ThisKey="Material_ID", OtherKey="Material_ID", IsForeignKey=true)]
-		public Material Material
-		{
-			get
-			{
-				return this._Material.Entity;
-			}
-			set
-			{
-				Material previousValue = this._Material.Entity;
-				if (((previousValue != value) 
-							|| (this._Material.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Material.Entity = null;
-						previousValue.Admixtures.Remove(this);
-					}
-					this._Material.Entity = value;
-					if ((value != null))
-					{
-						value.Admixtures.Add(this);
-						this._Material_ID = value.Material_ID;
-					}
-					else
-					{
-						this._Material_ID = default(byte);
-					}
-					this.SendPropertyChanged("Material");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Admixture_Proportions(Admixture_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Admixture = this;
-		}
-		
-		private void detach_Admixture_Proportions(Admixture_Proportion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Admixture = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Aggregates")]
-	public partial class Aggregate : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private byte _Aggregate_ID;
-		
-		private System.Nullable<decimal> _Absorption;
-		
-		private byte _Material_ID;
-		
-		private EntitySet<Coarse_Aggregate> _Coarse_Aggregates;
-		
-		private EntitySet<Fine_Aggregate> _Fine_Aggregates;
-		
-		private EntityRef<Material> _Material;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAggregate_IDChanging(byte value);
-    partial void OnAggregate_IDChanged();
-    partial void OnAbsorptionChanging(System.Nullable<decimal> value);
-    partial void OnAbsorptionChanged();
-    partial void OnMaterial_IDChanging(byte value);
-    partial void OnMaterial_IDChanged();
-    #endregion
-		
-		public Aggregate()
-		{
-			this._Coarse_Aggregates = new EntitySet<Coarse_Aggregate>(new Action<Coarse_Aggregate>(this.attach_Coarse_Aggregates), new Action<Coarse_Aggregate>(this.detach_Coarse_Aggregates));
-			this._Fine_Aggregates = new EntitySet<Fine_Aggregate>(new Action<Fine_Aggregate>(this.attach_Fine_Aggregates), new Action<Fine_Aggregate>(this.detach_Fine_Aggregates));
-			this._Material = default(EntityRef<Material>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Aggregate_ID", DbType="TinyInt NOT NULL", IsPrimaryKey=true)]
-		public byte Aggregate_ID
-		{
-			get
-			{
-				return this._Aggregate_ID;
-			}
-			set
-			{
-				if ((this._Aggregate_ID != value))
-				{
-					this.OnAggregate_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Aggregate_ID = value;
-					this.SendPropertyChanged("Aggregate_ID");
-					this.OnAggregate_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Absorption", DbType="Decimal(2,1)")]
-		public System.Nullable<decimal> Absorption
-		{
-			get
-			{
-				return this._Absorption;
-			}
-			set
-			{
-				if ((this._Absorption != value))
-				{
-					this.OnAbsorptionChanging(value);
-					this.SendPropertyChanging();
-					this._Absorption = value;
-					this.SendPropertyChanged("Absorption");
-					this.OnAbsorptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Material_ID", DbType="TinyInt NOT NULL")]
-		public byte Material_ID
-		{
-			get
-			{
-				return this._Material_ID;
-			}
-			set
-			{
-				if ((this._Material_ID != value))
-				{
-					if (this._Material.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMaterial_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Material_ID = value;
-					this.SendPropertyChanged("Material_ID");
-					this.OnMaterial_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Aggregate_Coarse_Aggregate", Storage="_Coarse_Aggregates", ThisKey="Aggregate_ID", OtherKey="Aggregate_ID")]
-		public EntitySet<Coarse_Aggregate> Coarse_Aggregates
-		{
-			get
-			{
-				return this._Coarse_Aggregates;
-			}
-			set
-			{
-				this._Coarse_Aggregates.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Aggregate_Fine_Aggregate", Storage="_Fine_Aggregates", ThisKey="Aggregate_ID", OtherKey="Aggregate_ID")]
-		public EntitySet<Fine_Aggregate> Fine_Aggregates
-		{
-			get
-			{
-				return this._Fine_Aggregates;
-			}
-			set
-			{
-				this._Fine_Aggregates.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Material_Aggregate", Storage="_Material", ThisKey="Material_ID", OtherKey="Material_ID", IsForeignKey=true)]
-		public Material Material
-		{
-			get
-			{
-				return this._Material.Entity;
-			}
-			set
-			{
-				Material previousValue = this._Material.Entity;
-				if (((previousValue != value) 
-							|| (this._Material.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Material.Entity = null;
-						previousValue.Aggregates.Remove(this);
-					}
-					this._Material.Entity = value;
-					if ((value != null))
-					{
-						value.Aggregates.Add(this);
-						this._Material_ID = value.Material_ID;
-					}
-					else
-					{
-						this._Material_ID = default(byte);
-					}
-					this.SendPropertyChanged("Material");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Coarse_Aggregates(Coarse_Aggregate entity)
-		{
-			this.SendPropertyChanging();
-			entity.Aggregate = this;
-		}
-		
-		private void detach_Coarse_Aggregates(Coarse_Aggregate entity)
-		{
-			this.SendPropertyChanging();
-			entity.Aggregate = null;
-		}
-		
-		private void attach_Fine_Aggregates(Fine_Aggregate entity)
-		{
-			this.SendPropertyChanging();
-			entity.Aggregate = this;
-		}
-		
-		private void detach_Fine_Aggregates(Fine_Aggregate entity)
-		{
-			this.SendPropertyChanging();
-			entity.Aggregate = null;
+			entity.Material_Type = null;
 		}
 	}
 }

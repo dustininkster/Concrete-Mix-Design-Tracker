@@ -12,13 +12,12 @@ namespace Concrete_Mix_Design_Tracker
         const int MAIN_SPLITTER_DISTANCE = 250;
         const int MAIN_PANEL2_SPLITTER_DISTANCE = 400;
         const int MAIN_PANEL1_SPLITTER_DISTANCE = 25;
-        const int IMAGE_PROPERTIES_SPLITTER_DISTANCE = 200;
+        const int DETAILS_PROPERTIES_SPLITTER_DISTANCE = 200;
         protected const int ROW_SPACING = 33;
         protected const int PANEL_PADDING = 15;
-        const int IMG_PANEL_PADDING = 3;
-        const int IMG_SELECT_BUTTON_SIZE = 20;
-        System.Drawing.Font fntID = new System.Drawing.Font("Times New Roman", 25, System.Drawing.FontStyle.Regular);
-        System.Drawing.Font fntSectionHeader = new System.Drawing.Font("Times New Roman", 15, System.Drawing.FontStyle.Regular);
+        System.Drawing.Font fntID = new System.Drawing.Font("Courier Sans", 25, System.Drawing.FontStyle.Regular);
+        System.Drawing.Font fntSectionHeader = new System.Drawing.Font("Courier Sans", 15, System.Drawing.FontStyle.Regular);
+        protected System.Drawing.Font normalFont = new System.Drawing.Font("Courier New", 8, System.Drawing.FontStyle.Regular);
 
 
          /// <summary>
@@ -37,6 +36,7 @@ namespace Concrete_Mix_Design_Tracker
         protected System.Windows.Forms.ComboBox[] cbFilterSelect;
         protected System.Windows.Forms.ListBox[] lstItemSelect;
         protected System.Windows.Forms.DataGridView[] dgProperties;
+        protected System.Windows.Forms.DataGridView[] dgStaticProperties;
         protected System.Windows.Forms.Label[] lblIDDisplay;
         protected System.Windows.Forms.Button[] btnEditSave;
         protected System.Windows.Forms.Button[] btnAdvance;
@@ -76,14 +76,14 @@ namespace Concrete_Mix_Design_Tracker
             tbSelectionTabs.Controls.Add(this.tbMaterials);
             tbSelectionTabs.Controls.Add(this.tbPrototypes);
             tbSelectionTabs.Controls.Add(this.tbTrialBatches);
-            tbSelectionTabs.Controls.Add(this.tbSubmittals);
+            /*tbSelectionTabs.Controls.Add(this.tbSubmittals);/**/
             tbSelectionTabs.Controls.Add(this.tbMixDesigns);
 
             // Set the properties of the tabs
             tbMaterials.Size = this.tbSelectionTabs.Size;
             tbPrototypes.Size = this.tbSelectionTabs.Size;
             tbTrialBatches.Size = this.tbSelectionTabs.Size;
-            tbSubmittals.Size = this.tbSelectionTabs.Size;
+            /*tbSubmittals.Size = this.tbSelectionTabs.Size;/**/
             tbMixDesigns.Size = this.tbSelectionTabs.Size;
 
 
@@ -96,6 +96,7 @@ namespace Concrete_Mix_Design_Tracker
             this.cbFilterSelect = new System.Windows.Forms.ComboBox[tbSelectionTabs.TabCount];
             this.lstItemSelect = new System.Windows.Forms.ListBox[tbSelectionTabs.TabCount];
             this.dgProperties = new System.Windows.Forms.DataGridView[tbSelectionTabs.TabCount];
+            this.dgStaticProperties = new System.Windows.Forms.DataGridView[tbSelectionTabs.TabCount];
             this.lblIDDisplay = new System.Windows.Forms.Label[tbSelectionTabs.TabCount];
             this.btnEditSave = new System.Windows.Forms.Button[tbSelectionTabs.TabCount];
             this.btnAdvance = new System.Windows.Forms.Button[tbSelectionTabs.TabCount];
@@ -116,6 +117,7 @@ namespace Concrete_Mix_Design_Tracker
                 cbFilterSelect[i] = new ComboBox();
                 lstItemSelect[i] = new ListBox();
                 dgProperties[i] = new DataGridView();
+                dgStaticProperties[i] = new DataGridView();
                 lblIDDisplay[i] = new Label();
                 btnEditSave[i] = new Button();
                 btnAdvance[i] = new Button();
@@ -154,7 +156,7 @@ namespace Concrete_Mix_Design_Tracker
 
                 // List box for selecting the appropriate item
                 lstItemSelect[i].TabIndex = 2;
-                lstItemSelect[i].Font = new System.Drawing.Font("Courier New", 8, System.Drawing.FontStyle.Regular);
+                lstItemSelect[i].Font = normalFont;
                 lstItemSelect[i].Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
                 lstItemSelect[i].SelectedIndexChanged += listboxEventHandler;
 
@@ -173,6 +175,20 @@ namespace Concrete_Mix_Design_Tracker
                 dgProperties[i].Columns[0].ReadOnly = true;
                 dgProperties[i].CellValueChanged += new DataGridViewCellEventHandler(dgProperties_CellChanged);
                 dgProperties[i].Enabled = false;
+
+                // Static Datagrid for static properties
+                dgStaticProperties[i].TabStop = false;
+                dgStaticProperties[i].Dock = DockStyle.Fill;
+                dgStaticProperties[i].ColumnCount = 2;
+                dgStaticProperties[i].Columns[0].Name = "Item";
+                dgStaticProperties[i].Columns[1].Name = "Value";
+                dgStaticProperties[i].AllowUserToAddRows = false;
+                dgStaticProperties[i].AllowUserToDeleteRows = false;
+                dgStaticProperties[i].AllowUserToOrderColumns = false;
+                dgStaticProperties[i].AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgStaticProperties[i].RowHeadersVisible = false;
+                dgStaticProperties[i].ReadOnly = true;
+
 
                 // Label for ID
                 lblIDDisplay[i].Location = new System.Drawing.Point(PANEL_PADDING, PANEL_PADDING);
@@ -205,6 +221,7 @@ namespace Concrete_Mix_Design_Tracker
                 spMainPanel1Split[i].Panel1.Controls.Add(this.cbFilterSelect[i]);
                 spMainPanel1Split[i].Panel2.Controls.Add(this.lstItemSelect[i]);
                 spImagePropSplit[i].Panel2.Controls.Add(this.dgProperties[i]);
+                spImagePropSplit[i].Panel1.Controls.Add(this.dgStaticProperties[i]);
                 spMainPanel2Split[i].Panel1.Controls.Add(this.lblIDDisplay[i]);
                 spMainPanel2Split[i].Panel1.Controls.Add(this.btnEditSave[i]);
                 spMainPanel2Split[i].Panel1.Controls.Add(this.btnAdvance[i]);
@@ -222,7 +239,7 @@ namespace Concrete_Mix_Design_Tracker
                 btnEditSave[i].Location = new System.Drawing.Point(PANEL_PADDING, spMainPanel2Split[i].Panel1.Height - btnEditSave[i].Height - PANEL_PADDING);
                 btnAdvance[i].Location = new System.Drawing.Point((PANEL_PADDING*2) + btnEditSave[i].Width, spMainPanel2Split[i].Panel1.Height - btnAdvance[i].Height - PANEL_PADDING);
                 lstItemSelect[i].Size = new System.Drawing.Size(spMainPanel1Split[i].Panel2.Width, spMainPanel1Split[i].Panel2.Height);
-                spImagePropSplit[i].SplitterDistance = IMAGE_PROPERTIES_SPLITTER_DISTANCE;
+                spImagePropSplit[i].SplitterDistance = DETAILS_PROPERTIES_SPLITTER_DISTANCE;
 
             }
 
