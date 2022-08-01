@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engineering_Database_View;
 
-namespace Concrete_Mix_Design_Tracker
+namespace Concrete_Mix_Tracker
 {
     /// <summary>
     /// Structure to return quantity information from different types of materials

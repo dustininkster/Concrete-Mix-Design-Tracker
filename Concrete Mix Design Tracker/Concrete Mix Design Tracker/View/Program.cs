@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Engineering_Database_View;
 
 namespace Concrete_Mix_Design_Tracker
 {
     static class Program
     {
-        public static View main;
+        public static MainForm main;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -17,7 +18,7 @@ namespace Concrete_Mix_Design_Tracker
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            main = new View();
+            main = new MainForm();
             Application.Run(main);
         }
     }

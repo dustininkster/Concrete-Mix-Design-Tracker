@@ -8,33 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Concrete_Mix_Design_Tracker
+namespace Engineering_Database_View
 {
-    struct PrototypeInput
-    {
-        public string concreteClass;
-        public int WaterContent;
-        public List<MaterialField> CementQty;
-        public List<MaterialField> SCMQty;
-        public List<MaterialField> CAQty;
-        public List<MaterialField> FNQty;
-        public List<MaterialField> AdmixQty;
-        public bool IsAirEntrained;
-        public decimal TargetAir;
-    }
-    struct TrialBatchInput
-    {
-        public decimal Slump;
-        public decimal ActualAir;
-        public decimal FreshTemperature;
-        public decimal AmbientTemperature;
-        public decimal MeasuredUnitWeight;
-        public int CompressiveStrenigth;
-    }
-
-    //TODO: Need to encapsulate this better.
-    //What if you want to reuse this visual setup for something other than a concrete app?
-    
+   
     class View : MainForm
     {
         /// <summary>

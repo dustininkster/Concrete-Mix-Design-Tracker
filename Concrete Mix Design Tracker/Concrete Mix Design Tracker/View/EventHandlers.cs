@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 
-namespace Concrete_Mix_Design_Tracker
+namespace Engineering_Database_View
 {
     public partial class MainForm
     {
@@ -16,9 +16,10 @@ namespace Concrete_Mix_Design_Tracker
         /************************************************
          * This section has all of the event handlers   *
          ************************************************/
-
+/*
         private void Button_Click(object sender, System.EventArgs e)
         {
+            /*
             Button buttonClicked = (Button)sender;
             byte tab;
             byte id;
@@ -62,7 +63,6 @@ namespace Concrete_Mix_Design_Tracker
                 case "Add":
                     Controller.AddFile();
                     break;
-                    /**/
                 case "Add Material":
                     Controller.NewMaterialSelect();
                     break;
@@ -86,6 +86,7 @@ namespace Concrete_Mix_Design_Tracker
 
         private void Combo_SelectedIndexChanged(object sender, System.EventArgs e)
         {
+            /*
             byte index = (byte)Array.IndexOf(cbFilterSelect, (ComboBox)sender);
             Controller.FilterSelectionChanged(index, cbFilterSelect[index].Text);
 
@@ -95,6 +96,7 @@ namespace Concrete_Mix_Design_Tracker
 
         private void Listbox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
+            /*
             ListBox lb = (ListBox)sender;
             if (lb.Text == "")
                 return;
@@ -113,7 +115,7 @@ namespace Concrete_Mix_Design_Tracker
                     Controller.TrialBatchSelectionChanged(lstItemSelect[index].Text);
                     break;
                 case SUBMITTALS:
-                    /*Controller.SubmittalSelectionChanged(lstItemSelect[index].Text);/**/
+                    /*Controller.SubmittalSelectionChanged(lstItemSelect[index].Text);/*
                     break;
                 case MIX_DESIGNS:
                     Controller.MixDesignSelectionChanged(lstItemSelect[index].Text);
@@ -162,5 +164,6 @@ namespace Concrete_Mix_Design_Tracker
             ListBox lst = (ListBox)sender;
             Controller.ClassSelectedForPrototypeAdd(lst.Text);
         }
+*/
     }
 }

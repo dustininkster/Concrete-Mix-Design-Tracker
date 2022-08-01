@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Concrete_Mix_Design_Tracker
+namespace Concrete_Mix_Tracker
 {
     /// <summary>
     /// The Model class is a static class that contains all of the DAL (data access layer) for the desktop application.

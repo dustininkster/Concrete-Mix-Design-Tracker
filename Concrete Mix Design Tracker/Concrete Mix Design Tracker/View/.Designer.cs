@@ -1,5 +1,5 @@
 ﻿
-namespace Concrete_Mix_Design_Tracker
+namespace Engineering_Database_View
 {
     partial class MainForm
     {
@@ -38,8 +38,8 @@ namespace Concrete_Mix_Design_Tracker
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "MainForm";
             this.Text = "Concrete Mix Tracker";
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Resize += new System.EventHandler(this.MainForm_Resize);
+//            this.Load += new System.EventHandler(this.MainForm_Load);
+//            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.ResumeLayout(false);
 
         }

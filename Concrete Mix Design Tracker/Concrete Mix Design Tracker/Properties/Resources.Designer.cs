@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace Concrete_Mix_Design_Tracker.Properties
+namespace Engineering_Database_View.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
