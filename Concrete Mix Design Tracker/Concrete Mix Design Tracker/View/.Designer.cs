@@ -38,8 +38,12 @@ namespace Engineering_Database_View
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "MainForm";
             this.Text = "Concrete Mix Tracker";
+<<<<<<< HEAD:Concrete Mix Design Tracker/Concrete Mix Design Tracker/View/.Designer.cs
 //            this.Load += new System.EventHandler(this.MainForm_Load);
 //            this.Resize += new System.EventHandler(this.MainForm_Resize);
+=======
+            this.Load += new System.EventHandler(this.MainForm_Load);
+>>>>>>> parent of eec7c06 (This is the final form of my capstone project.):Concrete Mix Design Tracker/Concrete Mix Design Tracker/.Designer.cs
             this.ResumeLayout(false);
 
         }

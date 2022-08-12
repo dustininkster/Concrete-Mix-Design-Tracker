@@ -10,8 +10,8 @@ namespace Engineering_Database_View
             MATERIALS = 0,
             PROTOTYPES = 1,
             TRIAL_BATCHES = 2,
-            SUBMITTALS = 4,
-            MIX_DESIGNS = 3;
+            SUBMITTALS = 3,
+            MIX_DESIGNS = 4;
 
         /************************************************
          * This section has all of the event handlers   *
@@ -37,11 +37,8 @@ namespace Engineering_Database_View
                     Controller.Save(tab, id);
                     break;
                 case "Copy":
-                    tab = PROTOTYPES;
-                    id = byte.Parse(lstItemSelect[tab].Text.Substring(0, 3));
-                    Controller.CopyPrototype(id);
+                    Controller.CopyPrototype();
                     break;
-                    /*
                 case ">":
                     if (buttonClicked.Name == "btnMaterialsImgRight")
                         Controller.NextImage(MATERIALS);
@@ -70,15 +67,8 @@ namespace Engineering_Database_View
                     Controller.NewMaterial();
                     break;
                 case "Add To":
-                case "Trial Batch":
-                case "Submit":
-                case "Approved":
                     tab = (byte)Array.IndexOf(btnAdvance, buttonClicked);
-                    id = byte.Parse(lstItemSelect[tab].Text.Substring(0, 3));
-                    Controller.Advance(tab, id);
-                    break;
-                case "Print":
-                    Program.main.PrintMixDesign();
+                    Controller.Advance(tab);
                     break;
             }    
 
@@ -115,7 +105,11 @@ namespace Engineering_Database_View
                     Controller.TrialBatchSelectionChanged(lstItemSelect[index].Text);
                     break;
                 case SUBMITTALS:
+<<<<<<< HEAD:Concrete Mix Design Tracker/Concrete Mix Design Tracker/View/EventHandlers.cs
                     /*Controller.SubmittalSelectionChanged(lstItemSelect[index].Text);/*
+=======
+                    Controller.SubmittalSelectionChanged(lstItemSelect[index].Text);
+>>>>>>> parent of eec7c06 (This is the final form of my capstone project.):Concrete Mix Design Tracker/Concrete Mix Design Tracker/EventHandlers.cs
                     break;
                 case MIX_DESIGNS:
                     Controller.MixDesignSelectionChanged(lstItemSelect[index].Text);
@@ -159,11 +153,14 @@ namespace Engineering_Database_View
                 return;
             Controller.PrototypeSelectedForMaterialAdd(lstAddMaterialToPrototype.Text);
         }
+<<<<<<< HEAD:Concrete Mix Design Tracker/Concrete Mix Design Tracker/View/EventHandlers.cs
         private void lstConcreteClassSelected(object sender, System.EventArgs e)
         {
             ListBox lst = (ListBox)sender;
             Controller.ClassSelectedForPrototypeAdd(lst.Text);
         }
 */
+=======
+>>>>>>> parent of eec7c06 (This is the final form of my capstone project.):Concrete Mix Design Tracker/Concrete Mix Design Tracker/EventHandlers.cs
     }
 }
